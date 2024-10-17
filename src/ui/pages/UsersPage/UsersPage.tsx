@@ -1,43 +1,21 @@
 import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { ModalUI } from "../../components/ModalUI/ModalUI";
+import { dataUsers } from "../../../dataMock/dataMock";
+import { useModalHook } from "../../../dataMock/useModalHook";
 
 export const UsersPage = () => {
-  const data = [
-    {
-      id: "1",
-      firstName: "John",
-      lastName: "Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
-    },
-    {
-      id: "2",
-      firstName: "Jim",
-      lastName: "Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-    },
-    {
-      id: "3",
-      firstName: "Joe",
-      lastName: "Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-    },
-  ];
-
+  const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   return (
     <div>
-      <Button type="primary">Agregar Usuario</Button>
+      <Button type="primary" onClick={() => showModal()}>
+        Agregar Usuario
+      </Button>
       <br />
       <br />
       <Table
         rowKey={(record) => record.id}
-        dataSource={data}
+        dataSource={dataUsers}
         pagination={false}
       >
         <Column title="Nombre" dataIndex="firstName" key="firstName" />
@@ -48,7 +26,7 @@ export const UsersPage = () => {
           title="Action"
           key="action"
           render={(_, record) => (
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="flex gap-2">
               <Button variant="solid" onClick={() => console.log("A", record)}>
                 Editar
               </Button>
@@ -63,7 +41,11 @@ export const UsersPage = () => {
           )}
         />
       </Table>
-      <ModalUI />
+      <ModalUI
+        isModalOpen={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </div>
   );
 };
