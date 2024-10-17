@@ -1,5 +1,6 @@
 import { Input, Form, Button } from "antd";
 import type { FormProps } from "antd";
+import { User } from "../../types/User";
 
 type FieldType = {
   username?: string;
@@ -8,6 +9,7 @@ type FieldType = {
 };
 
 type Props = {
+  user?: User;
   handleOk: () => void;
 };
 

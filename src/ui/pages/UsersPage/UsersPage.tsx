@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Modal } from "antd";
 import Column from "antd/es/table/Column";
 import { ModalUI } from "../../components/ModalUI/ModalUI";
 import { dataUsers } from "../../../dataMock/dataMock";
@@ -8,6 +8,8 @@ import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
 
 export const UsersPage = () => {
+  const [modal, contextHolder] = Modal.useModal();
+
   const [users, setUsers] = useState<User[]>(dataUsers);
   const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   const [edit, setEdit] = useState<User & { edit: boolean }>({
@@ -22,7 +24,18 @@ export const UsersPage = () => {
   const handleEdit = (record: User) => {
     console.log(record, "editando");
     setEdit({ ...record, edit: true });
-    showModal();
+    modal.confirm({
+      title: "Editar usuario",
+      content: <UserForm user={record} handleOk={handleOk} />,
+      onOk: () => {
+        setUsers(users.map((user) => (user.id === record.id ? edit : user)));
+        handleCancel();
+      },
+      onClose: () => {
+        console.log("se cerro");
+      },
+    });
+    //showModal();
   };
 
   const handleCreate = () => {
@@ -35,7 +48,18 @@ export const UsersPage = () => {
       age: 0,
       address: "",
     });
-    showModal();
+    //showModal();
+    modal.confirm({
+      title: "Crear nuevo usuario",
+      content: <UserForm handleOk={handleOk} />,
+      onOk: () => {
+        setUsers([...users, edit]);
+        handleCancel();
+      },
+      onClose: () => {
+        console.log("se cerro");
+      },
+    });
   };
 
   const handleDelete = (record: User) => {
@@ -45,6 +69,7 @@ export const UsersPage = () => {
 
   return (
     <div>
+      {contextHolder}
       <Button type="primary" onClick={() => handleCreate()}>
         Agregar Usuario
       </Button>
