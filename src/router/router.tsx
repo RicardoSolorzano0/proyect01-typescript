@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { User } from "../ui/pages/User/User";
-import { TypeUser } from "../ui/pages/TypeUser/TypeUser";
+import { UsersPage } from "../ui/pages/UsersPage/UsersPage";
+import { TypeUsersPage } from "../ui/pages/TypeUsersPage/TypeUsersPage";
 import { routes } from "../constants/routes";
 import { ContainerLayout } from "../ui/layouts/ContainerLayout/ContainerLayout";
 import { NotFound } from "../ui/pages/NotFound/NotFound";
@@ -12,11 +12,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: routes.home.user,
-        element: <User />,
+        element: <UsersPage />,
       },
       {
         path: routes.home.typeUser,
-        element: <TypeUser />,
+        element: <TypeUsersPage />,
       },
     ],
   },
