@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
 import { Modal } from "antd";
 
 type Props = {
   title: string;
   isModalOpen: boolean;
+  children: ReactNode;
   handleOk: () => void;
   handleCancel: () => void;
 };
@@ -12,6 +14,7 @@ export const ModalUI = ({
   handleOk,
   handleCancel,
   title,
+  children,
 }: Props) => {
   return (
     <>
@@ -21,9 +24,7 @@ export const ModalUI = ({
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {children}
       </Modal>
     </>
   );

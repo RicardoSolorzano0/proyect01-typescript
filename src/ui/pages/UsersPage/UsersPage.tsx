@@ -82,7 +82,9 @@ export const UsersPage = () => {
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
-      />
+      >
+        Modal sin formularios
+      </ModalUI>
     </div>
   );
 };
