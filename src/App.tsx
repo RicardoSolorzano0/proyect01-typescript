@@ -1,7 +1,7 @@
-import "./App.css";
+import { ContainerLayout } from "./ui/layouts/ContainerLayout/ContainerLayout";
 
-function App() {
-  return <h1 className="">Hello world!</h1>;
-}
+const App = () => {
+  return <ContainerLayout>Comenzando</ContainerLayout>;
+};
 
 export default App;
