@@ -39,6 +39,7 @@ export const UsersPage = () => {
   };
 
   const handleDelete = (record: User) => {
+    setUsers(users.filter((user) => user.id !== record.id));
     console.log("Eliminando usuario", record);
   };
 
@@ -49,34 +50,38 @@ export const UsersPage = () => {
       </Button>
       <br />
       <br />
-      <Table
-        rowKey={(record) => record.id}
-        dataSource={users}
-        pagination={false}
-      >
-        <Column title="Nombre" dataIndex="firstName" key="firstName" />
-        <Column title="Apellido" dataIndex="lastName" key="lastName" />
-        <Column title="Edad" dataIndex="age" key="age" />
-        <Column title="Direccion" dataIndex="address" key="address" />
-        <Column
-          title="Acciones"
-          key="action"
-          render={(_, record: User) => (
-            <div className="flex gap-2">
-              <Button variant="solid" onClick={() => handleEdit(record)}>
-                Editar
-              </Button>
-              <Button
-                variant="solid"
-                color="danger"
-                onClick={() => handleDelete(record)}
-              >
-                Eliminar
-              </Button>
-            </div>
-          )}
-        />
-      </Table>
+      {users.length === 0 ? (
+        <h1>No hay usuarios registra uno</h1>
+      ) : (
+        <Table
+          rowKey={(record) => record.id}
+          dataSource={users}
+          pagination={false}
+        >
+          <Column title="Nombre" dataIndex="firstName" key="firstName" />
+          <Column title="Apellido" dataIndex="lastName" key="lastName" />
+          <Column title="Edad" dataIndex="age" key="age" />
+          <Column title="Direccion" dataIndex="address" key="address" />
+          <Column
+            title="Acciones"
+            key="action"
+            render={(_, record: User) => (
+              <div className="flex gap-2">
+                <Button variant="solid" onClick={() => handleEdit(record)}>
+                  Editar
+                </Button>
+                <Button
+                  variant="solid"
+                  color="danger"
+                  onClick={() => handleDelete(record)}
+                >
+                  Eliminar
+                </Button>
+              </div>
+            )}
+          />
+        </Table>
+      )}
       <ModalUI
         title={
           edit.edit ? `Editando usuario ${edit.firstName}` : "Agregar usuario"
