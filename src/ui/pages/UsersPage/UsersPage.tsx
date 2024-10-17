@@ -3,12 +3,28 @@ import Column from "antd/es/table/Column";
 import { ModalUI } from "../../components/ModalUI/ModalUI";
 import { dataUsers } from "../../../dataMock/dataMock";
 import { useModalHook } from "../../../dataMock/useModalHook";
+import { useState } from "react";
+import { AnyObject } from "antd/es/_util/type";
 
 export const UsersPage = () => {
   const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
+  const [edit, setEdit] = useState(false);
+
+  const handleEdit = (record: AnyObject) => {
+    console.log(record, "editando");
+    setEdit(true);
+    showModal();
+  };
+
+  const handleCreate = () => {
+    console.log("creando un nuevo usuario");
+    setEdit(false);
+    showModal();
+  };
+
   return (
     <div>
-      <Button type="primary" onClick={() => showModal()}>
+      <Button type="primary" onClick={() => handleCreate()}>
         Agregar Usuario
       </Button>
       <br />
@@ -27,7 +43,7 @@ export const UsersPage = () => {
           key="action"
           render={(_, record) => (
             <div className="flex gap-2">
-              <Button variant="solid" onClick={() => console.log("A", record)}>
+              <Button variant="solid" onClick={() => handleEdit(record)}>
                 Editar
               </Button>
               <Button
@@ -42,6 +58,7 @@ export const UsersPage = () => {
         />
       </Table>
       <ModalUI
+        title={edit ? "Editando usuario " : "Agregar usuario"}
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}

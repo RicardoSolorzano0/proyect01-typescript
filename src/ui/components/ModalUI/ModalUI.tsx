@@ -1,15 +1,22 @@
 import { Modal } from "antd";
 
 type Props = {
+  title: string;
   isModalOpen: boolean;
   handleOk: () => void;
   handleCancel: () => void;
 };
-export const ModalUI = ({ isModalOpen, handleOk, handleCancel }: Props) => {
+
+export const ModalUI = ({
+  isModalOpen,
+  handleOk,
+  handleCancel,
+  title,
+}: Props) => {
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title={title}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
