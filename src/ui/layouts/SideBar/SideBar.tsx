@@ -1,31 +1,12 @@
-import React from "react";
 import { Menu } from "antd";
-import type { MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { menu } from "../../../router/menu";
+import { Link } from "react-router-dom";
 
-const items: MenuProps["items"] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
+const items2 = menu.map((item) => ({
+  key: item.path,
+  icon: item.icon,
+  label: <Link to={item.path}>{item.label}</Link>,
 }));
 
 export const SideBar = () => {
@@ -36,7 +17,10 @@ export const SideBar = () => {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["1"]}
-        items={items}
+        items={items2}
+        onChange={(event) => {
+          console.log("change", event);
+        }}
       />
     </Sider>
   );

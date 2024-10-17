@@ -1,7 +1,8 @@
-import { ContainerLayout } from "./ui/layouts/ContainerLayout/ContainerLayout";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router/router";
 
 const App = () => {
-  return <ContainerLayout>Comenzando</ContainerLayout>;
+  return <RouterProvider router={router} />;
 };
 
 export default App;
