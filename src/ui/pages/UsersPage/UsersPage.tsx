@@ -4,22 +4,40 @@ import { ModalUI } from "../../components/ModalUI/ModalUI";
 import { dataUsers } from "../../../dataMock/dataMock";
 import { useModalHook } from "../../../dataMock/useModalHook";
 import { useState } from "react";
-import { AnyObject } from "antd/es/_util/type";
+import { User } from "../../../types/User";
 
 export const UsersPage = () => {
   const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState<User & { edit: boolean }>({
+    edit: false,
+    id: "",
+    firstName: "",
+    lastName: "",
+    age: 0,
+    address: "",
+  });
 
-  const handleEdit = (record: AnyObject) => {
+  const handleEdit = (record: User) => {
     console.log(record, "editando");
-    setEdit(true);
+    setEdit({ ...record, edit: true });
     showModal();
   };
 
   const handleCreate = () => {
     console.log("creando un nuevo usuario");
-    setEdit(false);
+    setEdit({
+      edit: false,
+      id: "",
+      firstName: "",
+      lastName: "",
+      age: 0,
+      address: "",
+    });
     showModal();
+  };
+
+  const handleDelete = (record: User) => {
+    console.log("Eliminando usuario", record);
   };
 
   return (
@@ -41,7 +59,7 @@ export const UsersPage = () => {
         <Column
           title="Action"
           key="action"
-          render={(_, record) => (
+          render={(_, record: User) => (
             <div className="flex gap-2">
               <Button variant="solid" onClick={() => handleEdit(record)}>
                 Editar
@@ -49,7 +67,7 @@ export const UsersPage = () => {
               <Button
                 variant="solid"
                 color="danger"
-                onClick={() => console.log("B", record)}
+                onClick={() => handleDelete(record)}
               >
                 Eliminar
               </Button>
@@ -58,7 +76,9 @@ export const UsersPage = () => {
         />
       </Table>
       <ModalUI
-        title={edit ? "Editando usuario " : "Agregar usuario"}
+        title={
+          edit.edit ? `Editando usuario ${edit.firstName}` : "Agregar usuario"
+        }
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
