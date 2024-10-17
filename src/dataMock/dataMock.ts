@@ -5,7 +5,6 @@ export const dataUsers = [
     lastName: "Brown",
     age: 32,
     address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
   },
   {
     id: "2",
@@ -13,7 +12,6 @@ export const dataUsers = [
     lastName: "Green",
     age: 42,
     address: "London No. 1 Lake Park",
-    tags: ["loser"],
   },
   {
     id: "3",
@@ -21,7 +19,6 @@ export const dataUsers = [
     lastName: "Black",
     age: 32,
     address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
   },
 ];
 

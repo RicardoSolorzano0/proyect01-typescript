@@ -5,8 +5,10 @@ import { dataUsers } from "../../../dataMock/dataMock";
 import { useModalHook } from "../../../dataMock/useModalHook";
 import { useState } from "react";
 import { User } from "../../../types/User";
+import { UserForm } from "../../../forms/UserForm/UserForm";
 
 export const UsersPage = () => {
+  const [users, setUsers] = useState<User[]>(dataUsers);
   const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   const [edit, setEdit] = useState<User & { edit: boolean }>({
     edit: false,
@@ -49,7 +51,7 @@ export const UsersPage = () => {
       <br />
       <Table
         rowKey={(record) => record.id}
-        dataSource={dataUsers}
+        dataSource={users}
         pagination={false}
       >
         <Column title="Nombre" dataIndex="firstName" key="firstName" />
@@ -57,7 +59,7 @@ export const UsersPage = () => {
         <Column title="Edad" dataIndex="age" key="age" />
         <Column title="Direccion" dataIndex="address" key="address" />
         <Column
-          title="Action"
+          title="Acciones"
           key="action"
           render={(_, record: User) => (
             <div className="flex gap-2">
@@ -83,7 +85,7 @@ export const UsersPage = () => {
         handleOk={handleOk}
         handleCancel={handleCancel}
       >
-        Modal sin formularios
+        <UserForm handleOk={handleOk} />
       </ModalUI>
     </div>
   );

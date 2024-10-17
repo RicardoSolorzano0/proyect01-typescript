@@ -23,6 +23,8 @@ export const ModalUI = ({
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
       >
         {children}
       </Modal>
