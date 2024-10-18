@@ -2,12 +2,6 @@ import { Input, Form, Button } from "antd";
 import type { FormProps } from "antd";
 import { User } from "../../types/User";
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
-
 type Props = {
   user?: User;
   users: User[];
@@ -16,10 +10,9 @@ type Props = {
 };
 
 export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+  const onFinish: FormProps["onFinish"] = (values) => {
     if (!user) {
-      console.log("agregar un nuevo usuario");
-      // setUsers([...users, { ...values, id: Date.now() }]);
+      setUsers([...users, { ...values, id: Date.now() }]);
     } else {
       setUsers(
         users.map((item) => {
@@ -33,9 +26,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
     handleCancel();
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
+  const onFinishFailed: FormProps["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 

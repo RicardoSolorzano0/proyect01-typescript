@@ -8,14 +8,6 @@ import { UserForm } from "../../../forms/UserForm/UserForm";
 export const UsersPage = () => {
   const [modal, contextHolder] = Modal.useModal();
   const [users, setUsers] = useState<User[]>(dataUsers);
-  const [edit, setEdit] = useState<User & { edit: boolean }>({
-    edit: false,
-    id: "",
-    firstName: "",
-    lastName: "",
-    age: 0,
-    address: "",
-  });
 
   const handleEdit = (record: User) => {
     const mdl = modal.info({
@@ -34,35 +26,24 @@ export const UsersPage = () => {
       cancelButtonProps: {
         style: { display: "none" },
       },
-      onOk: () => {
-        setUsers(users.map((user) => (user.id === record.id ? edit : user)));
-      },
-      onCancel: () => {},
     });
   };
 
   const handleCreate = () => {
-    console.log("creando un nuevo usuario");
-    setEdit({
-      edit: false,
-      id: "",
-      firstName: "",
-      lastName: "",
-      age: 0,
-      address: "",
-    });
-    //showModal();
-    modal.confirm({
+    const mdl = modal.info({
       title: "Crear nuevo usuario",
       content: (
-        <UserForm handleCancel={() => {}} setUsers={setUsers} users={users} />
+        <UserForm
+          handleCancel={() => mdl.destroy()}
+          setUsers={setUsers}
+          users={users}
+        />
       ),
-      onOk: () => {
-        setUsers([...users, edit]);
-        // handleCancel();
+      cancelButtonProps: {
+        style: { display: "none" },
       },
-      onClose: () => {
-        console.log("se cerro");
+      okButtonProps: {
+        style: { display: "none" },
       },
     });
   };
