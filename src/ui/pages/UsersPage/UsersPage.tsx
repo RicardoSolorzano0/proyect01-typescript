@@ -9,7 +9,6 @@ import { UserForm } from "../../../forms/UserForm/UserForm";
 
 export const UsersPage = () => {
   const [modal, contextHolder] = Modal.useModal();
-
   const [users, setUsers] = useState<User[]>(dataUsers);
   const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   const [edit, setEdit] = useState<User & { edit: boolean }>({
@@ -63,8 +62,17 @@ export const UsersPage = () => {
   };
 
   const handleDelete = (record: User) => {
-    setUsers(users.filter((user) => user.id !== record.id));
-    console.log("Eliminando usuario", record);
+    modal.confirm({
+      title: "Eliminar usuario",
+      content: `¿Estas seguro de eliminar el usuario ${record.firstName} ${record.lastName}?`,
+      onOk: () => {
+        setUsers(users.filter((user) => user.id !== record.id));
+        handleCancel();
+      },
+      onClose: () => {
+        console.log("se cerro");
+      },
+    });
   };
 
   return (
