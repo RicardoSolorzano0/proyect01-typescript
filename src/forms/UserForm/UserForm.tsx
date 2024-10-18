@@ -10,19 +10,26 @@ type FieldType = {
 
 type Props = {
   user?: User;
-  // handleOk: () => void;
+  users: User[];
   handleCancel: () => void;
+  setUsers: (users: User[]) => void;
 };
 
-export const UserForm = ({ user, handleCancel }: Props) => {
+export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     if (!user) {
-      console.log("creando un nuevo usuario");
+      console.log("agregar un nuevo usuario");
+      // setUsers([...users, { ...values, id: Date.now() }]);
     } else {
-      console.log("editando un usuario");
+      setUsers(
+        users.map((item) => {
+          if (item.id === user.id) {
+            return { ...item, ...values };
+          }
+          return item;
+        })
+      );
     }
-
-    console.log("Success:", values);
     handleCancel();
   };
 
@@ -53,7 +60,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
     >
       <Form.Item
         label="Nombre"
-        name="firstname"
+        name="firstName"
         initialValue={user?.firstName}
         rules={[
           {
@@ -66,7 +73,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
       </Form.Item>
       <Form.Item
         label="Apellido"
-        name="lastname"
+        name="lastName"
         initialValue={user?.lastName}
         rules={[
           {

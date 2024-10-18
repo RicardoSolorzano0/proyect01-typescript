@@ -1,8 +1,6 @@
 import { Button, Table, Modal } from "antd";
 import Column from "antd/es/table/Column";
-// import { ModalUI } from "../../components/ModalUI/ModalUI";
 import { dataUsers } from "../../../dataMock/dataMock";
-// import { useModalHook } from "../../../dataMock/useModalHook";
 import { useState } from "react";
 import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
@@ -10,7 +8,6 @@ import { UserForm } from "../../../forms/UserForm/UserForm";
 export const UsersPage = () => {
   const [modal, contextHolder] = Modal.useModal();
   const [users, setUsers] = useState<User[]>(dataUsers);
-  // const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   const [edit, setEdit] = useState<User & { edit: boolean }>({
     edit: false,
     id: "",
@@ -23,7 +20,14 @@ export const UsersPage = () => {
   const handleEdit = (record: User) => {
     const mdl = modal.info({
       title: `Editar usuario ${record.firstName} ${record.lastName}`,
-      content: <UserForm user={record} handleCancel={() => mdl.destroy()} />,
+      content: (
+        <UserForm
+          user={record}
+          handleCancel={() => mdl.destroy()}
+          setUsers={setUsers}
+          users={users}
+        />
+      ),
       okButtonProps: {
         style: { display: "none" },
       },
@@ -50,7 +54,9 @@ export const UsersPage = () => {
     //showModal();
     modal.confirm({
       title: "Crear nuevo usuario",
-      content: <UserForm handleCancel={() => {}} />,
+      content: (
+        <UserForm handleCancel={() => {}} setUsers={setUsers} users={users} />
+      ),
       onOk: () => {
         setUsers([...users, edit]);
         // handleCancel();
@@ -111,16 +117,6 @@ export const UsersPage = () => {
           />
         </Table>
       )}
-      {/* <ModalUI
-        title={
-          edit.edit ? `Editando usuario ${edit.firstName}` : "Agregar usuario"
-        }
-        isModalOpen={isModalOpen}
-        handleOk={handleOk}
-        handleCancel={handleCancel}
-      >
-        <UserForm handleOk={handleOk} />
-      </ModalUI> */}
     </div>
   );
 };
