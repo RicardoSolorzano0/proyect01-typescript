@@ -9,7 +9,10 @@ export const ContainerLayout = () => {
     <Layout hasSider>
       <SideBar />
       <Layout className="ml-[200px]">
-        <Content className="m-5 overflow-auto">
+        <Content
+          className="m-5 overflow-auto"
+          style={{ height: "calc(100vh - 114px)" }}
+        >
           <div className="p-6 bg-white rounded-lg">
             <Outlet />
           </div>
