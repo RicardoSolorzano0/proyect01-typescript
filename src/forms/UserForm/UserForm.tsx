@@ -10,13 +10,20 @@ type FieldType = {
 
 type Props = {
   user?: User;
-  handleOk: () => void;
+  // handleOk: () => void;
+  handleCancel: () => void;
 };
 
-export const UserForm = ({ handleOk }: Props) => {
+export const UserForm = ({ user, handleCancel }: Props) => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+    if (!user) {
+      console.log("creando un nuevo usuario");
+    } else {
+      console.log("editando un usuario");
+    }
+
     console.log("Success:", values);
-    handleOk();
+    handleCancel();
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
@@ -47,6 +54,7 @@ export const UserForm = ({ handleOk }: Props) => {
       <Form.Item
         label="Nombre"
         name="firstname"
+        initialValue={user?.firstName}
         rules={[
           {
             required: true,
@@ -59,6 +67,7 @@ export const UserForm = ({ handleOk }: Props) => {
       <Form.Item
         label="Apellido"
         name="lastname"
+        initialValue={user?.lastName}
         rules={[
           {
             required: true,
@@ -71,6 +80,7 @@ export const UserForm = ({ handleOk }: Props) => {
       <Form.Item
         label="Edad"
         name="age"
+        initialValue={user?.age}
         rules={[
           {
             required: true,
@@ -83,6 +93,7 @@ export const UserForm = ({ handleOk }: Props) => {
       <Form.Item
         label="Dirección"
         name="address"
+        initialValue={user?.address}
         rules={[
           {
             required: true,
@@ -92,17 +103,12 @@ export const UserForm = ({ handleOk }: Props) => {
       >
         <Input />
       </Form.Item>
-
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
+      <div className="flex justify-center gap-2">
+        <Button onClick={handleCancel}>Cancelar</Button>
         <Button type="primary" htmlType="submit">
-          Submit
+          {user ? "Editar" : "Crear"}
         </Button>
-      </Form.Item>
+      </div>
     </Form>
   );
 };

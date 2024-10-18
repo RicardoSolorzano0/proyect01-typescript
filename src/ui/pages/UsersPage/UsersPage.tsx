@@ -1,8 +1,8 @@
 import { Button, Table, Modal } from "antd";
 import Column from "antd/es/table/Column";
-import { ModalUI } from "../../components/ModalUI/ModalUI";
+// import { ModalUI } from "../../components/ModalUI/ModalUI";
 import { dataUsers } from "../../../dataMock/dataMock";
-import { useModalHook } from "../../../dataMock/useModalHook";
+// import { useModalHook } from "../../../dataMock/useModalHook";
 import { useState } from "react";
 import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
@@ -10,7 +10,7 @@ import { UserForm } from "../../../forms/UserForm/UserForm";
 export const UsersPage = () => {
   const [modal, contextHolder] = Modal.useModal();
   const [users, setUsers] = useState<User[]>(dataUsers);
-  const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
+  // const { isModalOpen, handleOk, handleCancel, showModal } = useModalHook();
   const [edit, setEdit] = useState<User & { edit: boolean }>({
     edit: false,
     id: "",
@@ -21,20 +21,20 @@ export const UsersPage = () => {
   });
 
   const handleEdit = (record: User) => {
-    console.log(record, "editando");
-    setEdit({ ...record, edit: true });
-    modal.confirm({
-      title: "Editar usuario",
-      content: <UserForm user={record} handleOk={handleOk} />,
+    const mdl = modal.info({
+      title: `Editar usuario ${record.firstName} ${record.lastName}`,
+      content: <UserForm user={record} handleCancel={() => mdl.destroy()} />,
+      okButtonProps: {
+        style: { display: "none" },
+      },
+      cancelButtonProps: {
+        style: { display: "none" },
+      },
       onOk: () => {
         setUsers(users.map((user) => (user.id === record.id ? edit : user)));
-        handleCancel();
       },
-      onClose: () => {
-        console.log("se cerro");
-      },
+      onCancel: () => {},
     });
-    //showModal();
   };
 
   const handleCreate = () => {
@@ -50,10 +50,10 @@ export const UsersPage = () => {
     //showModal();
     modal.confirm({
       title: "Crear nuevo usuario",
-      content: <UserForm handleOk={handleOk} />,
+      content: <UserForm handleCancel={() => {}} />,
       onOk: () => {
         setUsers([...users, edit]);
-        handleCancel();
+        // handleCancel();
       },
       onClose: () => {
         console.log("se cerro");
@@ -67,10 +67,6 @@ export const UsersPage = () => {
       content: `¿Estas seguro de eliminar el usuario ${record.firstName} ${record.lastName}?`,
       onOk: () => {
         setUsers(users.filter((user) => user.id !== record.id));
-        handleCancel();
-      },
-      onClose: () => {
-        console.log("se cerro");
       },
     });
   };
@@ -115,7 +111,7 @@ export const UsersPage = () => {
           />
         </Table>
       )}
-      <ModalUI
+      {/* <ModalUI
         title={
           edit.edit ? `Editando usuario ${edit.firstName}` : "Agregar usuario"
         }
@@ -124,7 +120,7 @@ export const UsersPage = () => {
         handleCancel={handleCancel}
       >
         <UserForm handleOk={handleOk} />
-      </ModalUI>
+      </ModalUI> */}
     </div>
   );
 };
