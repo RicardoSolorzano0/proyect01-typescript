@@ -15,7 +15,7 @@ export const ContainerLayout = () => {
           </div>
         </Content>
         <Footer className="text-center">
-          Ant Design ©{new Date().getFullYear()} Created by Ricardo Solórzano
+          App Users ©{new Date().getFullYear()} Creado por Ricardo Solórzano
         </Footer>
       </Layout>
     </Layout>
