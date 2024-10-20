@@ -61,7 +61,7 @@ export const UsersPage = () => {
   return (
     <div>
       {contextHolder}
-      <Button type="primary" onClick={() => handleCreate()}>
+      <Button type="primary" onClick={handleCreate}>
         Agregar Usuario
       </Button>
       <br />

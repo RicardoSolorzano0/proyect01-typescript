@@ -60,7 +60,7 @@ export const TypeUsersPage = () => {
   return (
     <div>
       {contextHolder}
-      <Button type="primary" onClick={() => handleCreate()}>
+      <Button type="primary" onClick={handleCreate}>
         Agregar tipo de Usuario
       </Button>
       <br />

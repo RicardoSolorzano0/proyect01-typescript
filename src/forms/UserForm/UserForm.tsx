@@ -1,6 +1,11 @@
 import { Input, Form, Button } from "antd";
 import type { FormProps } from "antd";
 import { User } from "../../types/User";
+import { useEffect } from "react";
+
+const { useForm, useWatch, Item } = Form;
+
+type UserFormProps = Omit<User, "id">;
 
 type Props = {
   user?: User;
@@ -10,9 +15,23 @@ type Props = {
 };
 
 export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
-  const onFinish: FormProps["onFinish"] = (values) => {
+  const [form] = useForm<UserFormProps>();
+  const age = useWatch("age", form);
+
+  useEffect(() => {
+    console.log("edad changed", age);
+  }, [age]);
+
+  const initialValues: Partial<UserFormProps> = {
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    age: user?.age,
+    address: user?.address,
+  };
+
+  const onFinish = (values: UserFormProps) => {
     if (!user) {
-      setUsers([...users, { ...values, id: Date.now() }]);
+      setUsers([...users, { ...values, id: Date.now().toString() }]);
     } else {
       setUsers(
         users.map((item) => {
@@ -26,7 +45,9 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
     handleCancel();
   };
 
-  const onFinishFailed: FormProps["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed: FormProps<UserFormProps>["onFinishFailed"] = (
+    errorInfo
+  ) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -42,17 +63,15 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
       style={{
         maxWidth: 600,
       }}
-      initialValues={{
-        remember: true,
-      }}
+      initialValues={initialValues}
+      form={form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
+      <Item
         label="Nombre"
         name="firstName"
-        initialValue={user?.firstName}
         rules={[
           {
             required: true,
@@ -61,11 +80,10 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
         ]}
       >
         <Input />
-      </Form.Item>
-      <Form.Item
+      </Item>
+      <Item
         label="Apellido"
         name="lastName"
-        initialValue={user?.lastName}
         rules={[
           {
             required: true,
@@ -74,11 +92,10 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
         ]}
       >
         <Input />
-      </Form.Item>
-      <Form.Item
+      </Item>
+      <Item
         label="Edad"
         name="age"
-        initialValue={user?.age}
         rules={[
           {
             required: true,
@@ -87,11 +104,10 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
         ]}
       >
         <Input type="number" />
-      </Form.Item>
-      <Form.Item
+      </Item>
+      <Item
         label="Dirección"
         name="address"
-        initialValue={user?.address}
         rules={[
           {
             required: true,
@@ -100,7 +116,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
         ]}
       >
         <Input />
-      </Form.Item>
+      </Item>
       <div className="flex justify-center gap-2">
         <Button onClick={handleCancel}>Cancelar</Button>
         <Button type="primary" htmlType="submit">

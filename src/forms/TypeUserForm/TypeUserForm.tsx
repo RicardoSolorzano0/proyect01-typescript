@@ -2,6 +2,10 @@ import { Input, Form, Button } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
 
+const { useForm, Item } = Form;
+
+type TypeUserFormProps = Omit<TypeUser, "id">;
+
 type Props = {
   typeUser?: TypeUser;
   typeUsers: TypeUser[];
@@ -15,9 +19,17 @@ export const TypeUserForm = ({
   handleCancel,
   setTypeUsers,
 }: Props) => {
-  const onFinish: FormProps["onFinish"] = (values) => {
+  const [form] = useForm();
+
+  const initValues: Partial<TypeUserFormProps> = {
+    name: typeUser?.name,
+    description: typeUser?.description,
+    color: typeUser?.color,
+  };
+
+  const onFinish = (values: TypeUserFormProps) => {
     if (!typeUser) {
-      setTypeUsers([...typeUsers, { ...values, id: Date.now() }]);
+      setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
     } else {
       setTypeUsers(
         typeUsers.map((item) => {
@@ -31,7 +43,9 @@ export const TypeUserForm = ({
     handleCancel();
   };
 
-  const onFinishFailed: FormProps["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed: FormProps<TypeUserFormProps>["onFinishFailed"] = (
+    errorInfo
+  ) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -47,17 +61,15 @@ export const TypeUserForm = ({
       style={{
         maxWidth: 600,
       }}
-      initialValues={{
-        remember: true,
-      }}
+      form={form}
+      initialValues={initValues}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
+      <Item
         label="Nombre"
         name="name"
-        initialValue={typeUser?.name}
         rules={[
           {
             required: true,
@@ -66,11 +78,10 @@ export const TypeUserForm = ({
         ]}
       >
         <Input />
-      </Form.Item>
-      <Form.Item
+      </Item>
+      <Item
         label="Descripción"
         name="description"
-        initialValue={typeUser?.description}
         rules={[
           {
             required: true,
@@ -79,11 +90,10 @@ export const TypeUserForm = ({
         ]}
       >
         <Input />
-      </Form.Item>
-      <Form.Item
+      </Item>
+      <Item
         label="Color"
         name="color"
-        initialValue={typeUser?.color}
         rules={[
           {
             required: true,
@@ -92,7 +102,7 @@ export const TypeUserForm = ({
         ]}
       >
         <Input />
-      </Form.Item>
+      </Item>
       <div className="flex justify-center gap-2">
         <Button onClick={handleCancel}>Cancelar</Button>
         <Button type="primary" htmlType="submit">
