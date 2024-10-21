@@ -1,4 +1,4 @@
-import { Input, Form, Button, App } from "antd";
+import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
 import { FormUi } from "../FormUi/FormUi";
@@ -104,7 +104,7 @@ export const TypeUserForm = ({
           },
         ]}
       >
-        <Input />
+        <ColorPicker onChange={(color) => form.setFieldsValue({ color: color.toHexString() })} />
       </Item>
       <div className="flex justify-center gap-2">
         <Button onClick={handleCancel}>Cancelar</Button>
