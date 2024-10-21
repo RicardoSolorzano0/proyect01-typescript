@@ -1,7 +1,8 @@
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button, App } from "antd";
 import type { FormProps } from "antd";
 import { User } from "../../types/User";
 import { useEffect } from "react";
+const { useApp } = App;
 
 const { useForm, useWatch, Item } = Form;
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
+  const { notification } = useApp();
   const [form] = useForm<UserFormProps>();
   const age = useWatch("age", form);
 
@@ -32,6 +34,11 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   const onFinish = (values: UserFormProps) => {
     if (!user) {
       setUsers([...users, { ...values, id: Date.now().toString() }]);
+      notification.success({
+        message: "Usuario creado",
+        description: "Se ha creado un nuevo usuario",
+        duration: 2,
+      });
     } else {
       setUsers(
         users.map((item) => {
@@ -41,6 +48,11 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
           return item;
         })
       );
+      notification.success({
+        message: "Usuario actualizado",
+        description: "Se ha actualizado el usuario",
+        duration: 2,
+      });
     }
     handleCancel();
   };
@@ -48,6 +60,11 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   const onFinishFailed: FormProps<UserFormProps>["onFinishFailed"] = (
     errorInfo
   ) => {
+    notification.error({
+      message: "Error",
+      description: "Revise los campos",
+      duration: 2,
+    });
     console.log("Failed:", errorInfo);
   };
 

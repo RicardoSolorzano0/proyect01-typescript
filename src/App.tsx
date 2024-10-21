@@ -1,8 +1,13 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router/router";
+import { App as ContexModal } from "antd";
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <ContexModal>
+      <RouterProvider router={router} />
+    </ContexModal>
+  );
 };
 
 export default App;

@@ -1,11 +1,14 @@
-import { Button, Table, Modal } from "antd";
+import { Button, Table, App } from "antd";
 import { useState } from "react";
 import { TypeUser } from "../../../types/TypeUsers";
 import { dataTypeUsers } from "../../../dataMock/dataMock";
 import { TypeUserForm } from "../../../forms/TypeUserForm/TypeUserForm";
 import Column from "antd/es/table/Column";
+
+const { useApp } = App;
+
 export const TypeUsersPage = () => {
-  const [modal, contextHolder] = Modal.useModal();
+  const { modal, notification } = useApp();
   const [typeUsers, setTypeUsers] = useState<TypeUser[]>(dataTypeUsers);
 
   const handleCreate = () => {
@@ -53,13 +56,17 @@ export const TypeUsersPage = () => {
       content: `¿Estas seguro de eliminar el tipo de usuario ?`,
       onOk: () => {
         setTypeUsers(typeUsers.filter((user) => user.id !== record.id));
+        notification.success({
+          message: "Tipo de usuario eliminado",
+          description: `Se ha eliminado el tipo de usuario ${record.name}`,
+          duration: 2,
+        });
       },
     });
   };
 
   return (
     <div>
-      {contextHolder}
       <Button type="primary" onClick={handleCreate}>
         Agregar tipo de Usuario
       </Button>

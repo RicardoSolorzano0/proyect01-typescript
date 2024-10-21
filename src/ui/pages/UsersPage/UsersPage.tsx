@@ -1,12 +1,14 @@
-import { Button, Table, Modal } from "antd";
+import { Button, Table, App } from "antd";
 import Column from "antd/es/table/Column";
 import { dataUsers } from "../../../dataMock/dataMock";
 import { useState } from "react";
 import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
 
+const { useApp } = App;
+
 export const UsersPage = () => {
-  const [modal, contextHolder] = Modal.useModal();
+  const { modal, notification } = useApp();
   const [users, setUsers] = useState<User[]>(dataUsers);
 
   const handleEdit = (record: User) => {
@@ -54,13 +56,17 @@ export const UsersPage = () => {
       content: `¿Estas seguro de eliminar el usuario ${record.firstName} ${record.lastName}?`,
       onOk: () => {
         setUsers(users.filter((user) => user.id !== record.id));
+        notification.success({
+          message: "Usuario eliminado",
+          description: `Se ha eliminado el usuario ${record.firstName} ${record.lastName}`,
+          duration: 2,
+        });
       },
     });
   };
 
   return (
     <div>
-      {contextHolder}
       <Button type="primary" onClick={handleCreate}>
         Agregar Usuario
       </Button>

@@ -1,6 +1,8 @@
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button, App } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
+
+const { useApp } = App;
 
 const { useForm, Item } = Form;
 
@@ -19,6 +21,7 @@ export const TypeUserForm = ({
   handleCancel,
   setTypeUsers,
 }: Props) => {
+  const { notification } = useApp();
   const [form] = useForm();
 
   const initValues: Partial<TypeUserFormProps> = {
@@ -30,6 +33,11 @@ export const TypeUserForm = ({
   const onFinish = (values: TypeUserFormProps) => {
     if (!typeUser) {
       setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
+      notification.success({
+        message: "Tipo de usuario creado",
+        description: "Se ha creado un nuevo tipo de usuario",
+        duration: 2,
+      });
     } else {
       setTypeUsers(
         typeUsers.map((item) => {
@@ -39,6 +47,11 @@ export const TypeUserForm = ({
           return item;
         })
       );
+      notification.success({
+        message: "Tipo de usuario actualizado",
+        description: "Se ha actualizado el tipo de usuario",
+        duration: 2,
+      });
     }
     handleCancel();
   };
@@ -47,6 +60,11 @@ export const TypeUserForm = ({
     errorInfo
   ) => {
     console.log("Failed:", errorInfo);
+    notification.error({
+      message: "Error",
+      description: "Revisar campos del formulario",
+      duration: 2,
+    });
   };
 
   return (
