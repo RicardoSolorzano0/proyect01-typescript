@@ -4,6 +4,7 @@ import { dataUsers } from "../../../dataMock/dataMock";
 import { useState } from "react";
 import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
+import dayjs from "dayjs";
 
 const { useApp } = App;
 
@@ -63,6 +64,7 @@ export const UsersPage = () => {
         });
       },
     });
+    console.log(users, "revisando la informacion que necesitamos")
   };
 
   return (
@@ -82,7 +84,7 @@ export const UsersPage = () => {
         >
           <Column title="Nombre" dataIndex="firstName" key="firstName" />
           <Column title="Apellido" dataIndex="lastName" key="lastName" />
-          <Column title="Edad" dataIndex="age" key="age" />
+          <Column title="Fecha de nacimiento" dataIndex="age" key="age" render={(date) => dayjs(date).format("DD/MM/YYYY")} />
           <Column title="Direccion" dataIndex="address" key="address" />
           <Column
             title="Acciones"

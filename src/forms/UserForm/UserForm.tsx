@@ -1,13 +1,17 @@
-import { Input, Form, Button, App } from "antd";
+import { Input, Form, Button, App, DatePicker } from "antd";
 import type { FormProps } from "antd";
 import { User } from "../../types/User";
-import { useEffect } from "react";
 import { FormUi } from "../FormUi/FormUi";
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
 const { useApp } = App;
 
-const { useForm, useWatch, Item } = Form;
+const { useForm, Item } = Form;
 
-type UserFormProps = Omit<User, "id">;
+type UserFormProps = Omit<User, "id"| "age"> & {
+  age: Dayjs;
+};
 
 type Props = {
   user?: User;
@@ -19,22 +23,18 @@ type Props = {
 export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   const { notification } = useApp();
   const [form] = useForm<UserFormProps>();
-  const age = useWatch("age", form);
-
-  useEffect(() => {
-    console.log("edad changed", age);
-  }, [age]);
+ 
 
   const initialValues: Partial<UserFormProps> = {
     firstName: user?.firstName,
     lastName: user?.lastName,
-    age: user?.age,
+    age: user?  dayjs(user?.age) : dayjs(), 
     address: user?.address,
   };
 
   const onFinish = (values: UserFormProps) => {
     if (!user) {
-      setUsers([...users, { ...values, id: Date.now().toString() }]);
+      setUsers([...users, { ...values, id: Date.now().toString(), age: values.age.toDate() }]);
       notification.success({
         message: "Usuario creado",
         description: "Se ha creado un nuevo usuario",
@@ -44,7 +44,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
       setUsers(
         users.map((item) => {
           if (item.id === user.id) {
-            return { ...item, ...values };
+            return { ...item, ...values, age: values.age.toDate() };
           }
           return item;
         })
@@ -96,7 +96,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
         <Input />
       </Item>
       <Item
-        label="Edad"
+        label="Fecha de nac"
         name="age"
         rules={[
           {
@@ -105,7 +105,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
           },
         ]}
       >
-        <Input type="number" />
+         <DatePicker format={"DD/MM/YYYY"}   />
       </Item>
       <Item
         label="Dirección"

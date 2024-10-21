@@ -1,23 +1,25 @@
-export const dataUsers = [
+import { User } from "../types/User";
+
+export const dataUsers: User[] = [
   {
     id: "1",
     firstName: "John",
     lastName: "Brown",
-    age: 32,
+    age: new Date("2001-10-01T00:00:00-06:00"),
     address: "New York No. 1 Lake Park",
   },
   {
     id: "2",
     firstName: "Jim",
     lastName: "Green",
-    age: 42,
+    age: new Date("2002-09-15T00:00:00-06:00"),
     address: "London No. 1 Lake Park",
   },
   {
     id: "3",
     firstName: "Joe",
     lastName: "Black",
-    age: 32,
+    age: new Date("2003-07-05T00:00:00-06:00"),
     address: "Sydney No. 1 Lake Park",
   },
 ];
