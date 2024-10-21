@@ -1,6 +1,7 @@
 import { Input, Form, Button, App } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
+import { FormUi } from "../FormUi/FormUi";
 
 const { useApp } = App;
 
@@ -22,7 +23,7 @@ export const TypeUserForm = ({
   setTypeUsers,
 }: Props) => {
   const { notification } = useApp();
-  const [form] = useForm();
+  const [form] = useForm<TypeUserFormProps>();
 
   const initValues: Partial<TypeUserFormProps> = {
     name: typeUser?.name,
@@ -68,23 +69,7 @@ export const TypeUserForm = ({
   };
 
   return (
-    <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      style={{
-        maxWidth: 600,
-      }}
-      form={form}
-      initialValues={initValues}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
+    <FormUi form={form} initialValues={initValues} onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <Item
         label="Nombre"
         name="name"
@@ -127,6 +112,6 @@ export const TypeUserForm = ({
           {typeUser ? "Editar" : "Crear"}
         </Button>
       </div>
-    </Form>
+    </FormUi>
   );
 };

@@ -2,6 +2,7 @@ import { Input, Form, Button, App } from "antd";
 import type { FormProps } from "antd";
 import { User } from "../../types/User";
 import { useEffect } from "react";
+import { FormUi } from "../FormUi/FormUi";
 const { useApp } = App;
 
 const { useForm, useWatch, Item } = Form;
@@ -69,23 +70,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   };
 
   return (
-    <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      style={{
-        maxWidth: 600,
-      }}
-      initialValues={initialValues}
-      form={form}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
+    <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <Item
         label="Nombre"
         name="firstName"
@@ -140,6 +125,6 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
           {user ? "Editar" : "Crear"}
         </Button>
       </div>
-    </Form>
+    </FormUi>
   );
 };
