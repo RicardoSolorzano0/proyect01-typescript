@@ -9,8 +9,8 @@ const { useApp } = App;
 
 const { useForm, Item } = Form;
 
-type UserFormProps = Omit<User, "id"| "age"> & {
-  age: Dayjs;
+type UserFormProps = Omit<User, "id"| "birthdate"> & {
+  birthdate: Dayjs;
 };
 
 type Props = {
@@ -28,13 +28,13 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
   const initialValues: Partial<UserFormProps> = {
     firstName: user?.firstName,
     lastName: user?.lastName,
-    age: user?  dayjs(user?.age) : dayjs(), 
+    birthdate: user?  dayjs(user?.birthdate) : dayjs(), 
     address: user?.address,
   };
 
   const onFinish = (values: UserFormProps) => {
     if (!user) {
-      setUsers([...users, { ...values, id: Date.now().toString(), age: values.age.toDate() }]);
+      setUsers([...users, { ...values, id: Date.now().toString(), birthdate: values.birthdate.toDate() }]);
       notification.success({
         message: "Usuario creado",
         description: "Se ha creado un nuevo usuario",
@@ -44,7 +44,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
       setUsers(
         users.map((item) => {
           if (item.id === user.id) {
-            return { ...item, ...values, age: values.age.toDate() };
+            return { ...item, ...values, birthdate: values.birthdate.toDate() };
           }
           return item;
         })
@@ -97,7 +97,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
       </Item>
       <Item
         label="Fecha de nac"
-        name="age"
+        name="birthdate"
         rules={[
           {
             required: true,
