@@ -4,10 +4,15 @@ import { TypeUser } from "../../../types/TypeUsers";
 import { dataTypeUsers } from "../../../dataMock/dataMock";
 import { TypeUserForm } from "../../../forms/TypeUserForm/TypeUserForm";
 import Column from "antd/es/table/Column";
+import { useGetUserTypesQuery } from "../../../services/userTypes";
 
 const { useApp } = App;
 
 export const TypeUsersPage = () => {
+  const {data, error, isLoading, isFetching} = useGetUserTypesQuery("all");
+
+  console.log(data, error, isLoading, isFetching, "check information")
+
   const { modal, notification } = useApp();
   const [typeUsers, setTypeUsers] = useState<TypeUser[]>(dataTypeUsers);
 

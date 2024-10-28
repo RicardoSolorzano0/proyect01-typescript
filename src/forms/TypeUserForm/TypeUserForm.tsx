@@ -2,12 +2,13 @@ import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
 import { FormUi } from "../FormUi/FormUi";
+import { useCreateUserTypeMutation } from "../../services/userTypes";
+import { TypeUserFormProps } from "../../types/payloads/payloadTypeUserForm";
 
 const { useApp } = App;
 
 const { useForm, Item } = Form;
 
-type TypeUserFormProps = Omit<TypeUser, "id">;
 
 type Props = {
   typeUser?: TypeUser;
@@ -22,6 +23,10 @@ export const TypeUserForm = ({
   handleCancel,
   setTypeUsers,
 }: Props) => {
+  const [createUserType,{data, error, isLoading, isSuccess}] =useCreateUserTypeMutation();
+  
+  console.log(data, error, isLoading, isSuccess, "revisando la informacion")
+
   const { notification } = useApp();
   const [form] = useForm<TypeUserFormProps>();
 
@@ -33,6 +38,7 @@ export const TypeUserForm = ({
 
   const onFinish = (values: TypeUserFormProps) => {
     if (!typeUser) {
+      createUserType({...values})
       setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
       notification.success({
         message: "Tipo de usuario creado",
