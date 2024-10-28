@@ -5,7 +5,7 @@ import { useState } from "react";
 import { User } from "../../../types/User";
 import { UserForm } from "../../../forms/UserForm/UserForm";
 import dayjs from "dayjs";
-import { Counter } from "../../../counter/Counter";
+import { ExampleRedux } from "../../../counter/ExampleRedux";
 
 const { useApp } = App;
 
@@ -70,8 +70,7 @@ export const UsersPage = () => {
 
   return (
     <div>
-
-      <Counter />
+      <ExampleRedux />
       <Button type="primary" onClick={handleCreate}>
         Agregar Usuario
       </Button>
