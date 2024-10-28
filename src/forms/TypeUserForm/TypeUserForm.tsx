@@ -23,7 +23,7 @@ export const TypeUserForm = ({
   handleCancel,
   setTypeUsers,
 }: Props) => {
-  const [createUserType,{data, error, isLoading, isSuccess}] =useCreateUserTypeMutation();
+  const [createUserType, { data, error, isLoading, isSuccess }] = useCreateUserTypeMutation();
   
   console.log(data, error, isLoading, isSuccess, "revisando la informacion")
 
