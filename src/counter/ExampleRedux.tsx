@@ -4,13 +4,15 @@ import { decrement, increment, incrementByAmount } from '../store/slices/counter
 import { Button } from 'antd'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Pokemon } from './Pokemon'
+import { useState } from 'react'
 
-const pokemon = ['bulbasaur', 'pikachu', 'ditto', 'bulbasaur']
+const initPokemon = ['bulbasaur', 'pikachu', 'ditto', 'bulbasaur']
 
 export function ExampleRedux() {
   //const count = useSelector((state: RootState) => state.counter.value)
   //const dispatch = useDispatch()
   const count = useAppSelector((state) => state.counter.value)
+  const [pokemon, setPokemon] = useState<string[]>(initPokemon)
   const dispatch = useAppDispatch()
 
   return (
@@ -41,6 +43,9 @@ export function ExampleRedux() {
       {pokemon.map((poke, index) => (
           <Pokemon key={index} name={poke} />
         ))}
+        <Button onClick={() => setPokemon([...pokemon, 'pikachu'])}>
+          Agregar otro pikachu
+        </Button>
     </div>
   )
 }
