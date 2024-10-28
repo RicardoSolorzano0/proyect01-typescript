@@ -1,6 +1,7 @@
 import { Layout } from "antd";
 import { SideBar } from "../SideBar/SideBar";
 import { Outlet } from "react-router";
+import { Counter } from "../../../counter/Counter";
 
 const { Content, Footer } = Layout;
 
@@ -14,6 +15,7 @@ export const ContainerLayout = () => {
           style={{ height: "calc(100vh - 109px)" }}
         >
           <div className="p-6 bg-white rounded-lg">
+            <Counter />
             <Outlet />
           </div>
         </Content>
