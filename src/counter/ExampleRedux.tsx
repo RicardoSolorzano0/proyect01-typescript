@@ -3,8 +3,11 @@
 import { decrement, increment, incrementByAmount } from './counterSlice'
 import { Button } from 'antd'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
+import { Pokemon } from './Pokemon'
 
-export function Counter() {
+const pokemon = ['bulbasaur', 'pikachu', 'ditto', 'bulbasaur']
+
+export function ExampleRedux() {
   //const count = useSelector((state: RootState) => state.counter.value)
   //const dispatch = useDispatch()
   const count = useAppSelector((state) => state.counter.value)
@@ -12,6 +15,7 @@ export function Counter() {
 
   return (
     <div>
+      <h1>Counter</h1>
       <div className='flex gap-3'>
         <Button
           aria-label="Increment value"
@@ -33,6 +37,10 @@ export function Counter() {
           Increment 5
         </Button>
       </div>
+      <h2>Pokemon</h2>
+      {pokemon.map((poke, index) => (
+          <Pokemon key={index} name={poke} />
+        ))}
     </div>
   )
 }
