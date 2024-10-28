@@ -2,7 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router/router";
 import { App as ContexModal } from "antd";
 import { Provider } from "react-redux";
-import { store } from './counter/store';
+import { store } from './store';
 
 const App = () => {
   return (

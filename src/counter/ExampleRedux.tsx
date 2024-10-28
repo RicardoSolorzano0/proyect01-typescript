@@ -1,8 +1,8 @@
 //import type { RootState } from './store'
 //import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment, incrementByAmount } from './counterSlice'
+import { decrement, increment, incrementByAmount } from '../store/slices/counterSlice'
 import { Button } from 'antd'
-import { useAppDispatch, useAppSelector } from './hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import { Pokemon } from './Pokemon'
 
 const pokemon = ['bulbasaur', 'pikachu', 'ditto', 'bulbasaur']
