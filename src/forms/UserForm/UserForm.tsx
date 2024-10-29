@@ -4,6 +4,7 @@ import { User } from "@/types/User";
 import { FormUi } from "@/forms/FormUi/FormUi";
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import { useCreateUserMutation, useUpdateUserMutation } from "@/services/user";
 
 const { useApp } = App;
 
@@ -15,40 +16,41 @@ type UserFormProps = Omit<User, "id"| "birthdate"> & {
 
 type Props = {
   user?: User;
-  users: User[];
   handleCancel: () => void;
-  setUsers: (users: User[]) => void;
 };
 
-export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
+export const UserForm = ({ user, handleCancel }: Props) => {
+  const [createUser, {isLoading: isCreating}] = useCreateUserMutation();
+  const [updateUser, {isLoading: isUpdating}] = useUpdateUserMutation();
+  
   const { notification } = useApp();
   const [form] = useForm<UserFormProps>();
  
-
   const initialValues: Partial<UserFormProps> = {
-    firstName: user?.firstName,
-    lastName: user?.lastName,
+    name: user?.name,
+    last_name: user?.last_name,
     birthdate: user?  dayjs(user?.birthdate) : dayjs(), 
     address: user?.address,
   };
 
-  const onFinish = (values: UserFormProps) => {
+  const onFinish = async(values: UserFormProps) => {
     if (!user) {
-      setUsers([...users, { ...values, id: Date.now().toString(), birthdate: values.birthdate.toDate() }]);
+      await createUser({ ...values, birthdate: values.birthdate.toDate() }).unwrap();
+
       notification.success({
         message: "Usuario creado",
         description: "Se ha creado un nuevo usuario",
         duration: 2,
       });
     } else {
-      setUsers(
-        users.map((item) => {
-          if (item.id === user.id) {
-            return { ...item, ...values, birthdate: values.birthdate.toDate() };
-          }
-          return item;
-        })
-      );
+      //setUsers(
+       // users.map((item) => {
+         // if (item.id === user.id) {
+           // return { ...item, ...values, birthdate: values.birthdate.toDate() };
+         // }
+          //return item;
+       // })
+      //);
       notification.success({
         message: "Usuario actualizado",
         description: "Se ha actualizado el usuario",
@@ -69,11 +71,13 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
     console.log("Failed:", errorInfo);
   };
 
+  const loading = isCreating || isUpdating;
+
   return (
     <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <Item
         label="Nombre"
-        name="firstName"
+        name="name"
         rules={[
           {
             required: true,
@@ -85,7 +89,7 @@ export const UserForm = ({ user, handleCancel, setUsers, users }: Props) => {
       </Item>
       <Item
         label="Apellido"
-        name="lastName"
+        name="last_name"
         rules={[
           {
             required: true,
