@@ -18,9 +18,7 @@ export const SideBar = () => {
         mode="inline"
         defaultSelectedKeys={["1"]}
         items={items2}
-        onChange={(event) => {
-          console.log("change", event);
-        }}
+        onChange={() => {}}
       />
     </Sider>
   );

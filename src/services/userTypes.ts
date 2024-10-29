@@ -29,6 +29,9 @@ export const userTypesApi = createApi({
                 method: 'POST',
                 body,
             }),
+            transformErrorResponse: (response) => {
+              return response.data
+            },
             invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
         }),
         updateUserType: builder.mutation<void, TypeUserFormProps>({

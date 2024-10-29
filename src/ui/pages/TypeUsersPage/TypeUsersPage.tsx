@@ -13,10 +13,8 @@ const { useApp } = App;
 export const TypeUsersPage = () => {
   const [option, setOption] = useState<TypeParamGetUserType>("active");
   const {data, error, isLoading, isFetching} = useGetUserTypesQuery(option);
-  const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
-  console.log(data, error, isLoading, isFetching, "check information")
-  console.log(dataDelete, errorDelete, isLoadingDelete, "check information")
-  console.log(option, "revisando la informacion")
+  //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
+  const [deleteUserType] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();
   // const [typeUsers, setTypeUsers] = useState<TypeUser[]>(data as TypeUser[]);
 

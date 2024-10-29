@@ -1,4 +1,4 @@
-import { useGetPokemonByNameQuery } from '../services/pokemon'
+import { useGetPokemonByNameQuery } from "@/services/pokemon";
 
 interface Props {
   name?: string
@@ -13,7 +13,6 @@ export const Pokemon = ({
       skip: name === undefined
     }
   )
-  console.log(name, data, error, isLoading, isFetching) 
 
   const loading = isLoading || isFetching;
 

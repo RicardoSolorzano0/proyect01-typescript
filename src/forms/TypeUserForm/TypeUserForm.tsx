@@ -3,32 +3,25 @@ import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
 import { FormUi } from "../FormUi/FormUi";
 import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "../../services/userTypes";
-import { TypeUserFormProps } from "../../types/payloads/payloadTypeUserForm";
+import { TypeUserFormProps } from "@/types/payloads/payloadTypeUserForm";
 
 const { useApp } = App;
-
 const { useForm, Item } = Form;
-
 
 type Props = {
   typeUser?: TypeUser;
-  // typeUsers: TypeUser[];
   handleCancel: () => void;
-  // setTypeUsers: (users: TypeUser[]) => void;
 };
 
 export const TypeUserForm = ({
   typeUser,
-  // typeUsers,
   handleCancel,
-  // setTypeUsers,
 }: Props) => {
-  const [createUserType, { data, error, isLoading, isSuccess }] = useCreateUserTypeMutation();
-  const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
+  const [createUserType] = useCreateUserTypeMutation();
+  // se puede hacer de la siguiente manera también
+  //const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
+  const [updateUserType] = useUpdateUserTypeMutation();
   
-  console.log(data, error, isLoading, isSuccess, "revisando la informacion")
-  console.log(dataUpdate, errorUpdate, isLoadingUpdate, isSuccessUpdate, "revisando la informacion")
-
   const { notification } = useApp();
   const [form] = useForm<TypeUserFormProps>();
 
@@ -38,30 +31,25 @@ export const TypeUserForm = ({
     color: typeUser?.color,
   };
 
-  const onFinish = (values: TypeUserFormProps) => {
-    if (!typeUser) {
-      createUserType(values)
-      // setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
+  const onFinish = async (values: TypeUserFormProps) => {
+    try{
+      if (!typeUser) {
+        await createUserType(values).unwrap();
+      } else {
+        await updateUserType({...typeUser, ...values}).unwrap();
+      }
       notification.success({
-        message: "Tipo de usuario creado",
-        description: "Se ha creado un nuevo tipo de usuario",
+        message: `Tipo de usuario ${typeUser ? " actualizado" : " creado"}`,
+        description: `Se ha ${typeUser ? "actualizado" : "creado"} un nuevo tipo de usuario`,
         duration: 2,
       });
-    } else {
-      updateUserType({...typeUser, ...values})
-      // setTypeUsers(
-      //   typeUsers.map((item) => {
-      //     if (item.id === typeUser.id) {
-      //       return { ...item, ...values };
-      //     }
-      //     return item;
-      //   })
-      // );
-      notification.success({
-        message: "Tipo de usuario actualizado",
-        description: "Se ha actualizado el tipo de usuario",
+    }catch(error){
+      const parsedError = error as { error: string };
+      notification.error({
+        message: "Error",
+        description: parsedError.error,
         duration: 2,
-      });
+      })
     }
     handleCancel();
   };
