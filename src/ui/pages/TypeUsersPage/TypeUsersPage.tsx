@@ -58,13 +58,22 @@ export const TypeUsersPage = () => {
       title: "Eliminar tipo de usuario",
       content: `¿Estas seguro de eliminar el tipo de usuario ?`,
       onOk: () => {
-        deleteUserType(record.id);
-        // setTypeUsers(typeUsers.filter((user) => user.id !== record.id));
-        notification.success({
-          message: "Tipo de usuario eliminado",
-          description: `Se ha eliminado el tipo de usuario ${record.name}`,
-          duration: 2,
-        });
+        try{
+          deleteUserType(record.id);
+          // setTypeUsers(typeUsers.filter((user) => user.id !== record.id));
+          notification.success({
+            message: "Tipo de usuario eliminado",
+            description: `Se ha eliminado el tipo de usuario ${record.name}`,
+            duration: 2,
+          });
+        }catch(error){
+          const parsedError = error as { error: string };
+          notification.error({
+            message: "Error",
+            description: parsedError.error,
+            duration: 2,
+          })
+        }
       },
     });
   };
