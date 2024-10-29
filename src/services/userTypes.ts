@@ -2,11 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseUrl } from '../constants/routes'
 import { TypeUser } from '../types/TypeUsers'
-import { TypeUserFormProps } from '../types/payloads/payloadTypeUserForm'
-
-
-
-type TypeParamGetUserType = "all"| "active" | "inactive"
+import { TypeParamGetUserType, TypeUserFormProps } from '../types/payloads/payloadTypeUserForm'
 
 export const userTypesApi = createApi({
     reducerPath: 'userTypesApi',

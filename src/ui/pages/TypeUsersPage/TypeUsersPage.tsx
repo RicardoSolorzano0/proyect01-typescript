@@ -1,20 +1,22 @@
-import { Button, Table, App } from "antd";
+import { Button, Table, App, Switch } from "antd";
 // import { useState } from "react";
 import { TypeUser } from "../../../types/TypeUsers";
 // import { dataTypeUsers } from "../../../dataMock/dataMock";
  import { TypeUserForm } from "../../../forms/TypeUserForm/TypeUserForm";
 import Column from "antd/es/table/Column";
 import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "../../../services/userTypes";
+import { TypeParamGetUserType } from "../../../types/payloads/payloadTypeUserForm";
+import { useState } from "react";
 
 const { useApp } = App;
 
 export const TypeUsersPage = () => {
-  const {data, error, isLoading, isFetching} = useGetUserTypesQuery("active");
+  const [option, setOption] = useState<TypeParamGetUserType>("active");
+  const {data, error, isLoading, isFetching} = useGetUserTypesQuery(option);
   const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
-
   console.log(data, error, isLoading, isFetching, "check information")
   console.log(dataDelete, errorDelete, isLoadingDelete, "check information")
-
+  console.log(option, "revisando la informacion")
   const { modal, notification } = useApp();
   // const [typeUsers, setTypeUsers] = useState<TypeUser[]>(data as TypeUser[]);
 
@@ -69,19 +71,23 @@ export const TypeUsersPage = () => {
     });
   };
 
+  const handleSwitch = (record:boolean) => {
+    setOption(record ? "active" : "inactive");
+  }
+
   const loading = isLoading || isFetching;
 
 
-  console.log("cargando informacion ", loading)
-
   return (
     <div>
+      <div className="flex justify-between  items-center">
       <Button type="primary" onClick={handleCreate}>
         Agregar tipo de Usuario
       </Button>
+      <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch}/>
+      </div>
       <br />
-      <br />
-
+      
       {loading ?
       <p>Cargando informacion...</p>
       :  
@@ -112,6 +118,7 @@ export const TypeUsersPage = () => {
         )}
       />
     </Table>
+    
     }
 
      
