@@ -55,9 +55,9 @@ export const TypeUsersPage = () => {
     modal.confirm({
       title: "Eliminar tipo de usuario",
       content: `¿Estas seguro de eliminar el tipo de usuario ?`,
-      onOk: () => {
+      onOk: async () => {
         try{
-          deleteUserType(record.id);
+          await deleteUserType(record.id).unwrap();
           // setTypeUsers(typeUsers.filter((user) => user.id !== record.id));
           notification.success({
             message: "Tipo de usuario eliminado",
@@ -86,43 +86,45 @@ export const TypeUsersPage = () => {
   return (
     <div>
       <div className="flex justify-between  items-center">
-      <Button type="primary" onClick={handleCreate}>
-        Agregar tipo de Usuario
-      </Button>
-      <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch}/>
+        <Button type="primary" onClick={handleCreate}>
+          Agregar tipo de Usuario
+        </Button>
+        <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch}/>
       </div>
       <br />
       
       {loading ?
-      <p>Cargando informacion...</p>
-      :  
-      <Table
-      rowKey={(record) => record.id}
-      dataSource={data}
-      pagination={false}
-    >
-      <Column title="Nombre" dataIndex="name" key="name" />
-      <Column title="Descripción" dataIndex="description" key="description" />
-      <Column title="Color" dataIndex="color" key="color" />
-      <Column
-        title="Acciones"
-        key="action"
-        render={(_, record: TypeUser) => (
-          <div className="flex gap-2">
-            <Button variant="solid" onClick={() => handleEdit(record)}>
-              Editar
-            </Button>
-            <Button
-              variant="solid"
-              color="danger"
-              onClick={() => handleDelete(record)}
-            >
-              Eliminar
-            </Button>
-          </div>
-        )}
-      />
-    </Table>
+        <p>Cargando informacion...</p>
+        :  
+        <Table
+          rowKey={(record) => record.id}
+          dataSource={data}
+          pagination={false}
+        >
+          <Column title="Nombre" dataIndex="name" key="name" />
+          <Column title="Descripción" dataIndex="description" key="description" />
+          <Column title="Color" dataIndex="color" key="color" />
+          {option === "active" &&
+            <Column
+              title="Acciones"
+              key="action"
+              render={(_, record: TypeUser) => (
+                <div className="flex gap-2">
+                  <Button variant="solid" onClick={() => handleEdit(record)}>
+                    Editar
+                  </Button>
+                  <Button
+                    variant="solid"
+                    color="danger"
+                    onClick={() => handleDelete(record)}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              )}
+            />
+          }
+      </Table>
     
     }
 

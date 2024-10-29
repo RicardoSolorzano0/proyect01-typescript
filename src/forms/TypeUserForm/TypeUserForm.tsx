@@ -2,7 +2,7 @@ import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
 import { FormUi } from "@/forms/FormUi/FormUi";
 import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "@/services/userTypes";
-import { TypeUserFormProps } from "@/types/payloads/payloadTypeUserForm";
+import { CreateUserTypePayload } from "@/types/payloads/payloadTypeUserForm";
 import type { TypeUser } from '@/types/TypeUsers';
 
 const { useApp } = App;
@@ -13,17 +13,21 @@ type Props = {
   handleCancel: () => void;
 };
 
+type TypeUserFormProps = CreateUserTypePayload;
+
 export const TypeUserForm = ({
   typeUser,
   handleCancel,
 }: Props) => {
-  const [createUserType] = useCreateUserTypeMutation();
-  // se puede hacer de la siguiente manera también
-  //const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
-  const [updateUserType] = useUpdateUserTypeMutation();
-  
   const { notification } = useApp();
   const [form] = useForm<TypeUserFormProps>();
+
+  const [createUserType, { isLoading: isCreating }] = useCreateUserTypeMutation();
+  // se puede hacer de la siguiente manera también
+  //const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
+  const [updateUserType, { isLoading: isUpdating }] = useUpdateUserTypeMutation();
+  
+  const loading = isCreating || isUpdating;
 
   const initValues: Partial<TypeUserFormProps> = {
     name: typeUser?.name,
@@ -36,7 +40,7 @@ export const TypeUserForm = ({
       if (!typeUser) {
         await createUserType(values).unwrap();
       } else {
-        await updateUserType({...typeUser, ...values}).unwrap();
+        await updateUserType({ id: typeUser.id , ...values}).unwrap();
       }
       notification.success({
         message: `Tipo de usuario ${typeUser ? " actualizado" : " creado"}`,
@@ -66,7 +70,7 @@ export const TypeUserForm = ({
   };
 
   return (
-    <FormUi form={form} initialValues={initValues} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+    <FormUi form={form} initialValues={initValues} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
       <Item
         label="Nombre"
         name="name"

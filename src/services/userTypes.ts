@@ -1,8 +1,7 @@
-// Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseUrl } from '@/constants/routes'
 import { TypeUser } from '@/types/TypeUsers'
-import { TypeParamGetUserType, TypeUserFormProps } from '@/types/payloads/payloadTypeUserForm'
+import { CreateUserTypePayload, TypeParamGetUserType, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
 
 export const userTypesApi = createApi({
     reducerPath: 'userTypesApi',
@@ -23,28 +22,43 @@ export const userTypesApi = createApi({
                     [{ type: 'UserTypes', id: 'LIST' }],
         }),
         // lo primero lo que devuelve y lo segundo lo que le mando
-        createUserType: builder.mutation<void, TypeUserFormProps>({
+        createUserType: builder.mutation<void, CreateUserTypePayload>({
             query: (body) => ({
                 url: 'createUserType',
                 method: 'POST',
                 body,
             }),
+           // transformErrorResponse: (response: FetchBaseQueryError) => {
+             // return {
+               // status: response.status,
+                //message: (response.data as { error: string }).error
+             // }
+            //},
             transformErrorResponse: (response) => {
               return response.data
             },
             invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
         }),
-        updateUserType: builder.mutation<void, TypeUserFormProps>({
+        updateUserType: builder.mutation<void, UpdateUserTypePayload>({
             query: (body) => ({
                 url: 'updateUserType',
-                method: 'POST',
+                method: 'PATCH',
                 body,
             }),
-            invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
+            transformErrorResponse: (response) => {
+              return response.data
+            },
+            invalidatesTags: (_, __, { id }) => [{ type: 'UserTypes', id }],
         }),
         deleteUserType: builder.mutation<void, string>({
-          query: (id) => `deleteUserType?id=${id}`,
-          invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
+          query: (id) => ({
+            url: `deleteUserType?id=${id}`,
+            method: 'DELETE',
+          }),
+          transformErrorResponse: (response) => {
+            return response.data
+          },
+          invalidatesTags: (_, __, id) => [{ type: 'UserTypes', id }],
         }),
 
     })
