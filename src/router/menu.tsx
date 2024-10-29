@@ -1,4 +1,4 @@
-import { routes } from "../constants/routes";
+import { routes } from "@/constants/routes";
 import { UserOutlined } from "@ant-design/icons";
 
 export const menu = [

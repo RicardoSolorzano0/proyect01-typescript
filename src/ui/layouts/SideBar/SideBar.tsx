@@ -1,6 +1,6 @@
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
-import { menu } from "../../../router/menu";
+import { menu } from "@/router/menu";
 import { Link } from "react-router-dom";
 
 const items2 = menu.map((item) => ({

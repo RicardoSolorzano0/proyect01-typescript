@@ -1,4 +1,4 @@
-import { TypeUser } from "../TypeUsers";
+import { TypeUser } from "@/types/TypeUsers";
 
 export type TypeUserFormProps = Omit<TypeUser, "id">;
 export type TypeParamGetUserType = "all"| "active" | "inactive"

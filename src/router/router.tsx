@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import { UsersPage } from "../ui/pages/UsersPage/UsersPage";
-import { TypeUsersPage } from "../ui/pages/TypeUsersPage/TypeUsersPage";
-import { routes } from "../constants/routes";
-import { ContainerLayout } from "../ui/layouts/ContainerLayout/ContainerLayout";
-import { NotFound } from "../ui/pages/NotFound/NotFound";
+import { UsersPage } from "@/ui/pages/UsersPage/UsersPage";
+import { TypeUsersPage } from "@/ui/pages/TypeUsersPage/TypeUsersPage";
+import { routes } from "@/constants/routes";
+import { ContainerLayout } from "@/ui/layouts/ContainerLayout/ContainerLayout";
+import { NotFound } from "@/ui/pages/NotFound/NotFound";
 
 export const router = createBrowserRouter([
   {

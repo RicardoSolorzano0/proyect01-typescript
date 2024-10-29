@@ -1,11 +1,11 @@
 import { Button, Table, App } from "antd";
 import Column from "antd/es/table/Column";
-import { dataUsers } from "../../../dataMock/dataMock";
+import { dataUsers } from "@/dataMock/dataMock";
 import { useState } from "react";
-import { User } from "../../../types/User";
-import { UserForm } from "../../../forms/UserForm/UserForm";
+import { User } from "@/types/User";
+import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
-import { ExampleRedux } from "../../../counter/ExampleRedux";
+import { ExampleRedux } from "@/counter/ExampleRedux";
 
 const { useApp } = App;
 

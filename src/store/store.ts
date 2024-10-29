@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../store/slices/counterSlice";
-import { pokemonApi } from "../services/pokemon";
+import counterReducer from "@/store/slices/counterSlice";
+import { pokemonApi } from "@/services/pokemon";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { userTypesApi } from "../services/userTypes";
+import { userTypesApi } from "@/services/userTypes";
 
 export const store = configureStore({
     reducer: {

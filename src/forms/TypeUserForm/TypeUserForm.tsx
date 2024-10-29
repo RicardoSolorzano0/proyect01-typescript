@@ -1,9 +1,9 @@
 import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
-import type { TypeUser } from "../../types/TypeUsers";
-import { FormUi } from "../FormUi/FormUi";
-import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "../../services/userTypes";
+import { FormUi } from "@/forms/FormUi/FormUi";
+import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "@/services/userTypes";
 import { TypeUserFormProps } from "@/types/payloads/payloadTypeUserForm";
+import type { TypeUser } from '@/types/TypeUsers';
 
 const { useApp } = App;
 const { useForm, Item } = Form;

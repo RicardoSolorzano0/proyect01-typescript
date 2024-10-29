@@ -1,7 +1,7 @@
 import { Input, Form, Button, App, DatePicker } from "antd";
 import type { FormProps } from "antd";
-import { User } from "../../types/User";
-import { FormUi } from "../FormUi/FormUi";
+import { User } from "@/types/User";
+import { FormUi } from "@/forms/FormUi/FormUi";
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 

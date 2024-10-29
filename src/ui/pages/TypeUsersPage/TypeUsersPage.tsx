@@ -1,18 +1,16 @@
 import { Button, Table, App, Switch } from "antd";
-// import { useState } from "react";
-import { TypeUser } from "../../../types/TypeUsers";
-// import { dataTypeUsers } from "../../../dataMock/dataMock";
- import { TypeUserForm } from "../../../forms/TypeUserForm/TypeUserForm";
+import { TypeUser } from "@/types/TypeUsers";
+ import { TypeUserForm } from "@/forms/TypeUserForm/TypeUserForm";
 import Column from "antd/es/table/Column";
-import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "../../../services/userTypes";
-import { TypeParamGetUserType } from "../../../types/payloads/payloadTypeUserForm";
+import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/services/userTypes";
+import { TypeParamGetUserType } from "@/types/payloads/payloadTypeUserForm";
 import { useState } from "react";
 
 const { useApp } = App;
 
 export const TypeUsersPage = () => {
   const [option, setOption] = useState<TypeParamGetUserType>("active");
-  const {data, error, isLoading, isFetching} = useGetUserTypesQuery(option);
+  const {data,  isLoading, isFetching} = useGetUserTypesQuery(option);
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const [deleteUserType] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();

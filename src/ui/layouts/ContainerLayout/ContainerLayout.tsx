@@ -1,5 +1,5 @@
 import { Layout } from "antd";
-import { SideBar } from "../SideBar/SideBar";
+import { SideBar } from "@/ui/layouts/SideBar/SideBar";
 import { Outlet } from "react-router";
 
 const { Content, Footer } = Layout;
