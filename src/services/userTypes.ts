@@ -35,7 +35,20 @@ export const userTypesApi = createApi({
             }),
             invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
         }),
+        updateUserType: builder.mutation<void, TypeUserFormProps>({
+            query: (body) => ({
+                url: 'updateUserType',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
+        }),
+        deleteUserType: builder.mutation<void, string>({
+          query: (id) => `deleteUserType?id=${id}`,
+          invalidatesTags: [{ type: 'UserTypes', id: 'LIST' }],
+        }),
+
     })
 })
 
-export const {useGetUserTypesQuery, useCreateUserTypeMutation} = userTypesApi
+export const {useGetUserTypesQuery, useCreateUserTypeMutation, useUpdateUserTypeMutation, useDeleteUserTypeMutation} = userTypesApi

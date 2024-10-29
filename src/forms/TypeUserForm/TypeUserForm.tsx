@@ -2,7 +2,7 @@ import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
 import type { TypeUser } from "../../types/TypeUsers";
 import { FormUi } from "../FormUi/FormUi";
-import { useCreateUserTypeMutation } from "../../services/userTypes";
+import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "../../services/userTypes";
 import { TypeUserFormProps } from "../../types/payloads/payloadTypeUserForm";
 
 const { useApp } = App;
@@ -12,20 +12,22 @@ const { useForm, Item } = Form;
 
 type Props = {
   typeUser?: TypeUser;
-  typeUsers: TypeUser[];
+  // typeUsers: TypeUser[];
   handleCancel: () => void;
-  setTypeUsers: (users: TypeUser[]) => void;
+  // setTypeUsers: (users: TypeUser[]) => void;
 };
 
 export const TypeUserForm = ({
   typeUser,
-  typeUsers,
+  // typeUsers,
   handleCancel,
-  setTypeUsers,
+  // setTypeUsers,
 }: Props) => {
   const [createUserType, { data, error, isLoading, isSuccess }] = useCreateUserTypeMutation();
+  const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
   
   console.log(data, error, isLoading, isSuccess, "revisando la informacion")
+  console.log(dataUpdate, errorUpdate, isLoadingUpdate, isSuccessUpdate, "revisando la informacion")
 
   const { notification } = useApp();
   const [form] = useForm<TypeUserFormProps>();
@@ -38,22 +40,23 @@ export const TypeUserForm = ({
 
   const onFinish = (values: TypeUserFormProps) => {
     if (!typeUser) {
-      createUserType({...values})
-      setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
+      createUserType(values)
+      // setTypeUsers([...typeUsers, { ...values, id: Date.now().toString() }]);
       notification.success({
         message: "Tipo de usuario creado",
         description: "Se ha creado un nuevo tipo de usuario",
         duration: 2,
       });
     } else {
-      setTypeUsers(
-        typeUsers.map((item) => {
-          if (item.id === typeUser.id) {
-            return { ...item, ...values };
-          }
-          return item;
-        })
-      );
+      updateUserType({...typeUser, ...values})
+      // setTypeUsers(
+      //   typeUsers.map((item) => {
+      //     if (item.id === typeUser.id) {
+      //       return { ...item, ...values };
+      //     }
+      //     return item;
+      //   })
+      // );
       notification.success({
         message: "Tipo de usuario actualizado",
         description: "Se ha actualizado el tipo de usuario",
