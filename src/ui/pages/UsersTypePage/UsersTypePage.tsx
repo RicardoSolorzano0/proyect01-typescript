@@ -1,6 +1,6 @@
 import { Button, Table, App, Switch } from "antd";
 import { TypeUser } from "@/types/TypeUsers";
- import { TypeUserForm } from "@/forms/TypeUserForm/TypeUserForm";
+ import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
 import Column from "antd/es/table/Column";
 import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/services/userTypes";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { OpitionsInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;
 
-export const TypeUsersPage = () => {
+export const UsersTypePage = () => {
   const [option, setOption] = useState<OpitionsInGetQuerys>("active");
   const {data,  isLoading, isFetching} = useGetUserTypesQuery(option);
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
@@ -20,7 +20,7 @@ export const TypeUsersPage = () => {
     const mdl = modal.info({
       title: "Crear nuevo tipo de usuario",
       content: (
-        <TypeUserForm
+        <UserTypeForm
           handleCancel={() => mdl.destroy()}
         />
       ),
@@ -37,7 +37,7 @@ export const TypeUsersPage = () => {
     const mdl = modal.info({
       title: `Editar tipo de usuario ${record.name}`,
       content: (
-         <TypeUserForm
+         <UserTypeForm
            typeUser={record}
            handleCancel={() => mdl.destroy()}
          />

@@ -15,7 +15,7 @@ type Props = {
 
 type TypeUserFormProps = CreateUserTypePayload;
 
-export const TypeUserForm = ({
+export const UserTypeForm = ({
   typeUser,
   handleCancel,
 }: Props) => {
