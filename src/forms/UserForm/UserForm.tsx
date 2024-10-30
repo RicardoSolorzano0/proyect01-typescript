@@ -78,13 +78,9 @@ export const UserForm = ({ user, handleCancel }: Props) => {
     console.log("Failed:", errorInfo);
   };
 
-  const handleSelectChange = (value:UserGender) =>{
-    form.setFieldsValue({gender: value})
-  }
+  
 
-  const handleSelectChangeType = (value:string) =>{
-    form.setFieldsValue({user_type_id: value})
-  }
+ 
 
   const loading = isCreating || isUpdating || isLoadingTypes;
 
@@ -124,7 +120,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
           },
         ]}
       >
-         <DatePicker format={"DD/MM/YYYY"} />
+        <DatePicker format={"DD/MM/YYYY"} />
       </Item>
       <Item
         label="Dirección"
@@ -160,12 +156,11 @@ export const UserForm = ({ user, handleCancel }: Props) => {
           },
         ]}
       >
-         <SelectUI size="large" placeholder="Seleccione una opción" options={[
-        { value: 'M', label: 'Masculino' },
-        { value: 'F', label: 'Femenino' },
-      ]}
-      onChange={handleSelectChange}
-    />
+        <SelectUI size="large" placeholder="Seleccione una opción" options={[
+          { value: 'M', label: 'Masculino' },
+          { value: 'F', label: 'Femenino' },
+        ]}
+        />
       </Item>
       <Item
         label="Tipo de usuario"
@@ -177,9 +172,8 @@ export const UserForm = ({ user, handleCancel }: Props) => {
           },
         ]}
       >
-         <SelectUI size="large" placeholder="Seleccione una opción" options={optionUserTypes}
-      onChange={handleSelectChangeType}
-    />
+        <SelectUI size="large" placeholder="Seleccione una opción" options={optionUserTypes}
+        />
       </Item>
       <div className="flex justify-center gap-2">
         <Button onClick={handleCancel}>Cancelar</Button>

@@ -8,6 +8,7 @@ export const FormUi = <T = never>(props: Props<T>) => {
     return (
         <Form
             name="basic"
+            layout="vertical"
             labelCol={{
                 span: 8,
             }}
