@@ -17,7 +17,6 @@ export const UsersPage = () => {
   const [deleteUser] = useDeleteUserMutation();
 
   const { modal, notification } = useApp();
-  const [users, setUsers] = useState<User[]>(dataUsers);
 
   const handleEdit = (record: User) => {
     const mdl = modal.info({
