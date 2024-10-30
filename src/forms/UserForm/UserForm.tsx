@@ -37,7 +37,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
   const initialValues: Partial<UserFormProps> = {
     name: user?.name,
     last_name: user?.last_name,
-    birthdate: user?  dayjs(user?.birthdate) : dayjs(), 
+    birthdate: user?  dayjs(user?.birthdate.toString().substring(0, 10)) : dayjs(), 
     address: user?.address,
     email: user?.email,
     gender: user?.gender,
@@ -124,7 +124,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
           },
         ]}
       >
-         <DatePicker format={"DD/MM/YYYY"}   />
+         <DatePicker format={"DD/MM/YYYY"} />
       </Item>
       <Item
         label="Dirección"
