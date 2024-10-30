@@ -104,7 +104,7 @@ export const UsersPage = () => {
           <Column title="Apellido" dataIndex="last_name" key="last_name" />
           <Column title="Correo" dataIndex="email" key="email" />
           <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => {
-            return dayjs(date.toString().substring(0, 10)).format("DD/MM/YYYY")}} />
+            return dayjs(date).format("DD/MM/YYYY")}} />
           <Column title="Direccion" dataIndex="address" key="address" />
           {option==="active" && <Column
             title="Acciones"
