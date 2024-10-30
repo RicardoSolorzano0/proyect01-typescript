@@ -6,14 +6,15 @@ import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
-import { useGetUsersQuery } from "@/services/user";
+import { useDeleteUserMutation, useGetUsersQuery } from "@/services/user";
 import { TypeParamGetUser } from "@/types/payloads/payloadUserForm";
 
 const { useApp } = App;
 
 export const UsersPage = () => {
-  const [option, setOption] = useState<TypeParamGetUser>("all");
+  const [option, setOption] = useState<TypeParamGetUser>("active");
   const {data, isLoading, isFetching} = useGetUsersQuery(option);
+  const [deleteUser] = useDeleteUserMutation();
 
   const { modal, notification } = useApp();
   const [users, setUsers] = useState<User[]>(dataUsers);
@@ -25,8 +26,6 @@ export const UsersPage = () => {
         <UserForm
           user={record}
           handleCancel={() => mdl.destroy()}
-          setUsers={setUsers}
-          users={users}
         />
       ),
       okButtonProps: {
@@ -44,8 +43,6 @@ export const UsersPage = () => {
       content: (
         <UserForm
           handleCancel={() => mdl.destroy()}
-          setUsers={setUsers}
-          users={users}
         />
       ),
       cancelButtonProps: {
@@ -61,13 +58,22 @@ export const UsersPage = () => {
     modal.confirm({
       title: "Eliminar usuario",
       content: `¿Estas seguro de eliminar el usuario ${record.name} ${record.last_name}?`,
-      onOk: () => {
-        setUsers(users.filter((user) => user.id !== record.id));
-        notification.success({
-          message: "Usuario eliminado",
-          description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
-          duration: 2,
-        });
+      onOk:async  () => {
+        try{
+          await deleteUser(record.id).unwrap();
+          notification.success({
+            message: "Usuario eliminado",
+            description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
+            duration: 2,
+          });
+        }catch(error){
+          const parsedError = error as { error: string };
+          notification.error({
+            message: "Error",
+            description: parsedError.error,
+            duration: 2,
+          });
+        }
       },
     });
   };
@@ -100,7 +106,7 @@ export const UsersPage = () => {
           <Column title="Apellido" dataIndex="last_name" key="last_name" />
           <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => dayjs(date).format("DD/MM/YYYY")} />
           <Column title="Direccion" dataIndex="address" key="address" />
-          <Column
+          {option==="active" && <Column
             title="Acciones"
             key="action"
             render={(_, record: User) => (
@@ -117,7 +123,7 @@ export const UsersPage = () => {
                 </Button>
               </div>
             )}
-          />
+          />}
         </Table>
       }
     </>
