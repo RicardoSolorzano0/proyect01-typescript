@@ -7,12 +7,12 @@ import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
 import { useDeleteUserMutation, useGetUsersQuery } from "@/services/user";
-import { TypeParamGetUser } from "@/types/payloads/payloadUserForm";
+import { OpitionsInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;
 
 export const UsersPage = () => {
-  const [option, setOption] = useState<TypeParamGetUser>("active");
+  const [option, setOption] = useState<OpitionsInGetQuerys>("active");
   const {data, isLoading, isFetching} = useGetUsersQuery(option);
   const [deleteUser] = useDeleteUserMutation();
 
