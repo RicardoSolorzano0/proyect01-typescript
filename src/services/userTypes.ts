@@ -2,14 +2,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseUrl } from '@/constants/routes'
 import { TypeUser } from '@/types/TypeUsers'
 import { CreateUserTypePayload, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
-import { OpitionsInGetQuerys } from '@/types/generalTypes'
+import { OptionInGetQuerys } from '@/types/generalTypes'
 
 export const userTypesApi = createApi({
     reducerPath: 'userTypesApi',
     baseQuery: fetchBaseQuery({ baseUrl }),
     tagTypes: ['UserTypes'],
     endpoints: (builder) => ({
-        getUserTypes: builder.query<TypeUser[], OpitionsInGetQuerys>({
+        getUserTypes: builder.query<TypeUser[], OptionInGetQuerys>({
             query: (option) => `selectUserTypes?option=${option}`,
             providesTags: (result) =>
                 // is result available?

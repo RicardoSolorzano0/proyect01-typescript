@@ -4,12 +4,12 @@ import { TypeUser } from "@/types/TypeUsers";
 import Column from "antd/es/table/Column";
 import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/services/userTypes";
 import { useState } from "react";
-import { OpitionsInGetQuerys } from "@/types/generalTypes";
+import { OptionInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;
 
 export const UsersTypePage = () => {
-  const [option, setOption] = useState<OpitionsInGetQuerys>("active");
+  const [option, setOption] = useState<OptionInGetQuerys>("active");
   const {data,  isLoading, isFetching} = useGetUserTypesQuery(option);
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const [deleteUserType] = useDeleteUserTypeMutation()

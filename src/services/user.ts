@@ -1,5 +1,5 @@
 import { baseUrl } from "@/constants/routes";
-import { OpitionsInGetQuerys } from "@/types/generalTypes";
+import { OptionInGetQuerys } from "@/types/generalTypes";
 import { CreateUserPayload, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
 import { User } from "@/types/User";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -9,7 +9,7 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     tagTypes: ['User'],
     endpoints: (builder) => ({
-        getUsers: builder.query<User[], OpitionsInGetQuerys>({
+        getUsers: builder.query<User[], OptionInGetQuerys>({
             query: (option) => `selectUsers?option=${option}`,
             providesTags: (result) =>
                 // is result available?

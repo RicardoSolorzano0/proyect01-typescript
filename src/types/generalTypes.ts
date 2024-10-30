@@ -1,1 +1,1 @@
-export type OpitionsInGetQuerys =  "all"| "active" | "inactive"
+export type OptionInGetQuerys =  "all"| "active" | "inactive"
