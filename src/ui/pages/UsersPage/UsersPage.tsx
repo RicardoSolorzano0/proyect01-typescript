@@ -1,6 +1,5 @@
 import { Button, Table, App, Switch } from "antd";
 import Column from "antd/es/table/Column";
-import { dataUsers } from "@/dataMock/dataMock";
 import { useState } from "react";
 import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
@@ -103,7 +102,9 @@ export const UsersPage = () => {
         >
           <Column title="Nombre" dataIndex="name" key="name" />
           <Column title="Apellido" dataIndex="last_name" key="last_name" />
-          <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => dayjs(date).format("DD/MM/YYYY")} />
+          <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => {
+            console.log(date, "revisando la fecha que nos mande")
+            return dayjs(date).format("DD/MM/YYYY")}} />
           <Column title="Direccion" dataIndex="address" key="address" />
           {option==="active" && <Column
             title="Acciones"
