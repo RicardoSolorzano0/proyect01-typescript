@@ -1,6 +1,6 @@
 import { TypeUser } from '@/types/TypeUsers'
-import { CreateUserTypePayload, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
-import { OptionInGetQuerys } from '@/types/generalTypes'
+import { CreateUserTypePayload, SelectPaginatePayload, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
+import { OptionInGetQuerys, Paginated } from '@/types/generalTypes'
 import { userAppApi } from '@/api/rtk/userApp.api'
 import { serializeUriWithFilters } from '@/api/utils/serializationUtils'
 import { usersTypesUris } from '@/api/constants/uris/usersTypes.uri'
@@ -13,6 +13,11 @@ export const userTypesApi = userAppApi.injectEndpoints({
       query: (option) => serializeUriWithFilters(usersTypesUris.selectUserTypes, {option}),
       //query: (option) => `selectUserTypes?option=${option}`,
       providesTags: rtkCacher.providesList(USER_TYPES_TAG)
+    }),
+    selectUserTypesPaginate: builder.query<Paginated<TypeUser>, SelectPaginatePayload>({
+      query: (options) => serializeUriWithFilters(usersTypesUris.selectUserTypesPaginate, options),
+      //query: (option) => `selectUserTypes?option=${option}`,
+      providesTags: rtkCacher.providesNestedList(USER_TYPES_TAG)
     }),
     // lo primero lo que devuelve y lo segundo lo que le mando
     createUserType: builder.mutation<void, CreateUserTypePayload>({
@@ -57,4 +62,4 @@ export const userTypesApi = userAppApi.injectEndpoints({
   })
 })
 
-export const { useGetUserTypesQuery, useCreateUserTypeMutation, useUpdateUserTypeMutation, useDeleteUserTypeMutation } = userTypesApi
+export const { useSelectUserTypesPaginateQuery,useGetUserTypesQuery, useCreateUserTypeMutation, useUpdateUserTypeMutation, useDeleteUserTypeMutation } = userTypesApi

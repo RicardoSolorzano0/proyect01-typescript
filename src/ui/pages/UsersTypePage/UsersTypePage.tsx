@@ -1,8 +1,8 @@
-import { Button, Table, App, Switch } from "antd";
+import { Button, Table, App, Switch, Pagination } from "antd";
 import { TypeUser } from "@/types/TypeUsers";
- import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
+import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
 import Column from "antd/es/table/Column";
-import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/api/services/userTypes";
+import { useDeleteUserTypeMutation, useGetUserTypesQuery, useSelectUserTypesPaginateQuery } from "@/api/services/userTypes";
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 
@@ -10,7 +10,11 @@ const { useApp } = App;
 
 export const UsersTypePage = () => {
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const {data,  isLoading, isFetching} = useGetUserTypesQuery(option);
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching } = useGetUserTypesQuery(option);
+  console.log(data, isLoading, isFetching, "informacion original")
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectUserTypesPaginateQuery({ option, limit: 2, page });
+  console.log(dataPaginate, isLoadingPaginate, isFetchingPaginate, "revisando la informacion que me tiene que mandar")
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const [deleteUserType] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();
@@ -37,10 +41,10 @@ export const UsersTypePage = () => {
     const mdl = modal.info({
       title: `Editar tipo de usuario ${record.name}`,
       content: (
-         <UserTypeForm
-           typeUser={record}
-           handleCancel={() => mdl.destroy()}
-         />
+        <UserTypeForm
+          typeUser={record}
+          handleCancel={() => mdl.destroy()}
+        />
       ),
       okButtonProps: {
         style: { display: "none" },
@@ -56,15 +60,14 @@ export const UsersTypePage = () => {
       title: "Eliminar tipo de usuario",
       content: `¿Estas seguro de eliminar el tipo de usuario ?`,
       onOk: async () => {
-        try{
+        try {
           await deleteUserType(record.id).unwrap();
-          // setTypeUsers(typeUsers.filter((user) => user.id !== record.id));
           notification.success({
             message: "Tipo de usuario eliminado",
             description: `Se ha eliminado el tipo de usuario ${record.name}`,
             duration: 2,
           });
-        }catch(error){
+        } catch (error) {
           const parsedError = error as { error: string };
           notification.error({
             message: "Error",
@@ -76,12 +79,11 @@ export const UsersTypePage = () => {
     });
   };
 
-  const handleSwitch = (record:boolean) => {
+  const handleSwitch = (record: boolean) => {
     setOption(record ? "active" : "inactive");
   }
 
   const loading = isLoading || isFetching;
-
 
   return (
     <div>
@@ -89,46 +91,58 @@ export const UsersTypePage = () => {
         <Button type="primary" onClick={handleCreate}>
           Agregar tipo de Usuario
         </Button>
-        <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch}/>
+        <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
       </div>
       <br />
-      
+
       {loading ?
         <p>Cargando informacion...</p>
-        :  
-        <Table
-          rowKey={(record) => record.id}
-          dataSource={data}
-          pagination={false}
-        >
-          <Column title="Nombre" dataIndex="name" key="name" />
-          <Column title="Descripción" dataIndex="description" key="description" />
-          <Column title="Color" dataIndex="color" key="color" />
-          {option === "active" &&
-            <Column
-              title="Acciones"
-              key="action"
-              render={(_, record: TypeUser) => (
-                <div className="flex gap-2">
-                  <Button variant="solid" onClick={() => handleEdit(record)}>
-                    Editar
-                  </Button>
-                  <Button
-                    variant="solid"
-                    color="danger"
-                    onClick={() => handleDelete(record)}
-                  >
-                    Eliminar
-                  </Button>
-                </div>
-              )}
+        :
+        <>
+          <Table
+            rowKey={(record) => record.id}
+            dataSource={dataPaginate?.data}
+            pagination={false}
+          >
+            <Column title="Nombre" dataIndex="name" key="name" />
+            <Column title="Descripción" dataIndex="description" key="description" />
+            <Column title="Color" dataIndex="color" key="color" />
+            {option === "active" &&
+              <Column
+                title="Acciones"
+                key="action"
+                render={(_, record: TypeUser) => (
+                  <div className="flex gap-2">
+                    <Button variant="solid" onClick={() => handleEdit(record)}>
+                      Editar
+                    </Button>
+                    <Button
+                      variant="solid"
+                      color="danger"
+                      onClick={() => handleDelete(record)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                )}
+              />
+            }
+          </Table>
+          <div className="flex justify-center items-center mt-3 ">
+            <Pagination
+              total={dataPaginate?.total}
+              showTotal={(total) => {
+                return `Total ${total}`
+              }}
+              defaultPageSize={2}
+              defaultCurrent={1}
+              onChange={(e) => {
+                setPage(e)
+              }}
             />
-          }
-      </Table>
-    
-    }
-
-     
+          </div>
+        </>
+      }
     </div>
   );
 };

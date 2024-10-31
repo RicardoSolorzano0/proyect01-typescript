@@ -3,7 +3,8 @@ import { usersUris } from "@/api/constants/uris/users.uri";
 import { userAppApi } from "@/api/rtk/userApp.api";
 import { rtkCacher } from "@/api/utils/rtkQueryCacheUtils";
 import { serializeUriWithFilters } from "@/api/utils/serializationUtils";
-import { OptionInGetQuerys } from "@/types/generalTypes";
+import { OptionInGetQuerys, Paginated } from "@/types/generalTypes";
+import { SelectPaginatePayload } from "@/types/payloads/payloadTypeUserForm";
 import { CreateUserPayload, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -26,6 +27,10 @@ export const usersApi = userAppApi.injectEndpoints({
             //         : // an error occurred, but we still want to refetch this query when `{ type: 'User', id: 'LIST' }` is invalidated
             //         [{ type: 'User', id: 'LIST' }],
         }),
+        selectUsersPaginate: builder.query<Paginated<User>, SelectPaginatePayload>({
+            query: (options) => serializeUriWithFilters(usersUris.selectUsersPaginate, options),
+            providesTags: rtkCacher.providesNestedList(USERS_TAG)
+          }),
         createUser: builder.mutation<void, CreateUserPayload>({
             query: (body) => ({
                 url: usersUris.createUser,
@@ -61,4 +66,4 @@ export const usersApi = userAppApi.injectEndpoints({
     }),
 })
 
-export const { useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi
+export const { useSelectUsersPaginateQuery,useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi

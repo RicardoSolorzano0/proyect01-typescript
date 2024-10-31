@@ -1,17 +1,20 @@
-import { Button, Table, App, Switch } from "antd";
+import { Button, Table, App, Switch, Pagination } from "antd";
 import Column from "antd/es/table/Column";
 import { useState } from "react";
 import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
-import { useDeleteUserMutation, useGetUsersQuery } from "@/api/services/user";
+import { useDeleteUserMutation, useGetUsersQuery, useSelectUsersPaginateQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;
 
 export const UsersPage = () => {
+  const [page, setPage] = useState(1);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
+  const {data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate}= useSelectUsersPaginateQuery({option, limit: 2, page});
+  console.log(dataPaginate, isLoadingPaginate, isFetchingPaginate, "revisando la informacion que me tiene que mandar")
   const {data, isLoading, isFetching} = useGetUsersQuery(option);
   const [deleteUser] = useDeleteUserMutation();
 
@@ -95,9 +98,10 @@ export const UsersPage = () => {
       {loading ? 
         <p>Cargando informacion...</p>
        : 
+       <>
         <Table
           rowKey={(record) => record.id}
-          dataSource={data}
+          dataSource={dataPaginate?.data}
           pagination={false}
         >
           <Column title="Nombre" dataIndex="name" key="name" />
@@ -125,6 +129,20 @@ export const UsersPage = () => {
             )}
           />}
         </Table>
+        <div className="flex justify-center items-center mt-3 ">
+            <Pagination
+              total={dataPaginate?.total}
+              showTotal={(total) => {
+                return `Total ${total}`
+              }}
+              defaultPageSize={2}
+              defaultCurrent={1}
+              onChange={(e) => {
+                setPage(e)
+              }}
+            />
+          </div>
+        </>
       }
     </>
   );
