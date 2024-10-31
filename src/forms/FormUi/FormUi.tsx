@@ -15,9 +15,9 @@ export const FormUi = <T = never>(props: Props<T>) => {
             wrapperCol={{
                 span: 16,
             }}
-            style={{
-                maxWidth: 600,
-            }}
+            // style={{
+            //     maxWidth: 600,
+            // }}
             autoComplete="off"
             {...props}
         />
