@@ -1,7 +1,7 @@
 import { Input, Form, Button, App, ColorPicker } from "antd";
 import type { FormProps } from "antd";
 import { FormUi } from "@/forms/FormUi/FormUi";
-import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "@/services/userTypes";
+import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "@/api/services/userTypes";
 import { CreateUserTypePayload } from "@/types/payloads/payloadTypeUserForm";
 import type { TypeUser } from '@/types/TypeUsers';
 

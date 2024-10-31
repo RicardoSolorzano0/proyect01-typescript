@@ -5,7 +5,7 @@ import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
-import { useDeleteUserMutation, useGetUsersQuery } from "@/services/user";
+import { useDeleteUserMutation, useGetUsersQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;

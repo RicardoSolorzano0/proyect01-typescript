@@ -2,7 +2,7 @@ import { Button, Table, App, Switch } from "antd";
 import { TypeUser } from "@/types/TypeUsers";
  import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
 import Column from "antd/es/table/Column";
-import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/services/userTypes";
+import { useDeleteUserTypeMutation, useGetUserTypesQuery } from "@/api/services/userTypes";
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 

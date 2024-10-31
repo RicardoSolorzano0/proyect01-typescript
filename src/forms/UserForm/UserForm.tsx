@@ -4,9 +4,9 @@ import { User, UserGender } from "@/types/User";
 import { FormUi } from "@/forms/FormUi/FormUi";
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import { useCreateUserMutation, useUpdateUserMutation } from "@/services/user";
+import { useCreateUserMutation, useUpdateUserMutation } from "@/api/services/user";
 import { SelectUI } from "@/ui/components/SelectUI";
-import { useGetUserTypesQuery } from "@/services/userTypes";
+import { useGetUserTypesQuery } from "@/api/services/userTypes";
 
 const { useApp } = App;
 

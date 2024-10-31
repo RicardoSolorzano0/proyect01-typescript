@@ -1,4 +1,4 @@
-import { useGetPokemonByNameQuery } from "@/services/pokemon";
+import { useGetPokemonByNameQuery } from "@/api/services/pokemon";
 
 interface Props {
   name?: string
