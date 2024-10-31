@@ -135,7 +135,7 @@ export const UsersPage = () => {
               showTotal={(total) => {
                 return `Total ${total}`
               }}
-              defaultPageSize={2}
+              defaultPageSize={10}
               defaultCurrent={1}
               onChange={(e) => {
                 setPage(e)
