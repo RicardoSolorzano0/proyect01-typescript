@@ -9,7 +9,7 @@ import { CreateUserPayload, UpdateUserPayload } from "@/types/payloads/payloadUs
 
 import { User } from "@/types/User";
 
-export const userApi = userAppApi.injectEndpoints({
+export const usersApi = userAppApi.injectEndpoints({
     endpoints: (builder) => ({
         getUsers: builder.query<User[], OptionInGetQuerys>({
             // query: (option) => `selectUsers?option=${option}`,
@@ -61,4 +61,4 @@ export const userApi = userAppApi.injectEndpoints({
     }),
 })
 
-export const { useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = userApi
+export const { useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi
