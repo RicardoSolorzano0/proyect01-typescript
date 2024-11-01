@@ -1,20 +1,23 @@
-import { Button, Table, App, Switch, Pagination } from "antd";
+import { Button, Table, App, Switch, Pagination, Input } from "antd";
 import Column from "antd/es/table/Column";
 import { useState } from "react";
 import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
-import { useDeleteUserMutation,  useSelectPaginatedUsersQuery } from "@/api/services/user";
+import { useDeleteUserMutation, useSelectPaginatedUsersQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
+import { useDebounce } from "@/hooks/debounce";
 
 const { useApp } = App;
 
 export const UsersPage = () => {
+  const [text, setText] = useState("");
+  const debouncedText = useDebounce(text);
   const [page, setPage] = useState(1);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const {data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate}= useSelectPaginatedUsersQuery({option, limit: 10, page});
-  const [deleteUser,{ isLoading:isLoadingDelete}] = useDeleteUserMutation();
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText });
+  const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
 
   const { modal, notification } = useApp();
 
@@ -57,15 +60,15 @@ export const UsersPage = () => {
     modal.confirm({
       title: "Eliminar usuario",
       content: `¿Estas seguro de eliminar el usuario ${record.name} ${record.last_name}?`,
-      onOk:async  () => {
-        try{
+      onOk: async () => {
+        try {
           await deleteUser(record.id).unwrap();
           notification.success({
             message: "Usuario eliminado",
             description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
             duration: 2,
           });
-        }catch(error){
+        } catch (error) {
           const parsedError = error as { error: string };
           notification.error({
             message: "Error",
@@ -77,57 +80,61 @@ export const UsersPage = () => {
     });
   };
 
-  const handleSwitch = (record:boolean) => {
+  const handleSwitch = (record: boolean) => {
     setOption(record ? "active" : "inactive");
   }
 
-  const loading = isLoadingPaginate||isFetchingPaginate || isLoadingDelete;
+  const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete;
 
   return (
     <>
       {/* <ExampleRedux /> */}
       <div className="flex justify-between items-center">
-      <Button type="primary" onClick={handleCreate}>
-        Agregar Usuario
-      </Button>
-      <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch}/>
+        <Button type="primary" onClick={handleCreate}>
+          Agregar Usuario
+        </Button>
+        <div className="flex gap-4 items-center">
+          <Input placeholder="Buscar por nombre, apellido o correo" allowClear onChange={(e) => { setText(e.target.value) }} />
+          <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
+        </div>
       </div>
       <br />
-      {loading ? 
+      {loading ?
         <p>Cargando informacion...</p>
-       : 
-       <>
-        <Table
-          rowKey={(record) => record.id}
-          dataSource={dataPaginate?.data}
-          pagination={false}
-        >
-          <Column title="Nombre" dataIndex="name" key="name" />
-          <Column title="Apellido" dataIndex="last_name" key="last_name" />
-          <Column title="Correo" dataIndex="email" key="email" />
-          <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => {
-            return dayjs(date).format("DD/MM/YYYY")}} />
-          <Column title="Direccion" dataIndex="address" key="address" />
-          {option==="active" && <Column
-            title="Acciones"
-            key="action"
-            render={(_, record: User) => (
-              <div className="flex gap-2">
-                <Button variant="solid" onClick={() => handleEdit(record)}>
-                  Editar
-                </Button>
-                <Button
-                  variant="solid"
-                  color="danger"
-                  onClick={() => handleDelete(record)}
-                >
-                  Eliminar
-                </Button>
-              </div>
-            )}
-          />}
-        </Table>
-        <div className="flex justify-center items-center mt-3 ">
+        :
+        <>
+          <Table
+            rowKey={(record) => record.id}
+            dataSource={dataPaginate?.data}
+            pagination={false}
+          >
+            <Column title="Nombre" dataIndex="name" key="name" />
+            <Column title="Apellido" dataIndex="last_name" key="last_name" />
+            <Column title="Correo" dataIndex="email" key="email" />
+            <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => {
+              return dayjs(date).format("DD/MM/YYYY")
+            }} />
+            <Column title="Direccion" dataIndex="address" key="address" />
+            {option === "active" && <Column
+              title="Acciones"
+              key="action"
+              render={(_, record: User) => (
+                <div className="flex gap-2">
+                  <Button variant="solid" onClick={() => handleEdit(record)}>
+                    Editar
+                  </Button>
+                  <Button
+                    variant="solid"
+                    color="danger"
+                    onClick={() => handleDelete(record)}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              )}
+            />}
+          </Table>
+          <div className="flex justify-center items-center mt-3 ">
             <Pagination
               total={dataPaginate?.total}
               showTotal={(total) => {

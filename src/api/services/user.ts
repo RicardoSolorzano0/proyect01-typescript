@@ -3,8 +3,8 @@ import { usersUris } from "@/api/constants/uris/users.uri";
 import { userAppApi } from "@/api/rtk/userApp.api";
 import { rtkCacher } from "@/api/utils/rtkQueryCacheUtils";
 import { serializeUriWithFilters } from "@/api/utils/serializationUtils";
-import { OptionInGetQuerys, Paginated, SelectPaginatePayload } from "@/types/generalTypes";
-import { CreateUserPayload, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
+import { OptionInGetQuerys, Paginated } from "@/types/generalTypes";
+import { CreateUserPayload, SelectPaginatePayloadWithUser, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { User } from "@/types/User";
@@ -26,7 +26,7 @@ export const usersApi = userAppApi.injectEndpoints({
             //         : // an error occurred, but we still want to refetch this query when `{ type: 'User', id: 'LIST' }` is invalidated
             //         [{ type: 'User', id: 'LIST' }],
         }),
-        selectPaginatedUsers: builder.query<Paginated<User>, SelectPaginatePayload>({
+        selectPaginatedUsers: builder.query<Paginated<User>, SelectPaginatePayloadWithUser>({
             query: (options) => serializeUriWithFilters(usersUris.selectPaginatedUsers, options),
             providesTags: rtkCacher.providesNestedList(USERS_TAG)
           }),
