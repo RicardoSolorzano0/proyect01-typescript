@@ -5,6 +5,9 @@ import Column from "antd/es/table/Column";
 import { useDeleteUserTypeMutation, useSelectUserTypesPaginateQuery } from "@/api/services/userTypes";
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
+import { Input } from "antd"
+
+const { Search } = Input
 
 const { useApp } = App;
 
@@ -84,11 +87,14 @@ export const UsersTypePage = () => {
 
   return (
     <div>
-      <div className="flex justify-between  items-center">
+      <div className="flex justify-between items-center flex-wrap">
         <Button type="primary" onClick={handleCreate}>
           Agregar tipo de Usuario
         </Button>
+        <div className="flex gap-4 items-center">
+        <Search placeholder="input search text" onSearch={(e)=>{console.log(e)}} onChange={(e)=>{console.log(e.target.value, "cambio en tiempo real")}} style={{ width: 200 }} />
         <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
+        </div>
       </div>
       <br />
 
