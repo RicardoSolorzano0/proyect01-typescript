@@ -8,16 +8,20 @@ import dayjs from "dayjs";
 import { useDeleteUserMutation, useSelectPaginatedUsersQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 import { useDebounce } from "@/hooks/debounce";
+import { useGetUserTypesQuery } from "@/api/services/userTypes";
+import { SelectUI } from "@/ui/components/SelectUI";
 
 const { useApp } = App;
 
 export const UsersPage = () => {
   const [text, setText] = useState("");
+  const [userType, setUserType] = useState("")
   const debouncedText = useDebounce(text);
   const [page, setPage] = useState(1);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText });
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText,  userType});
   const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
+  const {data:dataUserType, isLoading: isLoadingTypes} = useGetUserTypesQuery("active");
 
   const { modal, notification } = useApp();
 
@@ -84,7 +88,12 @@ export const UsersPage = () => {
     setOption(record ? "active" : "inactive");
   }
 
-  const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete;
+  const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete || isLoadingTypes;
+   
+  const optionUserTypes = dataUserType?.map((type) => ({
+    label: type.name,
+    value: type.id
+  }));
 
   return (
     <>
@@ -94,6 +103,7 @@ export const UsersPage = () => {
           Agregar Usuario
         </Button>
         <div className="flex gap-4 items-center">
+          <SelectUI disabled={isLoadingTypes} size="large" placeholder="Tipo de usuario" allowClear options={optionUserTypes} onChange={(e)=>setUserType(e===undefined?"":e)}/>
           <Input placeholder="Buscar por nombre, apellido o correo" allowClear onChange={(e) => { setText(e.target.value) }} />
           <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
         </div>

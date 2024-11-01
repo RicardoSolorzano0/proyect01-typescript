@@ -5,5 +5,6 @@ export type CreateUserPayload = Omit<User, "id">;
 export type UpdateUserPayload = User;
 
 export type SelectPaginatePayloadWithUser = SelectPaginatePayload & {
-    filter?: string
+    filter?: string,
+    userType?:string
 }
