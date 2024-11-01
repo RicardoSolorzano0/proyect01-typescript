@@ -2,7 +2,7 @@ import { Button, Table, App, Switch, Pagination } from "antd";
 import { TypeUser } from "@/types/TypeUsers";
 import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
 import Column from "antd/es/table/Column";
-import { useDeleteUserTypeMutation, useSelectUserTypesPaginateQuery } from "@/api/services/userTypes";
+import { useDeleteUserTypeMutation, useSelectPaginatedUserTypesQuery } from "@/api/services/userTypes";
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 import { Input } from "antd"
@@ -14,7 +14,7 @@ const { useApp } = App;
 export const UsersTypePage = () => {
   const [option, setOption] = useState<OptionInGetQuerys>("active");
   const [page, setPage] = useState(1);
-  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectUserTypesPaginateQuery({ option, limit: 10, page });
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUserTypesQuery({ option, limit: 10, page });
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const [deleteUserType,{ isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();

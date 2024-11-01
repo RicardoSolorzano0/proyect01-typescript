@@ -14,8 +14,8 @@ export const userTypesApi = userAppApi.injectEndpoints({
       //query: (option) => `selectUserTypes?option=${option}`,
       providesTags: rtkCacher.providesList(USER_TYPES_TAG)
     }),
-    selectUserTypesPaginate: builder.query<Paginated<TypeUser>, SelectPaginatePayload>({
-      query: (options) => serializeUriWithFilters(usersTypesUris.selectUserTypesPaginate, options),
+    selectPaginatedUserTypes: builder.query<Paginated<TypeUser>, SelectPaginatePayload>({
+      query: (options) => serializeUriWithFilters(usersTypesUris.selectPaginatedUserTypes, options),
       //query: (option) => `selectUserTypes?option=${option}`,
       providesTags: rtkCacher.providesNestedList(USER_TYPES_TAG)
     }),
@@ -62,4 +62,4 @@ export const userTypesApi = userAppApi.injectEndpoints({
   })
 })
 
-export const { useSelectUserTypesPaginateQuery,useGetUserTypesQuery, useCreateUserTypeMutation, useUpdateUserTypeMutation, useDeleteUserTypeMutation } = userTypesApi
+export const {  useSelectPaginatedUserTypesQuery,useGetUserTypesQuery, useCreateUserTypeMutation, useUpdateUserTypeMutation, useDeleteUserTypeMutation } = userTypesApi
