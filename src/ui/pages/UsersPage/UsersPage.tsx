@@ -103,7 +103,7 @@ export const UsersPage = () => {
           Agregar Usuario
         </Button>
         <div className="flex gap-4 items-center">
-          <SelectUI disabled={isLoadingTypes} size="large" placeholder="Tipo de usuario" allowClear options={optionUserTypes} onChange={(e)=>setUserType(e===undefined?"":e)}/>
+          <SelectUI disabled={isLoadingTypes} size="large" placeholder="Tipo de usuario" allowClear options={optionUserTypes} onChange={(e)=>setUserType(e ?? "")}/>
           <Input placeholder="Buscar por nombre, apellido o correo" allowClear onChange={(e) => { setText(e.target.value) }} />
           <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
         </div>
