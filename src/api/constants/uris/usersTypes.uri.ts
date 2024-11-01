@@ -3,5 +3,5 @@ export const usersTypesUris = Object.freeze({
     createUserType: '/createUserType',
     updateUserType: '/updateUserType',
     selectUserTypes: '/selectUserTypes',
-    selectUserTypesPaginate: '/selectUserTypesPaginate',
+    selectUserTypesPaginate: '/selectPaginatedUserTypes',
 });
