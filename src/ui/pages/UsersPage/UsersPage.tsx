@@ -5,7 +5,7 @@ import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
 import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
-import { useDeleteUserMutation,  useSelectUsersPaginateQuery } from "@/api/services/user";
+import { useDeleteUserMutation,  useSelectPaginatedUsersQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 
 const { useApp } = App;
@@ -13,7 +13,7 @@ const { useApp } = App;
 export const UsersPage = () => {
   const [page, setPage] = useState(1);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const {data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate}= useSelectUsersPaginateQuery({option, limit: 10, page});
+  const {data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate}= useSelectPaginatedUsersQuery({option, limit: 10, page});
   const [deleteUser,{ isLoading:isLoadingDelete}] = useDeleteUserMutation();
 
   const { modal, notification } = useApp();

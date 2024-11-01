@@ -27,8 +27,8 @@ export const usersApi = userAppApi.injectEndpoints({
             //         : // an error occurred, but we still want to refetch this query when `{ type: 'User', id: 'LIST' }` is invalidated
             //         [{ type: 'User', id: 'LIST' }],
         }),
-        selectUsersPaginate: builder.query<Paginated<User>, SelectPaginatePayload>({
-            query: (options) => serializeUriWithFilters(usersUris.selectUsersPaginate, options),
+        selectPaginatedUsers: builder.query<Paginated<User>, SelectPaginatePayload>({
+            query: (options) => serializeUriWithFilters(usersUris.selectPaginatedUsers, options),
             providesTags: rtkCacher.providesNestedList(USERS_TAG)
           }),
         createUser: builder.mutation<void, CreateUserPayload>({
@@ -66,4 +66,4 @@ export const usersApi = userAppApi.injectEndpoints({
     }),
 })
 
-export const { useSelectUsersPaginateQuery,useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi
+export const {  useSelectPaginatedUsersQuery,useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi
