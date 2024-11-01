@@ -3,8 +3,7 @@ import { usersUris } from "@/api/constants/uris/users.uri";
 import { userAppApi } from "@/api/rtk/userApp.api";
 import { rtkCacher } from "@/api/utils/rtkQueryCacheUtils";
 import { serializeUriWithFilters } from "@/api/utils/serializationUtils";
-import { OptionInGetQuerys, Paginated } from "@/types/generalTypes";
-import { SelectPaginatePayload } from "@/types/payloads/payloadTypeUserForm";
+import { OptionInGetQuerys, Paginated, SelectPaginatePayload } from "@/types/generalTypes";
 import { CreateUserPayload, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 

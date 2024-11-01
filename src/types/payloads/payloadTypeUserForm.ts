@@ -1,18 +1,11 @@
 import { TypeUser } from "@/types/TypeUsers";
-import { OptionInGetQuerys } from "../generalTypes";
+import { OptionInGetQuerys, SelectPaginatePayload } from "../generalTypes";
 
 export type TypeUserFormProps = Omit<TypeUser, "id">;
 
 
 export type CreateUserTypePayload = Omit<TypeUser, "id">;
 export type UpdateUserTypePayload = TypeUser;
-
-
-export type SelectPaginatePayload ={
-    option:OptionInGetQuerys,
-    limit:number,
-    page:number
-}
 
 export type SelectPaginatePayloadWithFilters = SelectPaginatePayload & {
     name?:string

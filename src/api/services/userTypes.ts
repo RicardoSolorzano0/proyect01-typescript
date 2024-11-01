@@ -1,5 +1,5 @@
 import { TypeUser } from '@/types/TypeUsers'
-import { CreateUserTypePayload, SelectPaginatePayload, SelectPaginatePayloadWithFilters, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
+import { CreateUserTypePayload, SelectPaginatePayloadWithFilters, UpdateUserTypePayload } from '@/types/payloads/payloadTypeUserForm'
 import { OptionInGetQuerys, Paginated } from '@/types/generalTypes'
 import { userAppApi } from '@/api/rtk/userApp.api'
 import { serializeUriWithFilters } from '@/api/utils/serializationUtils'

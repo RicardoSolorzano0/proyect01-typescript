@@ -6,3 +6,9 @@ export type Paginated<Entity> = {
     perPage: number,
     total: number
 }
+
+export type SelectPaginatePayload ={
+    option:OptionInGetQuerys,
+    limit:number,
+    page:number
+}
