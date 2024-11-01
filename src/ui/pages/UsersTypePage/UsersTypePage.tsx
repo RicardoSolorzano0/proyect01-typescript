@@ -6,17 +6,18 @@ import { useDeleteUserTypeMutation, useSelectPaginatedUserTypesQuery } from "@/a
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 import { Input } from "antd"
-
-const { Search } = Input
+import { useDebounce } from "@/hooks/debounce";
 
 const { useApp } = App;
 
 export const UsersTypePage = () => {
+  const [text, setText] = useState("");
+  const debouncedText = useDebounce(text);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
   const [page, setPage] = useState(1);
-  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUserTypesQuery({ option, limit: 10, page });
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUserTypesQuery({ option, limit: 10, page, name: debouncedText });
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
-  const [deleteUserType,{ isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
+  const [deleteUserType, { isLoading: isLoadingDelete }] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();
   // const [typeUsers, setTypeUsers] = useState<TypeUser[]>(data as TypeUser[]);
 
@@ -92,8 +93,8 @@ export const UsersTypePage = () => {
           Agregar tipo de Usuario
         </Button>
         <div className="flex gap-4 items-center">
-        <Search placeholder="input search text" onSearch={(e)=>{console.log(e)}} onChange={(e)=>{console.log(e.target.value, "cambio en tiempo real")}} style={{ width: 200 }} />
-        <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
+          <Input placeholder="Buscar por nombre" allowClear onChange={(e) => { setText(e.target.value) }} />
+          <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
         </div>
       </div>
       <br />

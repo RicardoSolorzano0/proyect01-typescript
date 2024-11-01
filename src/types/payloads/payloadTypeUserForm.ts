@@ -13,3 +13,7 @@ export type SelectPaginatePayload ={
     limit:number,
     page:number
 }
+
+export type SelectPaginatePayloadWithFilters = SelectPaginatePayload & {
+    name?:string
+}
