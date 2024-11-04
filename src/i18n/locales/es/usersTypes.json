@@ -1,0 +1,27 @@
+{
+  "page": {
+    "addButton": "Agregar tipo de usuario",
+    "searchBy": "Buscar por nombre"
+  },
+  "table": {
+    "name": "Nombre",
+    "description": "Descripción",
+    "color": "Color",
+    "actions": "Acciones"
+  },
+  "form": {
+    "titleCreate": "Crear nuevo tipo de usuario",
+    "titleEdit": "Editar tipo de usuario {{user}}",
+    "titleDelete": "Eliminar tipo de usuario {{user}}",
+    "contentDelete": "¿Estás seguro de eliminar el tipo de usuario {{user}}?"
+  },
+  "errors": {},
+  "messages": {
+    "userTypeCreated": "Tipo de usuario creado",
+    "userTypeCreatedDescription": "Se ha creado un tipo de usuario",
+    "userTypeUpdated": "Tipo de usuario actualizado",
+    "userTypeUpdatedDescription": "Se ha actualizado un tipo de usuario",
+    "userTypeDeleted": "Tipo de usuario eliminado",
+    "userTypeDeletedDescription": "Se ha eliminado un tipo de usuario"
+  }
+}

@@ -7,10 +7,13 @@ import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
 import { Input } from "antd"
 import { useDebounce } from "@/hooks/debounce";
+import { useTranslation } from "react-i18next";
+import { globalT } from "@/i18n";
 
 const { useApp } = App;
 
 export const UsersTypePage = () => {
+  const { t } = useTranslation('usersTypes');
   const [text, setText] = useState("");
   const debouncedText = useDebounce(text);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
@@ -23,7 +26,7 @@ export const UsersTypePage = () => {
 
   const handleCreate = () => {
     const mdl = modal.info({
-      title: "Crear nuevo tipo de usuario",
+      title: t("form.titleCreate"),
       content: (
         <UserTypeForm
           handleCancel={() => mdl.destroy()}
@@ -40,7 +43,8 @@ export const UsersTypePage = () => {
 
   const handleEdit = (record: TypeUser) => {
     const mdl = modal.info({
-      title: `Editar tipo de usuario ${record.name}`,
+      // title: `Editar tipo de usuario ${record.name}`,
+      title: t("form.titleEdit", { typeUser: record.name }),
       content: (
         <UserTypeForm
           typeUser={record}
@@ -58,14 +62,14 @@ export const UsersTypePage = () => {
 
   const handleDelete = (record: TypeUser) => {
     modal.confirm({
-      title: "Eliminar tipo de usuario",
-      content: `¿Estas seguro de eliminar el tipo de usuario ?`,
+      title: t("form.titleDelete", { typeUser: record.name }),
+      content: t("form.contentDelete", { typeUser: record.name }),
       onOk: async () => {
         try {
           await deleteUserType(record.id).unwrap();
           notification.success({
-            message: "Tipo de usuario eliminado",
-            description: `Se ha eliminado el tipo de usuario ${record.name}`,
+            message: t("messages.userDeleted"),
+            description: t("messages.userDeletedDescription", { typeUser: record.name }),
             duration: 2,
           });
         } catch (error) {
@@ -90,17 +94,17 @@ export const UsersTypePage = () => {
     <div>
       <div className="flex justify-between items-center flex-wrap">
         <Button type="primary" onClick={handleCreate}>
-          Agregar tipo de Usuario
+          {t("page.addButton")}
         </Button>
         <div className="flex gap-4 items-center">
-          <Input placeholder="Buscar por nombre" allowClear onChange={(e) => { setText(e.target.value) }} />
+          <Input placeholder={t("page.searchBy")} allowClear onChange={(e) => { setText(e.target.value) }} />
           <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
         </div>
       </div>
       <br />
 
       {loading ?
-        <p>Cargando informacion...</p>
+        <p>{globalT("loading")}</p>
         :
         <>
           <Table
@@ -108,24 +112,24 @@ export const UsersTypePage = () => {
             dataSource={dataPaginate?.data}
             pagination={false}
           >
-            <Column title="Nombre" dataIndex="name" key="name" />
-            <Column title="Descripción" dataIndex="description" key="description" />
-            <Column title="Color" dataIndex="color" key="color" />
+            <Column title={t("table.name")} dataIndex="name" key="name" />
+            <Column title={t("table.description")} dataIndex="description" key="description" />
+            <Column title={t("table.color")} dataIndex="color" key="color" />
             {option === "active" &&
               <Column
-                title="Acciones"
+                title={t("table.actions")}
                 key="action"
                 render={(_, record: TypeUser) => (
                   <div className="flex gap-2">
                     <Button variant="solid" onClick={() => handleEdit(record)}>
-                      Editar
+                      {globalT("edit")}
                     </Button>
                     <Button
                       variant="solid"
                       color="danger"
                       onClick={() => handleDelete(record)}
                     >
-                      Eliminar
+                      {globalT("delete")}
                     </Button>
                   </div>
                 )}
@@ -136,7 +140,7 @@ export const UsersTypePage = () => {
             <Pagination
               total={dataPaginate?.total}
               showTotal={(total) => {
-                return `Total ${total}`
+                return globalT("paginate", { quantity: total })
               }}
               defaultPageSize={10}
               defaultCurrent={1}

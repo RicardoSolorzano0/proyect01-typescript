@@ -4,6 +4,8 @@ import { FormUi } from "@/forms/FormUi/FormUi";
 import { useCreateUserTypeMutation, useUpdateUserTypeMutation } from "@/api/services/userTypes";
 import { CreateUserTypePayload } from "@/types/payloads/payloadTypeUserForm";
 import type { TypeUser } from '@/types/TypeUsers';
+import { useTranslation } from "react-i18next";
+import { globalT } from "@/i18n";
 
 const { useApp } = App;
 const { useForm, Item } = Form;
@@ -19,6 +21,7 @@ export const UserTypeForm = ({
   typeUser,
   handleCancel,
 }: Props) => {
+  const { t } = useTranslation("usersTypes");
   const { notification } = useApp();
   const [form] = useForm<TypeUserFormProps>();
 
@@ -26,7 +29,7 @@ export const UserTypeForm = ({
   // se puede hacer de la siguiente manera también
   //const [updateUserType,{data:dataUpdate, error:errorUpdate, isLoading:isLoadingUpdate, isSuccess:isSuccessUpdate}] = useUpdateUserTypeMutation();
   const [updateUserType, { isLoading: isUpdating }] = useUpdateUserTypeMutation();
-  
+
   const loading = isCreating || isUpdating;
 
   const initValues: Partial<TypeUserFormProps> = {
@@ -36,18 +39,18 @@ export const UserTypeForm = ({
   };
 
   const onFinish = async (values: TypeUserFormProps) => {
-    try{
+    try {
       if (!typeUser) {
         await createUserType(values).unwrap();
       } else {
-        await updateUserType({ id: typeUser.id , ...values}).unwrap();
+        await updateUserType({ id: typeUser.id, ...values }).unwrap();
       }
       notification.success({
-        message: `Tipo de usuario ${typeUser ? " actualizado" : " creado"}`,
-        description: `Se ha ${typeUser ? "actualizado" : "creado"} un nuevo tipo de usuario`,
+        message: ` ${typeUser ? t("messages.userUpdated") : t("messages.userCreated")}`,
+        description: `${typeUser ? t("messages.userUpdatedDescription") : t("messages.userCreatedDescription")}`,
         duration: 2,
       });
-    }catch(error){
+    } catch (error) {
       const parsedError = error as { error: string };
       notification.error({
         message: "Error",
@@ -64,7 +67,7 @@ export const UserTypeForm = ({
     console.log("Failed:", errorInfo);
     notification.error({
       message: "Error",
-      description: "Revisar campos del formulario",
+      description: globalT("checkFields"),
       duration: 2,
     });
   };
@@ -72,36 +75,36 @@ export const UserTypeForm = ({
   return (
     <FormUi form={form} initialValues={initValues} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
       <Item
-        label="Nombre"
+        label={t("table.name")}
         name="name"
         rules={[
           {
             required: true,
-            message: "Campo requerido",
+            message: globalT("fielRequired"),
           },
         ]}
       >
         <Input />
       </Item>
       <Item
-        label="Descripción"
+        label={t("table.description")}
         name="description"
         rules={[
           {
             required: true,
-            message: "Campo requerido",
+            message: globalT("fielRequired"),
           },
         ]}
       >
         <Input />
       </Item>
       <Item
-        label="Color"
+        label={t("table.color")}
         name="color"
         rules={[
           {
             required: true,
-            message: "Campo requerido",
+            message: globalT("fielRequired"),
           },
         ]}
       >
@@ -110,7 +113,7 @@ export const UserTypeForm = ({
       <div className="flex justify-center gap-2">
         <Button onClick={handleCancel}>Cancelar</Button>
         <Button type="primary" htmlType="submit">
-          {typeUser ? "Editar" : "Crear"}
+          {typeUser ? globalT("edit") : globalT("create")}
         </Button>
       </div>
     </FormUi>
