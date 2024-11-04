@@ -1,7 +1,18 @@
 {
-    "back": "Back",
-    "english": "English",
-    "helloWorld": "Hello World",
-    "save": "Save",
-    "spanish": "Spanish"
+  "back": "Back",
+  "english": "English",
+  "helloWorld": "Hello World",
+  "save": "Save",
+  "spanish": "Spanish",
+  "active": "Active",
+  "deleted": "Eliminated",
+  "loading": "Loading information",
+  "edit": "Edit",
+  "delete": "Delete",
+  "paginate": "Total {{quantity}}",
+  "fieldRequired": "Required field",
+  "checkFields": "Please check the fields",
+  "selectOption": "Select an option",
+  "create": "Create",
+  "cancel": "Cancel"
 }

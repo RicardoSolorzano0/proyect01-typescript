@@ -1,9 +1,37 @@
 {
-    "form": {
-        "birthdate": "Fecha de nacimiento"
-    },
-    "delete": {
-        "title": "Eliminar usuario",
-        "content": "¿Estas seguro de el usuario {{user}}?"
-    }
+  "page": {
+    "addButton": "Agregar usuario",
+    "userTypeFilter": "Tipo de usuario",
+    "searchBy": "Buscar por nombre, apellido o correo"
+  },
+  "table": {
+    "name": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo",
+    "birthdate": "Fecha de nacimiento",
+    "address": "Dirección",
+    "actions": "Acciones"
+  },
+  "form": {
+    "titleCreate": "Crear nuevo usuario",
+    "titleEdit": "Editar usuario {{user}}",
+    "titleDelete": "Eliminar usuario {{user}}",
+    "contentDelete": "¿Estas seguro de eliminar el usuario {{user}}?",
+    "name": "Nombre",
+    "lastName": "Apellido",
+    "birthdate": "Fecha de nacimiento",
+    "address": "Dirección",
+    "email": "Correo",
+    "gender": "Genero",
+    "userType": "Tipo de usuario"
+  },
+  "errors": {},
+  "messages": {
+    "userCreated": "Usuario creado",
+    "userCreatedDescription": "Se ha creado un nuevo usuario",
+    "userUpdated": "Usuario actualizado",
+    "userUpdatedDescription": "Se ha actualizado el usuario {{user}}",
+    "userDeleted": "Usuario eliminado",
+    "userDeletedDescription": "Se ha eliminado el usuario {{user}}"
+  }
 }

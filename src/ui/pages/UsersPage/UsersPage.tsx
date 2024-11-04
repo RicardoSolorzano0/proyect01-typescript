@@ -10,24 +10,28 @@ import { OptionInGetQuerys } from "@/types/generalTypes";
 import { useDebounce } from "@/hooks/debounce";
 import { useGetUserTypesQuery } from "@/api/services/userTypes";
 import { SelectUI } from "@/ui/components/SelectUI";
+import { useTranslation } from "react-i18next";
+import { globalT } from "@/i18n";
+// import { globalT } from '@/i18n';
 
 const { useApp } = App;
-
 export const UsersPage = () => {
+  const { t } = useTranslation('users');
   const [text, setText] = useState("");
   const [userType, setUserType] = useState("")
   const debouncedText = useDebounce(text);
   const [page, setPage] = useState(1);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText,  userType});
+  const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText, userType });
   const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
-  const {data:dataUserType, isLoading: isLoadingTypes} = useGetUserTypesQuery("active");
+  const { data: dataUserType, isLoading: isLoadingTypes } = useGetUserTypesQuery("active");
 
   const { modal, notification } = useApp();
 
   const handleEdit = (record: User) => {
     const mdl = modal.info({
-      title: `Editar usuario ${record.name} ${record.last_name}`,
+      title: t("form.titleEdit", { user: `${record.name} ${record.last_name}` }),
+      // title: `Editar usuario ${record.name} ${record.last_name}`,
       content: (
         <UserForm
           user={record}
@@ -45,7 +49,7 @@ export const UsersPage = () => {
 
   const handleCreate = () => {
     const mdl = modal.info({
-      title: "Crear nuevo usuario",
+      title: t("form.titleCreate"),
       content: (
         <UserForm
           handleCancel={() => mdl.destroy()}
@@ -62,14 +66,17 @@ export const UsersPage = () => {
 
   const handleDelete = (record: User) => {
     modal.confirm({
-      title: "Eliminar usuario",
-      content: `¿Estas seguro de eliminar el usuario ${record.name} ${record.last_name}?`,
+      title: t("form.titleDelete", { user: `${record.name} ${record.last_name}` }),
+      // content: `¿Estas seguro de eliminar el usuario ${record.name} ${record.last_name}?`,
+      content: t('form.contentDelete', { user: `${record.name} ${record.last_name}` }),
+
       onOk: async () => {
         try {
           await deleteUser(record.id).unwrap();
           notification.success({
-            message: "Usuario eliminado",
-            description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
+            message: t("messages.userDeleted"),
+            description: t('messages.userDeletedDescription', { user: `${record.name} ${record.last_name}` }),
+            // description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
             duration: 2,
           });
         } catch (error) {
@@ -89,7 +96,7 @@ export const UsersPage = () => {
   }
 
   const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete || isLoadingTypes;
-   
+
   const optionUserTypes = dataUserType?.map((type) => ({
     label: type.name,
     value: type.id
@@ -97,20 +104,24 @@ export const UsersPage = () => {
 
   return (
     <>
+      {/* {
+        globalT('helloWorld')
+      } */}
       {/* <ExampleRedux /> */}
       <div className="flex justify-between items-center">
         <Button type="primary" onClick={handleCreate}>
-          Agregar Usuario
+          {t("page.addButton")}
         </Button>
         <div className="flex gap-4 items-center">
-          <SelectUI disabled={isLoadingTypes} size="large" placeholder="Tipo de usuario" allowClear options={optionUserTypes} onChange={(e)=>setUserType(e ?? "")}/>
-          <Input placeholder="Buscar por nombre, apellido o correo" allowClear onChange={(e) => { setText(e.target.value) }} />
-          <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
+          <SelectUI disabled={isLoadingTypes} size="large" placeholder={t("page.userTypeFilter")} allowClear options={optionUserTypes} onChange={(e) => setUserType(e ?? "")} />
+          <Input placeholder={t("page.searchBy")} allowClear onChange={(e) => { setText(e.target.value) }} />
+          {/* <Switch defaultChecked checkedChildren={globalT("active")} unCheckedChildren={globalT("deleted")} onChange={handleSwitch} /> */}
+          <Switch defaultChecked checkedChildren={globalT('active')} unCheckedChildren={globalT('deleted')} onChange={handleSwitch} />
         </div>
       </div>
       <br />
       {loading ?
-        <p>Cargando informacion...</p>
+        <p>{globalT("loading")}</p>
         :
         <>
           <Table
@@ -118,27 +129,27 @@ export const UsersPage = () => {
             dataSource={dataPaginate?.data}
             pagination={false}
           >
-            <Column title="Nombre" dataIndex="name" key="name" />
-            <Column title="Apellido" dataIndex="last_name" key="last_name" />
-            <Column title="Correo" dataIndex="email" key="email" />
-            <Column title="Fecha de nacimiento" dataIndex="birthdate" key="birthdate" render={(date) => {
-              return dayjs(date).format("DD/MM/YYYY")
+            <Column title={t("table.name")} dataIndex="name" key="name" />
+            <Column title={t("table.lastName")} dataIndex="last_name" key="last_name" />
+            <Column title={t("table.email")} dataIndex="email" key="email" />
+            <Column title={t("table.birthdate")} dataIndex="birthdate" key="birthdate" render={(date) => {
+              return dayjs(date).format("LL")
             }} />
-            <Column title="Direccion" dataIndex="address" key="address" />
+            <Column title={t("table.address")} dataIndex="address" key="address" />
             {option === "active" && <Column
-              title="Acciones"
+              title={t("table.actions")}
               key="action"
               render={(_, record: User) => (
                 <div className="flex gap-2">
                   <Button variant="solid" onClick={() => handleEdit(record)}>
-                    Editar
+                    {globalT("edit")}
                   </Button>
                   <Button
                     variant="solid"
                     color="danger"
                     onClick={() => handleDelete(record)}
                   >
-                    Eliminar
+                    {globalT("delete")}
                   </Button>
                 </div>
               )}
@@ -148,7 +159,7 @@ export const UsersPage = () => {
             <Pagination
               total={dataPaginate?.total}
               showTotal={(total) => {
-                return `Total ${total}`
+                return globalT('paginate', { quantity: total })
               }}
               defaultPageSize={10}
               defaultCurrent={1}

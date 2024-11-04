@@ -1,3 +1,37 @@
 {
-    
+  "page": {
+    "addButton": "Add User",
+    "userTypeFilter": "User Type",
+    "searchBy": "Search by name, surname or email"
+  },
+  "table": {
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "birthdate": "Birthdate",
+    "address": "Address",
+    "actions": "Actions"
+  },
+  "form": {
+    "titleCreate": "Create new user",
+    "titleEdit": "Edit user {{user}}",
+    "titleDelete": "Delete user {{user}}",
+    "contentDelete": "Are you sure you want to delete the user {{user}}?",
+    "name": "Name",
+    "lastName": "Last Name",
+    "birthdate": "Birthdate",
+    "address": "Address",
+    "email": "Email",
+    "gender": "Gender",
+    "userType": "User Type"
+  },
+  "errors": {},
+  "messages": {
+    "userCreated": "User created",
+    "userCreatedDescription": "A new user has been created",
+    "userUpdated": "User updated",
+    "userUpdatedDescription": "The user has been updated {{user}}",
+    "userDeleted": "User deleted",
+    "userDeletedDescription": "The user has been deleted {{user}}"
+  }
 }

@@ -1,7 +1,18 @@
 {
-    "back": "Regresar",
-    "english": "Inglés",
-    "helloWorld": "Hola Mundo",
-    "save": "Guardar",
-    "spanish": "Español"
+  "back": "Regresar",
+  "english": "Inglés",
+  "helloWorld": "Hola Mundo",
+  "save": "Guardar",
+  "spanish": "Español",
+  "active": "Activo",
+  "deleted": "Eliminado",
+  "loading": "Cargando información",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "paginate": "Total {{quantity}}",
+  "fieldRequired": "Campo requerido",
+  "checkFields": "Por favor revisa los campos",
+  "selectOption": "Seleccionar una opción",
+  "create": "Crear",
+  "cancel": "Cancelar"
 }
