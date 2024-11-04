@@ -1,0 +1,9 @@
+{
+    "form": {
+        "birthdate": "Fecha de nacimiento"
+    },
+    "delete": {
+        "title": "Eliminar usuario",
+        "content": "¿Estas seguro de el usuario {{user}}?"
+    }
+}
