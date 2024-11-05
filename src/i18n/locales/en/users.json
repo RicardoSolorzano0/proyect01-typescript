@@ -25,7 +25,9 @@
     "gender": "Gender",
     "userType": "User Type"
   },
-  "errors": {},
+  "errors": {
+    "EMAIL_ALREADY_EXISTS": "Email already exists"
+  },
   "messages": {
     "userCreated": "User created",
     "userCreatedDescription": "A new user has been created",

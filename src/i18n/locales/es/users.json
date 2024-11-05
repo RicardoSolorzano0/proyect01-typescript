@@ -26,8 +26,7 @@
     "userType": "Tipo de usuario"
   },
   "errors": {
-    "EMAIL_ALREADY_EXISTS": "El correo ya esta registrado",
-    "NAME_ALREADY_EXISTS": "El nombre ya esta registrado"
+    "EMAIL_ALREADY_EXISTS": "El correo ya esta registrado"
   },
   "messages": {
     "userCreated": "Usuario creado",
