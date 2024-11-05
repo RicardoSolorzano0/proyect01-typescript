@@ -50,6 +50,8 @@ export const UserForm = ({ user, handleCancel }: Props) => {
   const onFinish = async (values: UserFormProps) => {
     try {
       if (!user) {
+        console.log(values, "values")
+        console.log(values.birthdate.toDate(), "values.birthdate.toDate()")
         await createUser({ ...values, birthdate: values.birthdate.toDate() }).unwrap();
       } else {
         await updateUser({ id: user.id, ...values, birthdate: values.birthdate.toDate() }).unwrap();
@@ -62,6 +64,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
       });
     } catch (error) {
       const parsedError = error as { error: string };
+      console.log(error, "revisando el mensaje de erro")
       notification.error({
         message: "Error",
         description: parsedError.error,

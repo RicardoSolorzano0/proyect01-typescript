@@ -116,7 +116,7 @@ export const UsersPage = () => {
           <SelectUI disabled={isLoadingTypes} size="large" placeholder={t("page.userTypeFilter")} allowClear options={optionUserTypes} onChange={(e) => setUserType(e ?? "")} />
           <Input placeholder={t("page.searchBy")} allowClear onChange={(e) => { setText(e.target.value) }} />
           {/* <Switch defaultChecked checkedChildren={globalT("active")} unCheckedChildren={globalT("deleted")} onChange={handleSwitch} /> */}
-          <Switch defaultChecked checkedChildren={globalT('active')} unCheckedChildren={globalT('deleted')} onChange={handleSwitch} />
+          <Switch className="w-44" defaultChecked checkedChildren={globalT('active')} unCheckedChildren={globalT('deleted')} onChange={handleSwitch} />
         </div>
       </div>
       <br />
