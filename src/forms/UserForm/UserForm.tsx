@@ -57,7 +57,8 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         await updateUser({ id: user.id, ...values, birthdate: values.birthdate.toDate() }).unwrap();
       }
       notification.success({
-        message: `${user ? t("messages.userUpdated") : t("messages.userCreated")}`,
+        //message: `${user ? t("messages.userUpdated") : t("messages.userCreated")}`,
+        message: t(`messages.user${user ? "Updated" : "Created"}`),
         // message: `"Usuario ${user ? "actualizado" : "creado"}"`,
         description: `${user ? t("messages.userUpdatedDescription", { user: `${user?.name} ${user?.last_name}` }) : t("messages.userCreatedDescription")}`,
         duration: 2,

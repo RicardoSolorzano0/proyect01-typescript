@@ -25,7 +25,10 @@
     "gender": "Genero",
     "userType": "Tipo de usuario"
   },
-  "errors": {},
+  "errors": {
+    "EMAIL_ALREADY_EXISTS": "El correo ya esta registrado",
+    "NAME_ALREADY_EXISTS": "El nombre ya esta registrado"
+  },
   "messages": {
     "userCreated": "Usuario creado",
     "userCreatedDescription": "Se ha creado un nuevo usuario",
