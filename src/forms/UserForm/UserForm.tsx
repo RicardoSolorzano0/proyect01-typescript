@@ -123,7 +123,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
           },
         ]}
       >
-        <DatePicker format={"LL"} />
+        <DatePicker format={"L"} />
       </Item>
       <Item
         label={t("form.address")}

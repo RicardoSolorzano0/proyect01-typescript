@@ -154,7 +154,7 @@ export const UsersPage = () => {
             <Column title={t("table.lastName")} dataIndex="last_name" key="last_name" />
             <Column title={t("table.email")} dataIndex="email" key="email" />
             <Column title={t("table.birthdate")} dataIndex="birthdate" key="birthdate" render={(date) => {
-              return dayjs(date).format("LL")
+              return dayjs(date).format("L")
             }} />
             <Column title={t("table.address")} dataIndex="address" key="address" />
             {option === "active" && <Column
