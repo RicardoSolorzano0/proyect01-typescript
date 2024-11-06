@@ -11,7 +11,7 @@ import { defaultPaginationProps } from './utils';
 const { useApp } = App;
 
 export const EntityTable = <RecordType extends ObjectWithId>(props: EntityTableProps<RecordType>) => {
-    const { t } = useTranslation('components', { keyPrefix: 'table' });
+    const { t } = useTranslation('common');
     const { actions, columns: propColumns, data, loading, pagination } = props;
 
     const page = useAppSelector(({ pagination }) => pagination.page);

@@ -14,5 +14,6 @@
   "checkFields": "Please check the fields",
   "selectOption": "Select an option",
   "create": "Create",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "actions": "Actions"
 }
