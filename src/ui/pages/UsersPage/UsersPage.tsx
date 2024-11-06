@@ -12,6 +12,9 @@ import { useGetUserTypesQuery } from "@/api/services/userTypes";
 import { SelectUI } from "@/ui/components/SelectUI";
 import { useTranslation } from "react-i18next";
 import { globalT } from "@/i18n";
+import { useHandlePaginatedData, usePagination } from "@/hooks/paginate";
+import { EntityTable } from "@/ui/components/EntityTable";
+import { columns } from "./table/columns";
 // import { globalT } from '@/i18n';
 
 const { useApp } = App;
@@ -20,11 +23,16 @@ export const UsersPage = () => {
   const [text, setText] = useState("");
   const [userType, setUserType] = useState("")
   const debouncedText = useDebounce(text);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
+  const page = usePagination();
+  console.log(page);
+
   const [option, setOption] = useState<OptionInGetQuerys>("active");
   const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText, userType });
   const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
   const { data: dataUserType, isLoading: isLoadingTypes } = useGetUserTypesQuery("active");
+
+  const { data, pagination } = useHandlePaginatedData(dataPaginate);
 
   const { modal, notification } = useApp();
 
@@ -102,6 +110,11 @@ export const UsersPage = () => {
     value: type.id
   }));
 
+  const tableActions = {
+    update: handleEdit,
+    delete: handleDelete
+  };
+
   return (
     <>
       {/* {
@@ -124,7 +137,15 @@ export const UsersPage = () => {
         <p>{globalT("loading")}</p>
         :
         <>
-          <Table
+          <EntityTable
+            actions={tableActions}
+            columns={columns(t)}
+            data={data ?? []}
+            loading={loading}
+            pagination={pagination}
+          />
+
+          {/* <Table
             rowKey={(record) => record.id}
             dataSource={dataPaginate?.data}
             pagination={false}
@@ -167,7 +188,7 @@ export const UsersPage = () => {
                 setPage(e)
               }}
             />
-          </div>
+          </div> */}
         </>
       }
     </>
