@@ -1,7 +1,6 @@
-import { Button, Table, App, Switch, Pagination } from "antd";
+import { Button, App, Switch } from "antd";
 import { TypeUser } from "@/types/TypeUsers";
 import { UserTypeForm } from "@/forms/UserTypeForm/UserTypeForm";
-import Column from "antd/es/table/Column";
 import { useDeleteUserTypeMutation, useSelectPaginatedUserTypesQuery } from "@/api/services/userTypes";
 import { useState } from "react";
 import { OptionInGetQuerys } from "@/types/generalTypes";
@@ -9,6 +8,9 @@ import { Input } from "antd"
 import { useDebounce } from "@/hooks/debounce";
 import { useTranslation } from "react-i18next";
 import { globalT } from "@/i18n";
+import { EntityTable } from "@/ui/components/EntityTable";
+import { columns } from "./table/columns";
+import { useHandlePaginatedData, usePagination } from "@/hooks/paginate";
 
 const { useApp } = App;
 
@@ -17,8 +19,12 @@ export const UsersTypePage = () => {
   const [text, setText] = useState("");
   const debouncedText = useDebounce(text);
   const [option, setOption] = useState<OptionInGetQuerys>("active");
-  const [page, setPage] = useState(1);
+  const page = usePagination();
+  // const [page, setPage] = useState(1);
   const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUserTypesQuery({ option, limit: 10, page, name: debouncedText });
+
+  const { data, pagination } = useHandlePaginatedData(dataPaginate);
+
   //const [deleteUserType, {data:dataDelete, error:errorDelete, isLoading:isLoadingDelete}] = useDeleteUserTypeMutation()
   const [deleteUserType, { isLoading: isLoadingDelete }] = useDeleteUserTypeMutation()
   const { modal, notification } = useApp();
@@ -90,6 +96,11 @@ export const UsersTypePage = () => {
 
   const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete;
 
+  const tableActions = {
+    update: handleEdit,
+    delete: handleDelete
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center flex-wrap">
@@ -98,7 +109,7 @@ export const UsersTypePage = () => {
         </Button>
         <div className="flex gap-4 items-center">
           <Input placeholder={t("page.searchBy")} allowClear onChange={(e) => { setText(e.target.value) }} />
-          <Switch defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
+          <Switch className="w-44" defaultChecked checkedChildren="Activos" unCheckedChildren="Eliminados" onChange={handleSwitch} />
         </div>
       </div>
       <br />
@@ -107,7 +118,14 @@ export const UsersTypePage = () => {
         <p>{globalT("loading")}</p>
         :
         <>
-          <Table
+          <EntityTable
+            actions={tableActions}
+            columns={columns(t)}
+            data={data ?? []}
+            loading={loading}
+            pagination={pagination}
+          />
+          {/* <Table
             rowKey={(record) => record.id}
             dataSource={dataPaginate?.data}
             pagination={false}
@@ -148,7 +166,7 @@ export const UsersTypePage = () => {
                 setPage(e)
               }}
             />
-          </div>
+          </div> */}
         </>
       }
     </div>
