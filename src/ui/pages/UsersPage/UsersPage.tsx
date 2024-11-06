@@ -1,9 +1,7 @@
-import { Button, Table, App, Switch, Pagination, Input } from "antd";
-import Column from "antd/es/table/Column";
+import { Button, App, Switch, Input } from "antd";
 import { useState } from "react";
 import { User } from "@/types/User";
 import { UserForm } from "@/forms/UserForm/UserForm";
-import dayjs from "dayjs";
 //import { ExampleRedux } from "@/counter/ExampleRedux";
 import { useDeleteUserMutation, useSelectPaginatedUsersQuery } from "@/api/services/user";
 import { OptionInGetQuerys } from "@/types/generalTypes";
