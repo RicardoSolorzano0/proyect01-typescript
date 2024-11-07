@@ -136,7 +136,7 @@ export const UsersPage = () => {
         :
         <>
           <EntityTable
-            actions={tableActions}
+            actions={option === "active" ? tableActions : undefined}
             columns={columns(t)}
             data={data ?? []}
             loading={loading}
