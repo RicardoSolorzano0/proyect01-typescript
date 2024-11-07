@@ -15,5 +15,9 @@
   "selectOption": "Seleccionar una opción",
   "create": "Crear",
   "cancel": "Cancelar",
-  "actions": "Acciones"
+  "actions": "Acciones",
+  "table":{
+    "update": "Actualizar",
+    "delete": "Eliminar"
+  }
 }

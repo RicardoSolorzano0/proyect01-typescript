@@ -53,7 +53,7 @@ const getActionProps = <RecordType extends ObjectWithId>(data: TableCompositeAct
 };
 
 export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsColumnProps<RecordType>) => {
-    const { t } = useTranslation('components', { keyPrefix: 'table' });
+    const { t } = useTranslation('common', { keyPrefix: 'table' });
     const { actions, modal, record } = props;
 
     const [locked, setLocked] = useState(false);
