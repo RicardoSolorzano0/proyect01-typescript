@@ -3,6 +3,7 @@ export const routes = {
     root: "/",
     user: "/user",
     typeUser: "/typeuser",
+    animals: "/animals",
   },
 };
 

@@ -4,6 +4,7 @@ import { UsersTypePage } from "@/ui/pages/UsersTypePage/UsersTypePage";
 import { routes } from "@/constants/routes";
 import { ContainerLayout } from "@/ui/layouts/ContainerLayout/ContainerLayout";
 import { NotFound } from "@/ui/pages/NotFound/NotFound";
+import { AnimalPage } from "@/ui/pages/Animals/AnimalPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
         path: routes.home.typeUser,
         element: <UsersTypePage />,
       },
+      {
+        path: routes.home.animals,
+        element: <AnimalPage />,
+      }
     ],
   },
   {
