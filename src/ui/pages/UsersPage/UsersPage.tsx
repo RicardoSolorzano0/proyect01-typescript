@@ -23,7 +23,6 @@ export const UsersPage = () => {
   const debouncedText = useDebounce(text);
   // const [page, setPage] = useState(1);
   const page = usePagination();
-  console.log(page);
 
   const [option, setOption] = useState<OptionInGetQuerys>("active");
   const { data: dataPaginate, isLoading: isLoadingPaginate, isFetching: isFetchingPaginate } = useSelectPaginatedUsersQuery({ option, limit: 10, page, filter: debouncedText, userType });

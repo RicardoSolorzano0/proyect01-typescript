@@ -29,14 +29,12 @@ export const usePagination = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        console.log('a')
         const queryPage = Number.parseInt(searchParams.get('page') ?? '');
         dispatch(setPage(!isNaN(queryPage) ? queryPage : null));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [!!searchParams]);
 
     useEffect(() => {
-        console.log('b')
         if (page !== null) {
             searchParams.set('page', page.toString());
         } else if (page === null || page <= 0) {

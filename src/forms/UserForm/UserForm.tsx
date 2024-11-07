@@ -63,8 +63,6 @@ export const UserForm = ({ user, handleCancel }: Props) => {
       });
     } catch (error) {
       const parsedError = error as { error: string };
-
-      console.log(error, "revisando el mensaje de erro")
       notification.error({
         message: "Error",
         description: t(`errors.${parsedError.error}`),
