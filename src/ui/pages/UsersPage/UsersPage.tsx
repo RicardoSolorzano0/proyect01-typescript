@@ -35,7 +35,7 @@ export const UsersPage = () => {
 
   const handleEdit = (record: User) => {
     const mdl = modal.info({
-      title: t("form.titleEdit", { user: `${record.name} ${record.last_name}` }),
+      title: t("form.titles.edit", { user: `${record.name} ${record.last_name}` }),
       // title: `Editar usuario ${record.name} ${record.last_name}`,
       content: (
         <UserForm
@@ -54,7 +54,7 @@ export const UsersPage = () => {
 
   const handleCreate = () => {
     const mdl = modal.info({
-      title: t("form.titleCreate"),
+      title: t("form.titles.create"),
       content: (
         <UserForm
           handleCancel={() => mdl.destroy()}
@@ -71,24 +71,23 @@ export const UsersPage = () => {
 
   const handleDelete = (record: User) => {
     modal.confirm({
-      title: t("form.titleDelete", { user: `${record.name} ${record.last_name}` }),
+      title: t("form.titles.delete", { user: `${record.name} ${record.last_name}` }),
       // content: `¿Estas seguro de eliminar el usuario ${record.name} ${record.last_name}?`,
-      content: t('form.contentDelete', { user: `${record.name} ${record.last_name}` }),
+      content: t('form.contents.delete', { user: `${record.name} ${record.last_name}` }),
 
       onOk: async () => {
         try {
           await deleteUser(record.id).unwrap();
           notification.success({
-            message: t("messages.userDeleted"),
-            description: t('messages.userDeletedDescription', { user: `${record.name} ${record.last_name}` }),
-            // description: `Se ha eliminado el usuario ${record.name} ${record.last_name}`,
+            message: t("messages.success.delete"),
+            description: t('messages.success.deleteDescription', { user: `${record.name} ${record.last_name}` }),
             duration: 2,
           });
         } catch (error) {
           const parsedError = error as { error: string };
           notification.error({
             message: "Error",
-            description: parsedError.error,
+            description: t(`messages.errors.${parsedError.error}`),
             duration: 2,
           });
         }

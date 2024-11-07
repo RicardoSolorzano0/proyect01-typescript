@@ -4,36 +4,41 @@
     "userTypeFilter": "User Type",
     "searchBy": "Search by name, surname or email"
   },
-  "table": {
+  "entity": {
     "name": "Name",
     "lastName": "Last Name",
     "email": "Email",
     "birthdate": "Birthdate",
     "address": "Address",
+    "gender": "Gender",
+    "userType": "User Type",
     "actions": "Actions"
   },
   "form": {
-    "titleCreate": "Create new user",
-    "titleEdit": "Edit user {{user}}",
-    "titleDelete": "Delete user {{user}}",
-    "contentDelete": "Are you sure you want to delete the user {{user}}?",
-    "name": "Name",
-    "lastName": "Last Name",
-    "birthdate": "Birthdate",
-    "address": "Address",
-    "email": "Email",
-    "gender": "Gender",
-    "userType": "User Type"
-  },
-  "errors": {
-    "EMAIL_ALREADY_EXISTS": "Email already exists"
+    "titles": {
+      "create": "Crear nuevo usuario",
+      "edit": "Editar usuario {{user}}",
+      "delete": "Eliminar usuario {{user}}"
+    },
+    "contents": {
+      "delete": "¿Estas seguro de eliminar el usuario {{user}}?"
+    }
   },
   "messages": {
-    "userCreated": "User created",
-    "userCreatedDescription": "A new user has been created",
-    "userUpdated": "User updated",
-    "userUpdatedDescription": "The user has been updated {{user}}",
-    "userDeleted": "User deleted",
-    "userDeletedDescription": "The user has been deleted {{user}}"
+    "success": {
+      "create": "User created",
+      "createDescription": "A new user has been created",
+      "update": "User updated",
+      "updateDescription": "The user has been updated {{user}}",
+      "delete": "User deleted",
+      "deleteDescription": "The user has been deleted {{user}}"
+    },
+    "errors": {
+      "USER_TYPE_ALREADY_EXISTS": "User type already exists",
+      "USER_ALREADY_EXISTS": "User already exists",
+      "USER_TYPE_NOT_FOUND": "User type not found",
+      "USER_NOT_FOUND": "User not found",
+      "USER_ALREADY_DELETED": "User already deleted"
+    }
   }
 }

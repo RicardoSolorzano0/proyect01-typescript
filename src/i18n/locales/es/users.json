@@ -4,36 +4,41 @@
     "userTypeFilter": "Tipo de usuario",
     "searchBy": "Buscar por nombre, apellido o correo"
   },
-  "table": {
+  "entity": {
     "name": "Nombre",
     "lastName": "Apellido",
     "email": "Correo",
     "birthdate": "Fecha de nacimiento",
     "address": "Dirección",
+    "gender": "Genero",
+    "userType": "Tipo de usuario",
     "actions": "Acciones"
   },
   "form": {
-    "titleCreate": "Crear nuevo usuario",
-    "titleEdit": "Editar usuario {{user}}",
-    "titleDelete": "Eliminar usuario {{user}}",
-    "contentDelete": "¿Estas seguro de eliminar el usuario {{user}}?",
-    "name": "Nombre",
-    "lastName": "Apellido",
-    "birthdate": "Fecha de nacimiento",
-    "address": "Dirección",
-    "email": "Correo",
-    "gender": "Genero",
-    "userType": "Tipo de usuario"
-  },
-  "errors": {
-    "EMAIL_ALREADY_EXISTS": "El correo ya esta registrado"
+    "titles":{
+      "create": "Crear nuevo usuario",
+      "edit": "Editar usuario {{user}}",
+      "delete": "Eliminar usuario {{user}}"
+    },
+    "contents":{
+      "delete": "¿Estas seguro de eliminar el usuario {{user}}?"
+    }
   },
   "messages": {
-    "userCreated": "Usuario creado",
-    "userCreatedDescription": "Se ha creado un nuevo usuario",
-    "userUpdated": "Usuario actualizado",
-    "userUpdatedDescription": "Se ha actualizado el usuario {{user}}",
-    "userDeleted": "Usuario eliminado",
-    "userDeletedDescription": "Se ha eliminado el usuario {{user}}"
+    "success": {
+      "create": "Usuario creado",
+      "createDescription": "Se ha creado un nuevo usuario",
+      "update": "Usuario actualizado",
+      "updateDescription": "Se ha actualizado el usuario {{user}}",
+      "delete": "Usuario eliminado",
+      "deleteDescription": "Se ha eliminado el usuario {{user}}"
+    },
+    "errors": {
+      "USER_TYPE_ALREADY_EXISTS": "El tipo de usuario ya existe",
+      "USER_ALREADY_EXISTS": "El usuario ya existe",
+      "USER_TYPE_NOT_FOUND": "El tipo de usuario no existe",
+      "USER_NOT_FOUND": "El usuario no existe",
+      "USER_ALREADY_DELETED": "El usuario ya fue eliminado"
+    }
   }
 }
