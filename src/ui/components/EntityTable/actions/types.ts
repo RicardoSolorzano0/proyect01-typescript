@@ -73,7 +73,7 @@ export type UpdateActionCompositionType<R extends ObjectWithId> = (handleUpdate:
     modal: ModalInstance
 ) => Promise<void>) => CrudTableAction<R>;
 
-export type DeleteActionCompositionType<R extends ObjectWithId, ID = string> = (handleConfirm: (
-    id: ID,
+export type DeleteActionCompositionType<R extends ObjectWithId> = (handleConfirm: (
+    record: R,
     modal: ModalInstance
 ) => Promise<void>) => CrudTableAction<R>;
