@@ -1,0 +1,35 @@
+{
+    "page": {
+      "addButton": "Add animal"
+    },
+    "entity": {
+      "name": "Name",
+      "description": "Description"
+    },
+    "form": {
+      "titles": {
+        "create": "Create new animal",
+        "edit": "Edit animal {{animal}}",
+        "delete": "Delete animal {{animal}}"
+      },
+      "contents": {
+        "delete": "Are you sure you want to delete the animal {{animal}}?"
+      }
+    },
+    "messages": {
+      "success": {
+        "create": "Animal created",
+        "createDescription": "An animal has been created",
+        "update": "Animal updated",
+        "updateDescription": "An animal has been updated",
+        "delete": "Animal deleted",
+        "deleteDescription": "An animal has been deleted"
+      },
+      "errors": {
+        "ANIMAL_ALREADY_EXISTS": "The animal already exists",
+        "ANIMAL_NOT_FOUND":"The animal does not exist",
+        "ANIMAL_ALREADY_DELETED":"The animal has already been deleted"
+      }
+    }
+  }
+  

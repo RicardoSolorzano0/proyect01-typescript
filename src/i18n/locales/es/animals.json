@@ -1,0 +1,34 @@
+{
+  "page": {
+    "addButton": "Agregar animal"
+  },
+  "entity": {
+    "name": "Nombre",
+    "description": "Descripción"
+  },
+  "form": {
+    "titles": {
+      "create": "Crear nuevo animal",
+      "edit": "Editar animal {{animal}}",
+      "delete": "Eliminar animal {{animal}}"
+    },
+    "contents": {
+      "delete": "¿Estas seguro de eliminar el animal {{animal}}?"
+    }
+  },
+  "messages": {
+    "success": {
+      "create": "Animal creado",
+      "createDescription": "Se ha creado un animal",
+      "update": "Animal actualizado",
+      "updateDescription": "Se ha actualizado un animal",
+      "delete": "Animal eliminado",
+      "deleteDescription": "Se ha eliminado un animal"
+    },
+    "errors": {
+      "ANIMAL_ALREADY_EXISTS": "El animal ya existe",
+      "ANIMAL_NOT_FOUND":"El animal no existe",
+      "ANIMAL_ALREADY_DELETED":"El animal ya fue eliminado"
+    }
+  }
+}
