@@ -16,6 +16,7 @@
   },
   "form": {
     "titles": {
+      "favorite": "Agregando animales favoritos a {{user}}",
       "create": "Crear nuevo usuario",
       "edit": "Editar usuario {{user}}",
       "delete": "Eliminar usuario {{user}}"
