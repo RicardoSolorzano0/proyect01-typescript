@@ -7,23 +7,23 @@ import dayjs from 'dayjs';
 export const columns = (t: TFunction<'users'>): TableColumnsType<User> => [
     {
         dataIndex: 'name',
-        title: t('table.name')
+        title: t('entity.name')
     },
     {
         dataIndex: 'last_name',
-        title: t('table.lastName')
+        title: t('entity.lastName')
     },
     {
         dataIndex: 'email',
-        title: t('table.email')
+        title: t('entity.email')
     },
     {
         dataIndex: 'birthdate',
-        title: t('table.birthdate'),
+        title: t('entity.birthdate'),
         render: (value) => dayjs(value).format('L')
     },
     {
         dataIndex: 'address',
-        title: t('table.address')
+        title: t('entity.address')
     }
 ];

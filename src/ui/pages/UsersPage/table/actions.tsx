@@ -5,6 +5,7 @@ import { FeatherIcon } from '../../../components/FeatherIcon';
 import { PlusSquare } from 'react-feather';
 import { globalT } from '@/i18n';
 import { UserForm } from '@/forms/UserForm/UserForm';
+import { AnimalUserForm } from '@/forms/AnimalUserForm/AnimalUserForm';
 
 export const updateUserAction: CrudTableAction<User> = (user, modalFn) => {
     const mdl = modalFn.info({
@@ -63,15 +64,19 @@ export const updateAnimalsAction: (t: TFunction) => BaseActionProps<User> = t =>
     //hidden: (record) => record.name === 'Ricardo',
     colorMode: 'warning',
     onClick: (user, modalFn) => {
-        void modalFn.info({
+        const mdl = modalFn.info({
+            title:  t("form.titles.favorite", { user: `${user.name}` }),
             content: (
-                <div className='grid grid-cols-4 text-lg'>
-                    hola mundo
-                </div>
+              <AnimalUserForm user={user} handleCancel={() => mdl.destroy()} />
             ),
-            width: '50%'
+            cancelButtonProps: {
+              style: { display: "none" },
+            },
+            okButtonProps: {
+              style: { display: "none" },
+            }
         });
     },
-    title: t("form.titles.create"),
+    title: t("form.titles.create"),// esta no tiene que estar aqui?
     type: 'click'
 });
