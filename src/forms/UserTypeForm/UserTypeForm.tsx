@@ -46,15 +46,15 @@ export const UserTypeForm = ({
         await updateUserType({ id: typeUser.id, ...values }).unwrap();
       }
       notification.success({
-        message: ` ${typeUser ? t("messages.userUpdated") : t("messages.userCreated")}`,
-        description: `${typeUser ? t("messages.userUpdatedDescription") : t("messages.userCreatedDescription")}`,
+        message: t(`messages.success.${typeUser ? "update" : "create"}`),
+        description: `${typeUser ? t("messages.success.updateDescription") : t("messages.success.createDescription")}`,
         duration: 2,
       });
     } catch (error) {
       const parsedError = error as { error: string };
       notification.error({
         message: "Error",
-        description: parsedError.error,
+        description: t(`messages.errors.${parsedError.error}`),
         duration: 2,
       })
     }
@@ -75,7 +75,7 @@ export const UserTypeForm = ({
   return (
     <FormUi form={form} initialValues={initValues} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
       <Item
-        label={t("table.name")}
+        label={t("entity.name")}
         name="name"
         rules={[
           {
@@ -87,7 +87,7 @@ export const UserTypeForm = ({
         <Input />
       </Item>
       <Item
-        label={t("table.description")}
+        label={t("entity.description")}
         name="description"
         rules={[
           {
@@ -99,7 +99,7 @@ export const UserTypeForm = ({
         <Input />
       </Item>
       <Item
-        label={t("table.color")}
+        label={t("entity.color")}
         name="color"
         rules={[
           {

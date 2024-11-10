@@ -6,8 +6,7 @@
   "table": {
     "name": "Nombre",
     "description": "Descripción",
-    "color": "Color",
-    "actions": "Acciones"
+    "color": "Color"
   },
   "form": {
     "titleCreate": "Crear nuevo tipo de usuario",

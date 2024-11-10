@@ -32,7 +32,7 @@ export const UsersTypePage = () => {
 
   const handleCreate = () => {
     const mdl = modal.info({
-      title: t("form.titleCreate"),
+      title: t("form.titles.create"),
       content: (
         <UserTypeForm
           handleCancel={() => mdl.destroy()}
@@ -50,7 +50,7 @@ export const UsersTypePage = () => {
   const handleEdit = (record: TypeUser) => {
     const mdl = modal.info({
       // title: `Editar tipo de usuario ${record.name}`,
-      title: t("form.titleEdit", { typeUser: record.name }),
+      title: t("form.titles.edit", { typeUser: record.name }),
       content: (
         <UserTypeForm
           typeUser={record}
@@ -68,21 +68,21 @@ export const UsersTypePage = () => {
 
   const handleDelete = (record: TypeUser) => {
     modal.confirm({
-      title: t("form.titleDelete", { typeUser: record.name }),
-      content: t("form.contentDelete", { typeUser: record.name }),
+      title: t("form.titles.delete", { typeUser: record.name }),
+      content: t("form.contents.delete", { typeUser: record.name }),
       onOk: async () => {
         try {
           await deleteUserType(record.id).unwrap();
           notification.success({
-            message: t("messages.userDeleted"),
-            description: t("messages.userDeletedDescription", { typeUser: record.name }),
+            message: t("messages.success.delete"),
+            description: t("messages.success.deleteDescription", { typeUser: record.name }),
             duration: 2,
           });
         } catch (error) {
           const parsedError = error as { error: string };
           notification.error({
             message: "Error",
-            description: parsedError.error,
+            description: t(`messages.errors.${parsedError.error}`),
             duration: 2,
           })
         }

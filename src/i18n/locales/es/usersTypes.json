@@ -3,25 +3,33 @@
     "addButton": "Agregar tipo de usuario",
     "searchBy": "Buscar por nombre"
   },
-  "table": {
+  "entity": {
     "name": "Nombre",
     "description": "Descripción",
-    "color": "Color",
-    "actions": "Acciones"
+    "color": "Color"
   },
   "form": {
-    "titleCreate": "Crear nuevo tipo de usuario",
-    "titleEdit": "Editar tipo de usuario {{user}}",
-    "titleDelete": "Eliminar tipo de usuario {{user}}",
-    "contentDelete": "¿Estás seguro de eliminar el tipo de usuario {{user}}?"
+    "titles":{
+      "create":"Crear nuevo tipo de usuario",
+      "edit":"Editar tipo de usuario",
+      "delete":"Eliminar tipo de usuario"
+    },
+    "contents":{
+      "delete":"¿Estas seguro de eliminar el tipo de usuario?"
+    }
   },
-  "errors": {},
   "messages": {
-    "userTypeCreated": "Tipo de usuario creado",
-    "userTypeCreatedDescription": "Se ha creado un tipo de usuario",
-    "userTypeUpdated": "Tipo de usuario actualizado",
-    "userTypeUpdatedDescription": "Se ha actualizado un tipo de usuario",
-    "userTypeDeleted": "Tipo de usuario eliminado",
-    "userTypeDeletedDescription": "Se ha eliminado un tipo de usuario"
+    "success": {
+      "create": "Tipo de usuario creado",
+      "createDescription": "Se ha creado un tipo de usuario",
+      "update": "Tipo de usuario actualizado",
+      "updateDescription": "Se ha actualizado un tipo de usuario",
+      "delete": "Tipo de usuario eliminado",
+      "deleteDescription": "Se ha eliminado un tipo de usuario"
+    },
+    "errors": {
+      "USER_TYPE_ALREADY_EXISTS": "El tipo de usuario ya existe",
+      "USER_TYPE_NOT_FOUND":"El tipo de usuario no existe"
+    }
   }
 }
