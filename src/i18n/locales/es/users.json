@@ -16,13 +16,13 @@
   },
   "form": {
     "titles":{
-      "favorite": "Agregando animales favoritos a {{user}}",
+      "favorite": "Agregar animales favoritos",
       "create": "Crear nuevo usuario",
-      "edit": "Editar usuario {{user}}",
-      "delete": "Eliminar usuario {{user}}"
+      "edit": "Editar usuario",
+      "delete": "Eliminar usuario"
     },
     "contents":{
-      "delete": "¿Estas seguro de eliminar el usuario {{user}}?"
+      "delete": "¿Estas seguro de eliminar el usuario?"
     }
   },
   "messages": {
@@ -30,9 +30,9 @@
       "create": "Usuario creado",
       "createDescription": "Se ha creado un nuevo usuario",
       "update": "Usuario actualizado",
-      "updateDescription": "Se ha actualizado el usuario {{user}}",
+      "updateDescription": "Se ha actualizado el usuario",
       "delete": "Usuario eliminado",
-      "deleteDescription": "Se ha eliminado el usuario {{user}}"
+      "deleteDescription": "Se ha eliminado el usuario"
     },
     "errors": {
       "USER_TYPE_ALREADY_EXISTS": "El tipo de usuario ya existe",

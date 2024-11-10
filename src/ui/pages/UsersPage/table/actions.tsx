@@ -77,6 +77,6 @@ export const updateAnimalsAction: (t: TFunction) => BaseActionProps<User> = t =>
             }
         });
     },
-    title: t("form.titles.create"),// esta no tiene que estar aqui?
+    title: t("form.titles.favorite"),
     type: 'click'
 });

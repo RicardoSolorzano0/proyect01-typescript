@@ -55,17 +55,15 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         await updateUser({ id: user.id, ...values, birthdate: values.birthdate.toDate() }).unwrap();
       }
       notification.success({
-        //message: `${user ? t("messages.userUpdated") : t("messages.userCreated")}`,
-        message: t(`messages.user${user ? "Updated" : "Created"}`),
-        // message: `"Usuario ${user ? "actualizado" : "creado"}"`,
-        description: `${user ? t("messages.userUpdatedDescription", { user: `${user?.name} ${user?.last_name}` }) : t("messages.userCreatedDescription")}`,
+        message: t(`messages.success.${user ? "update" : "create"}`),
+        description: t(`messages.success.${user ? "updateDescription" : "createDescription"}`),
         duration: 2,
       });
     } catch (error) {
       const parsedError = error as { error: string };
       notification.error({
         message: "Error",
-        description: t(`errors.${parsedError.error}`),
+        description: t(`messages.errors.${parsedError.error}`),
         duration: 2,
       })
     }
@@ -88,7 +86,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
   return (
     <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
       <Item
-        label={t("form.name")}
+        label={t("entity.name")}
         name="name"
         rules={[
           {
@@ -100,7 +98,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         <Input />
       </Item>
       <Item
-        label={t("form.lastName")}
+        label={t("entity.lastName")}
         name="last_name"
         rules={[
           {
@@ -112,7 +110,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         <Input />
       </Item>
       <Item
-        label={t("form.birthdate")}
+        label={t("entity.birthdate")}
         name="birthdate"
         rules={[
           {
@@ -124,7 +122,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         <DatePicker format={"L"} />
       </Item>
       <Item
-        label={t("form.address")}
+        label={t("entity.address")}
         name="address"
         rules={[
           {
@@ -136,7 +134,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         <Input />
       </Item>
       <Item
-        label={t("form.email")}
+        label={t("entity.email")}
         name="email"
         rules={[
           {
@@ -148,7 +146,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         <Input type="email" />
       </Item>
       <Item
-        label={t("form.gender")}
+        label={t("entity.gender")}
         name="gender"
         rules={[
           {
@@ -164,7 +162,7 @@ export const UserForm = ({ user, handleCancel }: Props) => {
         />
       </Item>
       <Item
-        label={t("form.userType")}
+        label={t("entity.userType")}
         name="user_type_id"
         rules={[
           {
