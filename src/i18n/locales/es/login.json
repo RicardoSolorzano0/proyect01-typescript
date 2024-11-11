@@ -1,0 +1,9 @@
+{
+    "page":{
+        "title":"Iniciar sesión",
+        "email":"Correo",
+        "password":"Contraseña",
+        "remember":"Recuerdame",
+        "login":"Iniciar sesión"
+    }
+}

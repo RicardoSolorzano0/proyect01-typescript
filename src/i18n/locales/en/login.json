@@ -1,0 +1,9 @@
+{
+    "page":{
+        "title":"Login",
+        "email":"Email",
+        "password":"Password",
+        "remember":"Remember me",
+        "login":"Login"
+    }
+}
