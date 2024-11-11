@@ -5,7 +5,7 @@ import { routes } from "@/constants/routes";
 import { ContainerLayout } from "@/ui/layouts/ContainerLayout/ContainerLayout";
 import { NotFound } from "@/ui/pages/NotFound/NotFound";
 import { AnimalPage } from "@/ui/pages/Animals/AnimalPage";
-import { FormLogin } from "@/forms/FormLogin/FormLogin";
+import { LoginForm } from "@/forms/LoginForm/LoginForm";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <FormLogin />,
+    element: <LoginForm />,
   },
   {
     path: "/*",

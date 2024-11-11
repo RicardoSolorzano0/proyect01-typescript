@@ -13,7 +13,7 @@ type LoginFormProps = {
     password: string;
 }
 
-export const FormLogin = () => {
+export const LoginForm = () => {
     const { t } = useTranslation("login");
     const [form] = useForm<LoginFormProps>();
 
