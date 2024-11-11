@@ -63,10 +63,11 @@ export const LoginForm = () => {
 
     return (
         <div className="flex items-center justify-center bg-[#001529] h-screen">
-            <div className="bg-white rounded-lg p-5">
+            <div className="bg-white rounded-lg p-5 w-[400px]">
                 <h1 className="text-center text-2xl">{t("page.login")}</h1>
-                <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
+                <FormUi layout="horizontal" initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
                     <Item
+                    className="mt-4"
                         label={t("page.email")}
                         name="email"
                         rules={[
