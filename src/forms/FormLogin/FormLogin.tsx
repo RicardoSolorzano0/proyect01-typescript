@@ -62,39 +62,42 @@ export const FormLogin = () => {
     const loading = false
 
     return (
-        <div>
-            <h1>{t("page.title")}</h1>
-            <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
-                <Item
-                    label={t("page.email")}
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: globalT("fieldRequired"),
-                        },
-                    ]}
-                >
-                    <Input type="email" />
-                </Item>
-                <Item
-                    label={t("page.password")}
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: globalT("fieldRequired"),
-                        },
-                    ]}
-                >
-                    <Input type="password" />
-                </Item>
-                <div className="flex justify-center gap-2">
-                    <Button type="primary" htmlType="submit">
-                        {t("page.login")}
-                    </Button>
-                </div>
-            </FormUi>
+        <div className="flex items-center justify-center bg-[#001529] h-screen">
+            <div className="bg-white rounded-lg p-5">
+                <h1 className="text-center text-2xl">{t("page.login")}</h1>
+                <FormUi initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
+                    <Item
+                        label={t("page.email")}
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: globalT("fieldRequired"),
+                            },
+                        ]}
+                    >
+                        <Input type="email" />
+                    </Item>
+                    <Item
+                        label={t("page.password")}
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: globalT("fieldRequired"),
+                            },
+                        ]}
+                    >
+                        <Input type="password" />
+                    </Item>
+                    <div className="flex justify-center gap-2">
+                        <Button type="primary" htmlType="submit">
+                            {t("page.login")}
+                        </Button>
+                    </div>
+                </FormUi>
+            </div>
+
         </div >
     )
 }
