@@ -5,5 +5,12 @@
         "password":"Password",
         "remember":"Remember me",
         "login":"Login"
+    },
+    "messages":{
+     "success":{
+        "login":"Login successful",
+        "loginDescription":"You have successfully logged in"
+     }
     }
+   
 }
