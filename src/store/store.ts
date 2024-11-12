@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "@/store/slices/counterSlice";
+import userReducer from "@/store/slices/userSlice";
 import { pokemonApi } from "@/api/services/pokemon";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userAppApi } from "@/api/rtk/userApp.api";
@@ -8,6 +9,7 @@ import paginationReducer from "@/store/slices/paginationSlice";
 export const store = configureStore({
     reducer: {
         counter: counterReducer,
+        user: userReducer,
         pagination: paginationReducer,
         [pokemonApi.reducerPath]: pokemonApi.reducer,
         // [userTypesApi.reducerPath]: userTypesApi.reducer,
