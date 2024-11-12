@@ -7,7 +7,7 @@ import { globalT } from "@/i18n";
 import { Button, Form, Input, App } from "antd";
 import type { FormProps } from "antd";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { logoutUser, setCurrentUser } from "@/store/slices/userSlice"; 
@@ -27,6 +27,7 @@ export const LoginForm = () => {
     const navigate = useNavigate()
     const { t } = useTranslation("login");
     const [form] = useForm<LoginFormProps>();
+    const [loading, setLoading] = useState(true);
 
     const initialValues: Partial<LoginFormProps> = {
         email: "",
@@ -72,10 +73,9 @@ export const LoginForm = () => {
         console.log("Failed:", errorInfo);
     };
 
-    const loading = false
-
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
+            setLoading(true)
             if (user) {
                 dispatch(setCurrentUser({
                     displayName: user.displayName?user.displayName:"User",
@@ -83,11 +83,25 @@ export const LoginForm = () => {
                     uid: user.uid
                 }))
                 navigate(routes.home.root);
+                setLoading(false)
             }else{
                 dispatch(logoutUser())
+                setLoading(false)
             }
         });
     }, []);
+
+    if(loading){
+        return <>
+            <div className="flex items-center justify-center bg-[#001529] h-screen">
+                <div className="bg-white rounded-lg p-5 w-[400px]">
+                    <div className="flex justify-center gap-2">
+                        Cargando
+                    </div>
+                </div>
+            </div>
+        </>
+    }
 
     return (
         <div className="flex items-center justify-center bg-[#001529] h-screen">
