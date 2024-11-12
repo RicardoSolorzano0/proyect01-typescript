@@ -1,8 +1,16 @@
+import { routes } from "@/constants/routes";
+import { useFirebaseContext } from "@/context/FirebaseCtx";
+import { loginWithEmailPassword } from "@/firebase/providers";
 import { FormUi } from "@/forms/FormUi/FormUi"
+import { useAppDispatch } from "@/hooks";
 import { globalT } from "@/i18n";
 import { Button, Form, Input, App } from "antd";
 import type { FormProps } from "antd";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
+import { logoutUser, setCurrentUser } from "@/store/slices/userSlice"; 
 
 const { useApp } = App;
 
@@ -14,6 +22,9 @@ type LoginFormProps = {
 }
 
 export const LoginForm = () => {
+    const dispatch = useAppDispatch();
+    const { auth } = useFirebaseContext();
+    const navigate = useNavigate()
     const { t } = useTranslation("login");
     const [form] = useForm<LoginFormProps>();
 
@@ -25,27 +36,29 @@ export const LoginForm = () => {
     const { notification } = useApp();
 
     const onFinish = async (values: LoginFormProps) => {
-        console.log(values, "revisando la informacion")
         try {
-            //   if (!user) {
-            //     await createUser({ ...values, birthdate: values.birthdate.toDate() }).unwrap();
-            //   } else {
-            //     await updateUser({ id: user.id, ...values, birthdate: values.birthdate.toDate() }).unwrap();
-            //   }
-            //   notification.success({
-            //     message: t(`messages.success.${user ? "update" : "create"}`),
-            //     description: t(`messages.success.${user ? "updateDescription" : "createDescription"}`),
-            //     duration: 2,
-            //   });
+            const resp = await loginWithEmailPassword(auth, values);
+            if (resp.ok) {
+                notification.success({
+                    message:t("messages.success.login"),
+                    description: t("messages.success.loginDescription"),
+                    duration: 2,
+                });
+            }else{
+                notification.error({
+                    message: "Error",
+                    description: t(`messages.errors.NOT_FOUND`),
+                    duration: 2,
+                })
+            }
         } catch (error) {
-            //   const parsedError = error as { error: string };
-            //   notification.error({
-            //     message: "Error",
-            //     description: t(`messages.errors.${parsedError.error}`),
-            //     duration: 2,
-            //   })
+              const parsedError = error as { error: string };
+              notification.error({
+                message: "Error",
+                description: t(`messages.errors.${parsedError.error}`),
+                duration: 2,
+              })
         }
-        // handleCancel();
     };
 
     const onFinishFailed: FormProps<LoginFormProps>["onFinishFailed"] = (
@@ -61,13 +74,28 @@ export const LoginForm = () => {
 
     const loading = false
 
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(setCurrentUser({
+                    displayName: user.displayName?user.displayName:"User",
+                    email: user.email!,
+                    uid: user.uid
+                }))
+                navigate(routes.home.root);
+            }else{
+                dispatch(logoutUser())
+            }
+        });
+    }, []);
+
     return (
         <div className="flex items-center justify-center bg-[#001529] h-screen">
             <div className="bg-white rounded-lg p-5 w-[400px]">
                 <h1 className="text-center text-2xl">{t("page.login")}</h1>
                 <FormUi layout="horizontal" initialValues={initialValues} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} disabled={loading}>
                     <Item
-                    className="mt-4"
+                        className="mt-4"
                         label={t("page.email")}
                         name="email"
                         rules={[

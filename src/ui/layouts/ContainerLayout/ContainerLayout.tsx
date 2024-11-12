@@ -1,10 +1,35 @@
 import { Layout } from "antd";
 import { SideBar } from "@/ui/layouts/SideBar/SideBar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useFirebaseContext } from "@/context/FirebaseCtx";
+import { onAuthStateChanged } from "firebase/auth";
+import { routes } from "@/constants/routes";
+import { useAppDispatch } from "@/hooks";
+import { logoutUser, setCurrentUser } from "@/store/slices/userSlice";
 
 const { Content, Footer } = Layout;
 
 export const ContainerLayout = () => {
+  const navigate = useNavigate();
+  const { auth } = useFirebaseContext();
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        dispatch(logoutUser())
+        navigate(routes.login);
+      }else{
+        dispatch(setCurrentUser({
+          displayName: user.displayName?user.displayName:"User",
+          email: user.email!,
+          uid: user.uid
+        }))
+      } 
+  });
+  }, []);
+
   return (
     <Layout hasSider>
       <SideBar />
