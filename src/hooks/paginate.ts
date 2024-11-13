@@ -3,9 +3,9 @@ import { useEffect }                      from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { setPage } from '@/store/slices/paginationSlice';
-import { Paginated } from '@/types/generalTypes';
-import { ObjectWithId } from '@/types/ObjectWithId';
-import { EntityTableProps } from '@/ui/components/EntityTable';
+import type { Paginated } from '@/types/generalTypes';
+import type { ObjectWithId } from '@/types/ObjectWithId';
+import type { EntityTableProps } from '@/ui/components/EntityTable';
 
 
 export const useHandlePaginatedData = <T extends ObjectWithId>(data: Paginated<T> | undefined) => {
