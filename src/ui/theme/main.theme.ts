@@ -4,11 +4,6 @@ const primaryColor = '#AC5DD9';
 const secondaryColor = '#F190B3';
 
 export const mainTheme: ThemeConfig = {
-    token: {
-        borderRadius: 8,
-        colorInfo: primaryColor,
-        colorPrimary: primaryColor
-    },
     components: {
         DatePicker: {
             colorBorder: primaryColor,
@@ -40,7 +35,12 @@ export const mainTheme: ThemeConfig = {
             fontSize: 16
         },
         Upload: {
-            padding: 0,
+            padding: 0
         }
+    },
+    token: {
+        borderRadius: 8,
+        colorInfo: primaryColor,
+        colorPrimary: primaryColor
     }
 };
