@@ -19,10 +19,10 @@ const extraClasses: colorsClasses = {
 
 export const ActionButton = ({ className, customColor = 'default', icon, ...props }: CustomButtonProps) => (
     <Button
-        className={`border-none shadow ${className ?? ''} ${extraClasses[customColor]}`}
-        danger={customColor === 'danger'}
+        className={ `border-none shadow ${className ?? ''} ${extraClasses[customColor]}` }
+        danger={ customColor === 'danger' }
         shape='circle'
-        {...props}
+        { ...props }
     >
         {
             icon && (
