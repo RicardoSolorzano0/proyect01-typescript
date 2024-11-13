@@ -1,16 +1,17 @@
-import { Auth, signInWithEmailAndPassword } from "firebase/auth";
-import { FirebaseAuth } from "./config";
+import type { Auth } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseAuth } from './config';
 
 type LoginParams = {
     email: string;
     password: string;
-}
+};
 
-export const loginWithEmailPassword = async (auth: Auth, {email, password}:LoginParams) => {
-    try{
+export const loginWithEmailPassword = async (auth: Auth, { email, password }: LoginParams) => {
+    try {
         const resp = await signInWithEmailAndPassword(auth, email, password);
 
-        const {uid, displayName } = resp.user
+        const { displayName, uid } = resp.user;
 
         // const idTokeResult = await resp.user.getIdTokenResult();
 
@@ -25,21 +26,21 @@ export const loginWithEmailPassword = async (auth: Auth, {email, password}:Login
         // idTokeResult.claims['viewer'] // false
         
         return {
-            ok: true,
-            email,
             displayName,
-            uid,
-        }
-    }catch(error){
-        const parsedError = error as { error: string };
+            email,
+            ok: true,
+            uid
+        };
+    } catch (error) {
+        const parsedError = error as { error: string; };
 
         return {
-            ok:false, 
-            errorMessage: parsedError.error
-        }
+            errorMessage: parsedError.error, 
+            ok: false
+        };
     }
-}
+};
 
 export const logoutFirebase = async () => {
     return await FirebaseAuth.signOut();
-}
+};
