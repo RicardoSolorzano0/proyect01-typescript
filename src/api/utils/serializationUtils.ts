@@ -34,4 +34,4 @@ export const serializeUriWithPageAndFilters = <T extends ParamsType>(uri: string
     filters,
     page
 }: PagedFilters<T>): string =>
-    `${ uri }?page=${ page }${ filters !== undefined ? serializeObjectToQueryParams(filters) : '' }`;
+        `${ uri }?page=${ page }${ filters !== undefined ? serializeObjectToQueryParams(filters) : '' }`;

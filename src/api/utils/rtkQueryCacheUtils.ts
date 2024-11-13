@@ -35,14 +35,14 @@ const providesSimpleList = <T extends string>(
 const providesList = <T extends string>(
     type: T
 ): InnerProvidesList<T> => results => {
-    if (results)
-        return [
-            { id: LIST_ID, type },
-            ...results.map(({ id }) => ({ id, type } as const))
-        ];
+        if (results)
+            return [
+                { id: LIST_ID, type },
+                ...results.map(({ id }) => ({ id, type } as const))
+            ];
 
-    return [{ id: LIST_ID, type }];
-};
+        return [{ id: LIST_ID, type }];
+    };
 
 const invalidatesList = <T extends string>(type: T) => (): readonly [
     CacheItem<T, typeof LIST_ID>
@@ -59,45 +59,45 @@ type InnerProvidesNestedList<T> = <
 const providesNestedList = <T extends string>(
     type: T
 ): InnerProvidesNestedList<T> => results => {
-    if (results)
-        return [
-            { id: LIST_ID, type },
-            ...results.data.map(({ id }) => ({ id, type } as const))
-        ];
+        if (results)
+            return [
+                { id: LIST_ID, type },
+                ...results.data.map(({ id }) => ({ id, type } as const))
+            ];
 
 
-    return [{ id: LIST_ID, type }];
-};
+        return [{ id: LIST_ID, type }];
+    };
 
 const cacheByIdArg = <T extends string>(type: T) => <
     ID,
     Result = undefined,
     Error = undefined
 >(
-    _result: Result,
-    _error: Error,
-    id: ID
-): readonly [CacheItem<T, ID>] => [{ id, type }] as const;
+        _result: Result,
+        _error: Error,
+        id: ID
+    ): readonly [CacheItem<T, ID>] => [{ id, type }] as const;
 
 const cacheByIdArgProperty = <T extends string>(type: T) => <
     Arg extends { id: unknown; },
     Result = undefined,
     Error = undefined
 >(
-    _result: Result,
-    _error: Error,
-    arg: Arg
-): [] | readonly [CacheItem<T, Arg['id']>] => [{ id: arg.id, type }] as const;
+        _result: Result,
+        _error: Error,
+        arg: Arg
+    ): [] | readonly [CacheItem<T, Arg['id']>] => [{ id: arg.id, type }] as const;
 
 const cacheByIdArgPropertyNoInvalidateOnError = <T extends string>(type: T) => <
     Arg extends { id: unknown; },
     Result = undefined,
     Error = undefined
 >(
-    result: Result,
-    error: Error,
-    arg: Arg
-): [] | readonly [CacheItem<string, Arg['id']>] => !error ? cacheByIdArgProperty(type)(result, error, arg) : [];
+        result: Result,
+        error: Error,
+        arg: Arg
+    ): [] | readonly [CacheItem<string, Arg['id']>] => !error ? cacheByIdArgProperty(type)(result, error, arg) : [];
 
 export const rtkCacher = {
     cacheByIdArg,
