@@ -1,6 +1,6 @@
-import { TablePaginationConfig } from "antd";
+import type { TablePaginationConfig } from 'antd';
 import { store }                 from '@/store';
-import { setPage }               from "@/store/slices/paginationSlice";
+import { setPage }               from '@/store/slices/paginationSlice';
 
 export const defaultPaginationProps: TablePaginationConfig = {
     defaultCurrent: 1,

@@ -1,2 +1,2 @@
-export * from './EntityTable'
+export * from './EntityTable';
 export * from './types';

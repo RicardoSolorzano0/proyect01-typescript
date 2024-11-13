@@ -38,10 +38,20 @@ export const LanguageSelector = () => {
     }));
 
     return (
-        <Tooltip placement='left' title={t('changeLanguage')}>
-            <Dropdown menu={{ items, onClick: handleLanguageChange }} placement='bottom' trigger={['click']}>
-                <Button className='flex items-center justify-center' shape='circle'>
-                    <FeatherIcon icon={Globe} />
+        <Tooltip
+            placement='left'
+            title={ t('changeLanguage') }
+        >
+            <Dropdown
+                menu={ { items, onClick: handleLanguageChange } }
+                placement='bottom'
+                trigger={ ['click'] }
+            >
+                <Button
+                    className='flex items-center justify-center'
+                    shape='circle'
+                >
+                    <FeatherIcon icon={ Globe } />
                 </Button>
             </Dropdown>
         </Tooltip>

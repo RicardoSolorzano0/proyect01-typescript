@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Switch, Typography } from "antd";
+import { Switch, Typography } from 'antd';
+import { useState } from 'react';
 
 const { Paragraph, Text } = Typography;
 
@@ -9,13 +9,13 @@ export const Example = () => {
     return (
         <>
             <Switch
-                checked={ellipsis}
-                onChange={() => {
+                checked={ ellipsis }
+                onChange={ () => {
                     setEllipsis(!ellipsis);
-                }}
+                } }
             />
 
-            <Paragraph ellipsis={ellipsis}>
+            <Paragraph ellipsis={ ellipsis }>
                 Ant Design, a design language for background applications, is refined by
                 Ant UED Team. Ant Design, a design language for background applications,
                 is refined by Ant UED Team. Ant Design, a design language for background
@@ -28,7 +28,7 @@ export const Example = () => {
 
             <Paragraph
                 ellipsis={
-                    ellipsis ? { rows: 3, expandable: true, symbol: "más" } : false
+                    ellipsis ? { expandable: true, rows: 3, symbol: 'más' } : false
                 }
             >
                 Ant Design, a design language for background applications, is refined by
@@ -42,8 +42,8 @@ export const Example = () => {
             </Paragraph>
 
             <Text
-                style={ellipsis ? { width: 200 } : undefined}
-                ellipsis={ellipsis ? { tooltip: "I am ellipsis now!" } : false}
+                ellipsis={ ellipsis ? { tooltip: 'I am ellipsis now!' } : false }
+                style={ ellipsis ? { width: 200 } : undefined }
             >
                 Ant Design, a design language for background applications, is refined by
                 Ant UED Team.
@@ -51,8 +51,8 @@ export const Example = () => {
 
             <Text
                 code
-                style={ellipsis ? { width: 200 } : undefined}
-                ellipsis={ellipsis ? { tooltip: "I am ellipsis now!" } : false}
+                ellipsis={ ellipsis ? { tooltip: 'I am ellipsis now!' } : false }
+                style={ ellipsis ? { width: 200 } : undefined }
             >
                 Ant Design, a design language for background applications, is refined by
                 Ant UED Team.

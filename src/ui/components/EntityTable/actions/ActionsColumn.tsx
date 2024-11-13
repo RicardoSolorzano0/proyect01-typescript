@@ -2,13 +2,13 @@ import { Popconfirm, Space, Tooltip } from 'antd';
 import type { TFunction } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { CrudActionsEnum, type TableActionType, type TableCompositeAction } from './types';
 import { crudActionsData } from './utils';
-import { ObjectWithId } from '@/types/ObjectWithId';
-import { ModalFunctionsType } from '@/types/modals';
-import { FeatherIcon } from '../../FeatherIcon';
 import { ActionButton } from '../../Buttons';
-import { Link } from 'react-router-dom';
+import { FeatherIcon } from '../../FeatherIcon';
+import type { ModalFunctionsType } from '@/types/modals';
+import type { ObjectWithId } from '@/types/ObjectWithId';
 
 
 type ActionsColumnProps<RecordType extends ObjectWithId> = {
@@ -27,7 +27,7 @@ const getActionProps = <RecordType extends ObjectWithId>(data: TableCompositeAct
         if (typeof actionData === 'function') {
             return {
                 actionData,
-                buttonProps: { icon: <FeatherIcon icon={icon} /> },
+                buttonProps: { icon: <FeatherIcon icon={ icon } /> },
                 color: buttonType,
                 title
             };
@@ -35,7 +35,7 @@ const getActionProps = <RecordType extends ObjectWithId>(data: TableCompositeAct
 
         return {
             actionData,
-            buttonProps: { ...actionData.buttonProps, icon: <FeatherIcon icon={icon} /> },
+            buttonProps: { ...actionData.buttonProps, icon: <FeatherIcon icon={ icon } /> },
             color: buttonType,
             title
         };
@@ -83,12 +83,15 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
 
                 if (typeof actionData === 'function') {
                     return (
-                        <Tooltip key={i} title={title}>
+                        <Tooltip
+                            key={ i }
+                            title={ title }
+                        >
                             <ActionButton
-                                customColor={color}
-                                disabled={locked}
-                                onClick={() => lockActionsUI(() => actionData(record, modal))}
-                                {...buttonProps}
+                                customColor={ color }
+                                disabled={ locked }
+                                onClick={ () => lockActionsUI(() => actionData(record, modal)) }
+                                { ...buttonProps }
                             />
                         </Tooltip>
                     );
@@ -105,15 +108,15 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
 
                     return (
                         <Tooltip
-                            key={i}
-                            title={title}
-                            {...tooltipProps}
+                            key={ i }
+                            title={ title }
+                            { ...tooltipProps }
                         >
                             <ActionButton
-                                customColor={color}
-                                disabled={locked}
-                                onClick={() => lockActionsUI(() => onClick(record, modal))}
-                                {...buttonProps}
+                                customColor={ color }
+                                disabled={ locked }
+                                onClick={ () => lockActionsUI(() => onClick(record, modal)) }
+                                { ...buttonProps }
                             />
                         </Tooltip>
                     );
@@ -122,14 +125,14 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
                 if (type === 'link') {
                     return (
                         <Tooltip
-                            key={i}
-                            title={title}
-                            {...tooltipProps}
+                            key={ i }
+                            title={ title }
+                            { ...tooltipProps }
                         >
-                            <Link {...actionData.linkProps(record.id)}>
+                            <Link { ...actionData.linkProps(record.id) }>
                                 <ActionButton
-                                    customColor={color}
-                                    {...buttonProps}
+                                    customColor={ color }
+                                    { ...buttonProps }
                                 />
                             </Link>
                         </Tooltip>
@@ -141,14 +144,17 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
 
                     return (
                         <Tooltip
-                            key={i}
-                            title={title}
-                            {...tooltipProps}
+                            key={ i }
+                            title={ title }
+                            { ...tooltipProps }
                         >
-                            <Popconfirm {...popConfirmProps} onConfirm={() => onConfirm(record)}>
+                            <Popconfirm
+                                { ...popConfirmProps }
+                                onConfirm={ () => onConfirm(record) }
+                            >
                                 <ActionButton
-                                    customColor={color}
-                                    {...buttonProps}
+                                    customColor={ color }
+                                    { ...buttonProps }
                                 />
                             </Popconfirm>
                         </Tooltip>

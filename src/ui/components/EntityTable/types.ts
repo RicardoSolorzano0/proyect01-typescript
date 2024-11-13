@@ -1,6 +1,6 @@
-import { ObjectWithId } from "@/types/ObjectWithId";
-import { TableActionType } from "./actions";
-import { TableColumnsType, TablePaginationConfig } from "antd";
+import type { TableColumnsType, TablePaginationConfig } from 'antd';
+import type { TableActionType } from './actions';
+import type { ObjectWithId } from '@/types/ObjectWithId';
 
 export type EntityTableProps<RecordType extends ObjectWithId> = {
     actions?: TableActionType<RecordType>;

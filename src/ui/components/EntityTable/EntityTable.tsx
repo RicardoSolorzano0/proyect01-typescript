@@ -3,10 +3,10 @@ import type { TablePaginationConfig } from 'antd/lib/table';
 import { useTranslation } from 'react-i18next';
 import { ActionsColumn } from './actions';
 import type { EntityTableProps } from './types';
-import { ObjectWithId } from '@/types/ObjectWithId';
-import { usePageValidation } from '@/hooks/paginate';
-import { useAppSelector } from '@/hooks';
 import { defaultPaginationProps } from './utils';
+import { useAppSelector } from '@/hooks';
+import { usePageValidation } from '@/hooks/paginate';
+import type { ObjectWithId } from '@/types/ObjectWithId';
 
 const { useApp } = App;
 
@@ -23,7 +23,13 @@ export const EntityTable = <RecordType extends ObjectWithId>(props: EntityTableP
 
         const actionsColumn: TableColumnType<RecordType> = {
             key: 'actions',
-            render: (_, r) => <ActionsColumn actions={actions} modal={modal} record={r} />,
+            render: (_, r) => (
+                <ActionsColumn
+                    actions={ actions }
+                    modal={ modal }
+                    record={ r }
+                />
+            ),
             title: t('actions')
         };
 
@@ -43,11 +49,11 @@ export const EntityTable = <RecordType extends ObjectWithId>(props: EntityTableP
 
     return (
         <Table
-            columns={columns()}
-            dataSource={data}
-            loading={loading}
-            pagination={internalPagination}
-            rowKey={({ id }) => id}
+            columns={ columns() }
+            dataSource={ data }
+            loading={ loading }
+            pagination={ internalPagination }
+            rowKey={ ({ id }) => id }
         />
     );
 };

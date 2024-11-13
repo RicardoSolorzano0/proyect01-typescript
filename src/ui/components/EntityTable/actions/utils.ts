@@ -1,7 +1,7 @@
 import type { Icon }              from 'react-feather';
 import { Edit, Eye, Trash2 }      from 'react-feather';
 import type { CrudActionsType }   from './types';
-import { CustomButtonProps } from '../../Buttons';
+import type { CustomButtonProps } from '../../Buttons';
 
 
 type Action = {

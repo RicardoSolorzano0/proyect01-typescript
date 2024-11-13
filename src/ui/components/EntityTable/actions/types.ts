@@ -1,9 +1,9 @@
 import type { ButtonProps, PopconfirmProps, TooltipProps }      from 'antd';
+import type { LinkProps } from 'react-router-dom';
 import { z }                                                    from 'zod';
-import { CustomButtonProps } from '../../Buttons';
-import { ObjectWithId } from '@/types/ObjectWithId';
-import { ModalFunctionsType, ModalInstance } from '@/types/modals';
-import { LinkProps } from 'react-router-dom';
+import type { CustomButtonProps } from '../../Buttons';
+import type { ModalFunctionsType, ModalInstance } from '@/types/modals';
+import type { ObjectWithId } from '@/types/ObjectWithId';
 
 
 export const CrudActionsEnum = z.enum(['view', 'update', 'delete']);
