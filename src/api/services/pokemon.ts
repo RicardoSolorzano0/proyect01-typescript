@@ -1,19 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Pokemon } from '@/types/Pokemon';
 //import type { Pokemon } from './types'
 
 // Define a service using a base URL and expected endpoints
 export const pokemonApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
     endpoints: builder => ({
-        getAllPokemon: builder.query<any, number>({
+        getAllPokemon: builder.query<Pokemon[], number>({
             query: limit => `pokemon?limit=${limit}`
         }),
-        getPokemonByName: builder.query<any, string>({
+        getPokemonByName: builder.query<Pokemon, string>({
             query: name => `pokemon/${name}`
         }),
-        getPokemonByType: builder.query<any, string>({
+        getPokemonByType: builder.query<Pokemon, string>({
             query: name => `pokemon/${name}`
         })
     }),

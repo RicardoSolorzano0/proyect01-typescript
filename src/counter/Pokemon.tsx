@@ -1,41 +1,47 @@
-import { useGetPokemonByNameQuery } from "@/api/services/pokemon";
+import { useGetPokemonByNameQuery } from '@/api/services/pokemon';
 
 interface Props {
-  name?: string
+  readonly name?: string;
 }
 
 export const Pokemon = ({
-  name
-}:Props) => {
-  const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery(
+    name
+}: Props) => {
+    const { data, error, isFetching, isLoading } = useGetPokemonByNameQuery(
     name!,
     {
-      skip: name === undefined
+        skip: name === undefined
     }
-  )
+    );
 
-  const loading = isLoading || isFetching;
+    const loading = isLoading || isFetching;
 
-  // const [getPokemon, { data, error, isLoading, isFetching }] = useLazyGetPokemonByNameQuery();
+    if (error) {
+        return (
+            <>Oh no, there was an error</>
+        );
+    }
 
-  // useEffect(() => {
-  //   getPokemon(name)
-  // }, [name]);
+    if (loading) {
+        return (
+            <>Loading...</>
+        );
+    }
 
-  return (
-    <>
-      {error ? (
-        <>Oh no, there was an error</>
-      ) : loading ? (
-        <>Loading...</>
-      ) : data ? (
-        <>
-          <h3>
-            {data.species.name} {isFetching ? '...' : ''}
-          </h3>
-          <img src={data.sprites.front_shiny} alt={data.species.name} />
-        </>
-      ) : null}
-    </>
-  )
-}
+    return (
+               
+        data ? (
+            <>
+                <h3>
+                    {data.species.name}
+                </h3>
+
+                <img
+                    alt={ data.species.name }
+                    src={ data.sprites.front_shiny }
+                />
+            </>
+        ) : <>Not found</>
+        
+    );
+};
