@@ -1,9 +1,9 @@
 export const routes = {
-  home: {
-    root: "/",
-    user: "/user",
-    typeUser: "/typeuser",
-    animals: "/animals",
-  },
-  login: "/login",
+    home: {
+        animals: '/animals',
+        root: '/',
+        typeUser: '/typeuser',
+        user: '/user'
+    },
+    login: '/login'
 };
