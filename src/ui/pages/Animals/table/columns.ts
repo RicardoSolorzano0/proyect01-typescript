@@ -1,6 +1,6 @@
-import { Animal } from '@/types/Animals';
 import type { TableColumnsType } from 'antd';
 import type { TFunction } from 'i18next';
+import type { Animal } from '@/types/Animals';
 
 
 export const columns = (t: TFunction<'animal'>): TableColumnsType<Animal> => [
@@ -11,5 +11,5 @@ export const columns = (t: TFunction<'animal'>): TableColumnsType<Animal> => [
     {
         dataIndex: 'description',
         title: t('entity.description')
-    },
+    }
 ];

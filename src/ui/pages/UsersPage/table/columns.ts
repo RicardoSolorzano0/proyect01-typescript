@@ -1,7 +1,7 @@
-import { User } from '@/types/User';
 import type { TableColumnsType } from 'antd';
-import type { TFunction } from 'i18next';
 import dayjs from 'dayjs';
+import type { TFunction } from 'i18next';
+import type { User } from '@/types/User';
 
 
 export const columns = (t: TFunction<'users'>): TableColumnsType<User> => [
@@ -19,8 +19,8 @@ export const columns = (t: TFunction<'users'>): TableColumnsType<User> => [
     },
     {
         dataIndex: 'birthdate',
-        title: t('entity.birthdate'),
-        render: (value) => dayjs(value).format('L')
+        render: (_, { birthdate }) => dayjs(birthdate).format('L'),
+        title: t('entity.birthdate')
     },
     {
         dataIndex: 'address',

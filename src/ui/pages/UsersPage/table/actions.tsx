@@ -1,27 +1,27 @@
 import type { TFunction }                        from 'i18next';
-import { BaseActionProps, CrudTableAction, DeleteActionCompositionType } from '../../../components/EntityTable/actions/types';
-import { User } from '../../../../types/User';
-import { FeatherIcon } from '../../../components/FeatherIcon';
 import { PlusSquare } from 'react-feather';
-import { globalT } from '@/i18n';
-import { UserForm } from '@/forms/UserForm/UserForm';
+import type { User } from '../../../../types/User';
+import type { BaseActionProps, CrudTableAction, DeleteActionCompositionType } from '../../../components/EntityTable/actions/types';
+import { FeatherIcon } from '../../../components/FeatherIcon';
 import { AnimalUserForm } from '@/forms/AnimalUserForm/AnimalUserForm';
+import { UserForm } from '@/forms/UserForm/UserForm';
+import { globalT } from '@/i18n';
 
 export const updateUserAction: CrudTableAction<User> = (user, modalFn) => {
     const mdl = modalFn.info({
-        title: globalT("users:form.titles.edit", { user: `${user.name} ${user.last_name}` }),
+        cancelButtonProps: {
+            style: { display: 'none' }
+        },
         content: (
-          <UserForm
-            user={user}
-            handleCancel={() => mdl.destroy()}
-          />
+            <UserForm
+                handleCancel={ () => mdl.destroy() }
+                user={ user }
+            />
         ),
         okButtonProps: {
-          style: { display: "none" },
+            style: { display: 'none' }
         },
-        cancelButtonProps: {
-          style: { display: "none" },
-        },
+        title: globalT('users:form.titles.edit', { user: `${user.name} ${user.last_name}` })
     });
 };
 
@@ -50,9 +50,9 @@ export const updateUserAction: CrudTableAction<User> = (user, modalFn) => {
 export const deleteUserAction: DeleteActionCompositionType<User> = handleConfirm => {
     return (record, modalFn) => {
         const mdl = modalFn.confirm({
-            onOk: () => handleConfirm(record, mdl),
-            title: globalT("users:form.titles.delete", { user: `${record.name} ${record.last_name}` }),
             content: globalT('users:form.contents.delete', { user: `${record.name} ${record.last_name}` }),
+            onOk: () => handleConfirm(record, mdl),
+            title: globalT('users:form.titles.delete', { user: `${record.name} ${record.last_name}` })
         });
     };
 };
@@ -65,18 +65,21 @@ export const updateAnimalsAction: (t: TFunction) => BaseActionProps<User> = t =>
     colorMode: 'warning',
     onClick: (user, modalFn) => {
         const mdl = modalFn.info({
-            title:  t("form.titles.favorite", { user: `${user.name}` }),
-            content: (
-              <AnimalUserForm user={user} handleCancel={() => mdl.destroy()} />
-            ),
             cancelButtonProps: {
-              style: { display: "none" },
+                style: { display: 'none' }
             },
+            content: 
+              <AnimalUserForm
+                  handleCancel={ () => mdl.destroy() }
+                  user={ user }
+              />
+            ,
             okButtonProps: {
-              style: { display: "none" },
-            }
+                style: { display: 'none' }
+            },
+            title: t('form.titles.favorite', { user: `${user.name}` })
         });
     },
-    title: t("form.titles.favorite"),
+    title: t('form.titles.favorite'),
     type: 'click'
 });
