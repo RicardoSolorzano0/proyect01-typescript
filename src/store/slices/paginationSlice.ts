@@ -2,7 +2,7 @@ import type { PayloadAction }   from '@reduxjs/toolkit';
 import { createSlice }          from '@reduxjs/toolkit';
 
 export interface PaginationState {
-    page: number | null
+    page: number | null;
 }
 
 const initialState: PaginationState = {
@@ -10,8 +10,8 @@ const initialState: PaginationState = {
 };
 
 const paginationSlice = createSlice({
-    name: 'pagination',
     initialState,
+    name: 'pagination',
     reducers: {
         setPage: (state, action: PayloadAction<number | null>) => {
             state.page = action.payload;
