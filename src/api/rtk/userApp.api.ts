@@ -1,10 +1,10 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { apiBaseQuery } from "./apiBaseQuery";
-import { ENDPOINT_TAGS } from "../constants/endPointTags";
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { apiBaseQuery } from './apiBaseQuery';
+import { ENDPOINT_TAGS } from '../constants/endPointTags';
 
 export const userAppApi = createApi({
-    reducerPath: 'userAppApi',
     baseQuery: apiBaseQuery,
-    tagTypes: ENDPOINT_TAGS,
-    endpoints:()=>({})
-})
+    endpoints: ()=>({}),
+    reducerPath: 'userAppApi',
+    tagTypes: ENDPOINT_TAGS
+});
