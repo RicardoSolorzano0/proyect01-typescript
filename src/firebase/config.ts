@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { 
-    // connectAuthEmulator,
+    connectAuthEmulator,
     getAuth } from 'firebase/auth';
 
 const {
@@ -28,4 +28,4 @@ export const FirebaseApp = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 export const FirebaseAuth = getAuth(FirebaseApp);
-// connectAuthEmulator(FirebaseAuth, 'http://127.0.0.1:9099');
+connectAuthEmulator(FirebaseAuth, 'http://127.0.0.1:9099');
