@@ -1,20 +1,41 @@
-import { USERS_TAG } from "@/api/constants/endPointTags";
-import { usersUris } from "@/api/constants/uris/users.uri";
-import { userAppApi } from "@/api/rtk/userApp.api";
-import { rtkCacher } from "@/api/utils/rtkQueryCacheUtils";
-import { serializeUriWithFilters } from "@/api/utils/serializationUtils";
-import { OptionInGetQuerys, Paginated } from "@/types/generalTypes";
-import { CreateUserPayload, SelectPaginatePayloadWithUser, UpdateUserPayload } from "@/types/payloads/payloadUserForm";
+import { usersUris } from '@/api/constants/uris/users.uri';
+import { userAppApi } from '@/api/rtk/userApp.api';
+import { USERS_TAG } from '@/api/constants/endPointTags';
+import { rtkCacher } from '@/api/utils/rtkQueryCacheUtils';
+import { serializeUriWithFilters } from '@/api/utils/serializationUtils';
+import type { OptionInGetQuerys, Paginated } from '@/types/generalTypes';
+import type { CreateUserPayload, SelectPaginatePayloadWithUser, UpdateUserPayload } from '@/types/payloads/payloadUserForm';
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { User } from "@/types/User";
+import type { User } from '@/types/User';
 
 export const usersApi = userAppApi.injectEndpoints({
-    endpoints: (builder) => ({
+    endpoints: builder => ({
+        createUser: builder.mutation<void, CreateUserPayload>({
+            invalidatesTags: rtkCacher.invalidatesList(USERS_TAG),
+            query: body => ({
+                body,
+                method: 'POST',
+                url: usersUris.createUser
+            }),
+            transformErrorResponse: response => {
+                return response.data;
+            }
+        }),
+        deleteUser: builder.mutation<void, string>({
+            invalidatesTags: rtkCacher.cacheByIdArg(USERS_TAG),
+            query: id => ({
+                method: 'DELETE',
+                url: serializeUriWithFilters(usersUris.deleteUser, { id })
+            }),
+            transformErrorResponse: response => {
+                return response.data;
+            }
+        }),
         getUsers: builder.query<User[], OptionInGetQuerys>({
+            providesTags: rtkCacher.providesList(USERS_TAG),
             // query: (option) => `selectUsers?option=${option}`,
-            query:(option)=>serializeUriWithFilters(usersUris.selectUsers,{option}),
-            providesTags:rtkCacher.providesList(USERS_TAG)
+            query: option=>serializeUriWithFilters(usersUris.selectUsers, { option })
             // providesTags: (result) =>
             //     // is result available?
             //     result
@@ -27,42 +48,21 @@ export const usersApi = userAppApi.injectEndpoints({
             //         [{ type: 'User', id: 'LIST' }],
         }),
         selectPaginatedUsers: builder.query<Paginated<User>, SelectPaginatePayloadWithUser>({
-            query: (options) => serializeUriWithFilters(usersUris.selectPaginatedUsers, options),
-            providesTags: rtkCacher.providesNestedList(USERS_TAG)
-          }),
-        createUser: builder.mutation<void, CreateUserPayload>({
-            query: (body) => ({
-                url: usersUris.createUser,
-                method: 'POST',
-                body,
-            }),
-            transformErrorResponse: (response) => {
-                return response.data
-            },
-            invalidatesTags: rtkCacher.invalidatesList(USERS_TAG),
+            providesTags: rtkCacher.providesNestedList(USERS_TAG),
+            query: options => serializeUriWithFilters(usersUris.selectPaginatedUsers, options)
         }),
         updateUser: builder.mutation<void, UpdateUserPayload>({
-            query: (body) => ({
-                url: usersUris.updateUser,
-                method: 'PATCH',
-                body,
-            }),
-            transformErrorResponse: (response) => {
-                return response.data
-            },
             invalidatesTags: rtkCacher.cacheByIdArgProperty(USERS_TAG),
-        }),
-        deleteUser: builder.mutation<void, string>({
-            query: (id) => ({
-                url: serializeUriWithFilters(usersUris.deleteUser, { id }),
-                method: 'DELETE',
+            query: body => ({
+                body,
+                method: 'PATCH',
+                url: usersUris.updateUser
             }),
-            transformErrorResponse: (response) => {
-                return response.data
-            },
-            invalidatesTags: rtkCacher.cacheByIdArg(USERS_TAG),
+            transformErrorResponse: response => {
+                return response.data;
+            }
         })
-    }),
-})
+    })
+});
 
-export const {  useSelectPaginatedUsersQuery,useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation} = usersApi
+export const {  useCreateUserMutation, useDeleteUserMutation, useGetUsersQuery, useSelectPaginatedUsersQuery, useUpdateUserMutation } = usersApi;

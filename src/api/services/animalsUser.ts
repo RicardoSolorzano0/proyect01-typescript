@@ -1,29 +1,29 @@
-import { AnimalUserResponse } from "@/types/AnimalUser";
-import { userAppApi } from "../rtk/userApp.api";
-import { serializeUriWithFilters } from "../utils/serializationUtils";
-import { animalUserUris } from "../constants/uris/animalUser.uri";
-import { rtkCacher } from "../utils/rtkQueryCacheUtils";
-import { ANIMAL_USER_TAG } from "../constants/endPointTags";
-import { CreateAnimalUserPayload, SelectAnimalUsersPayload } from "@/types/payloads/payloadAnimalUserForm";
+import { ANIMAL_USER_TAG } from '../constants/endPointTags';
+import { animalUserUris } from '../constants/uris/animalUser.uri';
+import { userAppApi } from '../rtk/userApp.api';
+import { rtkCacher } from '../utils/rtkQueryCacheUtils';
+import { serializeUriWithFilters } from '../utils/serializationUtils';
+import type { AnimalUserResponse } from '@/types/AnimalUser';
+import type { CreateAnimalUserPayload, SelectAnimalUsersPayload } from '@/types/payloads/payloadAnimalUserForm';
 
 export const animalsUser = userAppApi.injectEndpoints({
-    endpoints: (builder) => ({
-        getAnimalsUser: builder.query<AnimalUserResponse[], SelectAnimalUsersPayload>({
-            query: (option) => serializeUriWithFilters(animalUserUris.selectAnimalUsers, option),
-            providesTags: rtkCacher.providesList(ANIMAL_USER_TAG)
-        }),
+    endpoints: builder => ({
         createAnimalsUser: builder.mutation<void, CreateAnimalUserPayload>({
-            query: (body) => ({
-                url: animalUserUris.createAnimalUser,
-                method: 'POST',
-                body,
-            }),
-            transformErrorResponse: (response) => {
-                return response.data
-            },
             invalidatesTags: rtkCacher.invalidatesList(ANIMAL_USER_TAG),
+            query: body => ({
+                body,
+                method: 'POST',
+                url: animalUserUris.createAnimalUser
+            }),
+            transformErrorResponse: response => {
+                return response.data;
+            }
         }),
+        getAnimalsUser: builder.query<AnimalUserResponse[], SelectAnimalUsersPayload>({
+            providesTags: rtkCacher.providesList(ANIMAL_USER_TAG),
+            query: option => serializeUriWithFilters(animalUserUris.selectAnimalUsers, option)
+        })
     })
-})
+});
 
-export const {useCreateAnimalsUserMutation, useGetAnimalsUserQuery} = animalsUser
+export const { useCreateAnimalsUserMutation, useGetAnimalsUserQuery } = animalsUser;
