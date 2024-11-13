@@ -34,6 +34,9 @@ export default [
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
     )),
     {
+        ignores:["eslint.config.mjs"]
+    },
+    {
         plugins: {
             "@stylistic": stylistic,
             perfectionist: fixupPluginRules(perfectionist),

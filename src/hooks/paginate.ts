@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type { PaginationConfig }          from 'antd/es/pagination';
 import { useEffect }                      from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -31,7 +32,7 @@ export const usePagination = () => {
     useEffect(() => {
         const queryPage = Number.parseInt(searchParams.get('page') ?? '');
         dispatch(setPage(!isNaN(queryPage) ? queryPage : null));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+         
     }, [!!searchParams]);
 
     useEffect(() => {

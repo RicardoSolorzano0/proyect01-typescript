@@ -1,6 +1,6 @@
-import { TypeUser } from '@/types/TypeUsers';
 import type { TableColumnsType } from 'antd';
 import type { TFunction } from 'i18next';
+import type { TypeUser } from '@/types/TypeUsers';  
 
 export const columns = (t: TFunction<'usersType'>): TableColumnsType<TypeUser> => [
     {
@@ -13,7 +13,7 @@ export const columns = (t: TFunction<'usersType'>): TableColumnsType<TypeUser> =
     },
     {
         dataIndex: 'color',
-        title: t('entity.color'),
-    },
+        title: t('entity.color')
+    }
 
 ];
