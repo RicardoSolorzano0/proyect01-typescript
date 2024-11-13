@@ -9,6 +9,7 @@ import { locale } from "dayjs";
 import 'dayjs/locale/es';
 import { FirebaseCtx } from "./context/FirebaseCtx";
 import { FirebaseApp, FirebaseAuth } from './firebase/config';
+import { mainTheme } from "./ui/theme/main.theme";
 
 const App = () => {
   const { i18n } = useTranslation();
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <FirebaseCtx.Provider value={{ app: FirebaseApp, auth: FirebaseAuth }}>
-        <ConfigProvider locale={antdLocales[i18n.language]}>
+        <ConfigProvider theme={mainTheme} locale={antdLocales[i18n.language]}>
           <ContexModal>
             <RouterProvider router={router} />
           </ContexModal>
