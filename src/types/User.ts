@@ -1,13 +1,13 @@
-import { ObjectWithId } from "./ObjectWithId";
+import type { ObjectWithId } from './ObjectWithId';
 
-export type UserGender = "M" | "F";
+export type UserGender = 'M' | 'F';
 
 export interface User extends ObjectWithId {
-  name: string;
-  last_name: string;
-  birthdate: Date;
   address: string;
+  birthdate: Date;
   email: string;
   gender: UserGender;
+  last_name: string;
+  name: string;
   user_type_id: string;
 };

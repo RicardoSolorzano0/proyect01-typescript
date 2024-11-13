@@ -1,4 +1,4 @@
-import { Animal } from "../Animals";
+import type { Animal } from '../Animals';
 
-export type CreateAnimalPayload = Omit<Animal,"id">
-export type UpdateAnimalPayload = Animal
+export type CreateAnimalPayload = Omit<Animal, 'id'>;
+export type UpdateAnimalPayload = Animal;

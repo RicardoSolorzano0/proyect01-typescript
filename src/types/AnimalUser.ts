@@ -1,4 +1,4 @@
-import { ObjectWithId } from "./ObjectWithId";
+import type { ObjectWithId } from './ObjectWithId';
 
 export interface AnimalUser extends ObjectWithId {
     animals: string[];
@@ -6,5 +6,5 @@ export interface AnimalUser extends ObjectWithId {
 };
 
 export interface AnimalUserResponse extends ObjectWithId {
-    name:string
+    name: string;
 }

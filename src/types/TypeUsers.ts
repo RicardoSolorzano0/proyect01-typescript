@@ -1,7 +1,7 @@
-import { ObjectWithId } from "./ObjectWithId";
+import type { ObjectWithId } from './ObjectWithId';
 
 export interface TypeUser extends ObjectWithId {
-  name: string;
-  description: string;
   color: string;
+  description: string;
+  name: string;
 };

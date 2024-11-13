@@ -1,7 +1,7 @@
-import { ObjectWithId } from "./ObjectWithId";
+import type { ObjectWithId } from './ObjectWithId';
 
 
 export interface Animal extends ObjectWithId {
-  name: string;
   description: string;
+  name: string;
 };
