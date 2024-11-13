@@ -1,7 +1,7 @@
 export const animalUris = Object.freeze({
-    deleteAnimal: '/deleteAnimal',
     createAnimal: '/createAnimal',
-    updateAnimal: '/updateAnimal',
+    deleteAnimal: '/deleteAnimal',
     selectAnimals: '/selectAnimals',
-    selectPaginatedAnimals: '/selectPaginatedAnimals'
-})
+    selectPaginatedAnimals: '/selectPaginatedAnimals',
+    updateAnimal: '/updateAnimal'
+});

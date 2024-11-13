@@ -10,4 +10,4 @@ export const ENDPOINT_TAGS = [
     USER_TYPES_TAG,
     ANIMALS_TAG,
     ANIMAL_USER_TAG
-]
+];

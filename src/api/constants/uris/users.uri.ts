@@ -1,7 +1,7 @@
 export const usersUris = Object.freeze({
-    deleteUser: '/deleteUser',
     createUser: '/createUser',
-    updateUser: '/updateUser',
+    deleteUser: '/deleteUser',
+    selectPaginatedUsers: '/selectPaginatedUsers',
     selectUsers: '/selectUsers',
-    selectPaginatedUsers: '/selectPaginatedUsers'
+    updateUser: '/updateUser'
 });
