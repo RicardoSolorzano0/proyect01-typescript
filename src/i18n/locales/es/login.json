@@ -5,5 +5,11 @@
         "password":"Contraseña",
         "remember":"Recuerdame",
         "login":"Iniciar sesión"
-    }
+    },
+    "messages":{
+        "success":{
+           "login":"Iniciar sesión",
+           "loginDescription":"Has iniciado sesión correctamente"
+        }
+       }
 }
