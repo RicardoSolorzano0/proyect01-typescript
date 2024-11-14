@@ -1,18 +1,32 @@
-import { App, Button, Switch } from 'antd';
+import { App, Breadcrumb, Button, Switch } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMatches } from 'react-router';
 import { columns } from './table/columns';
 import { useDeleteAnimalMutation, useSelectPaginatedAnimalsQuery } from '@/api/services/animals';
 import { AnimalForm } from '@/forms/AnimalForm/AnimalForm';
 import { useHandlePaginatedData, usePagination } from '@/hooks/paginate';
 import { globalT } from '@/i18n';
 import type { Animal } from '@/types/Animals';
-import type { OptionInGetQuerys } from '@/types/generalTypes';
+import type { Match, OptionInGetQuerys } from '@/types/generalTypes';
 import { EntityTable } from '@/ui/components/EntityTable';
 
 const { useApp } = App;
 
 export const AnimalPage = () => {
+    const matches = useMatches() as Match[];
+    const crumbs = matches
+        // first get rid of any matches that don't have handle and crumb
+        .filter(match => Boolean(match.handle?.crumb))
+        // now map them into an array of elements, passing the loader
+        // data to each one
+        .map(match => match.handle.crumb(match.data));
+
+    const breadcrums = crumbs.map((crumb, index) => {
+        return {
+            title: <a href={ index === 0 ? '/' : '' }>{crumb}</a>
+        };
+    });
     const { t } = useTranslation('animals');
     const page = usePagination();
     const [option, setOption] = useState<OptionInGetQuerys>('active');
@@ -93,6 +107,11 @@ export const AnimalPage = () => {
     const loading = isLoadingPaginate || isFetchingPaginate || isLoadingDelete;
     return (
         <>
+            <Breadcrumb
+                className='mb-4'
+                items={ breadcrums }
+            />
+
             <div className='flex items-center justify-between'>
                 <Button
                     type='primary'

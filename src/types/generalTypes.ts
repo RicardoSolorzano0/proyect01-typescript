@@ -1,3 +1,5 @@
+import type { Params } from 'react-router';
+
 export type OptionInGetQuerys =  'all' | 'active' | 'inactive';
 
 export type Paginated<Entity> = {
@@ -12,3 +14,11 @@ export type SelectPaginatePayload = {
     limit: number;
     page: number;
 };
+
+export interface Match {
+    data: unknown; 
+    handle: { crumb: (data: unknown) => string; }; 
+    id: string;
+    params: Params;
+    pathname: string;
+  }

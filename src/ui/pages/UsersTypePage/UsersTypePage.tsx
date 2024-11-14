@@ -1,20 +1,34 @@
-import { App, Button, Input, Switch } from 'antd';
+import { App, Breadcrumb, Button, Input, Switch } from 'antd';
 import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+import { useMatches } from 'react-router';
 import { columns } from './table/columns';
 import { useDeleteUserTypeMutation, useSelectPaginatedUserTypesQuery } from '@/api/services/userTypes';
 import { UserTypeForm } from '@/forms/UserTypeForm/UserTypeForm';
 import { useDebounce } from '@/hooks/debounce';
 import { useHandlePaginatedData, usePagination } from '@/hooks/paginate';
 import { globalT } from '@/i18n';
-import type { OptionInGetQuerys } from '@/types/generalTypes';
+import type { Match, OptionInGetQuerys } from '@/types/generalTypes';
 import type { TypeUser } from '@/types/TypeUsers';
 import { EntityTable } from '@/ui/components/EntityTable';
 
 const { useApp } = App;
 
 export const UsersTypePage = () => {
+    const matches = useMatches() as Match[];
+    const crumbs = matches
+        // first get rid of any matches that don't have handle and crumb
+        .filter(match => Boolean(match.handle?.crumb))
+        // now map them into an array of elements, passing the loader
+        // data to each one
+        .map(match => match.handle.crumb(match.data));
+
+    const breadcrums = crumbs.map((crumb, index) => {
+        return {
+            title: <a href={ index === 0 ? '/' : '' }>{crumb}</a>
+        };
+    });
     const { t } = useTranslation('usersTypes');
     const [text, setText] = useState('');
     const debouncedText = useDebounce(text);
@@ -102,7 +116,12 @@ export const UsersTypePage = () => {
     };
 
     return (
-        <div>
+        <>
+            <Breadcrumb
+                className='mb-4'
+                items={ breadcrums }
+            />
+
             <div className='flex flex-wrap items-center justify-between'>
                 <Button
                     type='primary'
@@ -188,6 +207,6 @@ export const UsersTypePage = () => {
           </div> */}
                     </>
                 )}
-        </div>
+        </>
     );
 };

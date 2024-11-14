@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Link } from 'react-router-dom';
 import { routes } from '@/constants/routes';
 import { LoginForm } from '@/forms/LoginForm/LoginForm';
 import { ContainerLayout } from '@/ui/layouts/ContainerLayout/ContainerLayout';
@@ -12,18 +12,30 @@ export const router = createBrowserRouter([
         children: [
             {
                 element: <UsersPage />,
+                handle: {
+                    crumb: ()=><Link to={ routes.home.user }>Usuarios</Link>
+                },
                 path: routes.home.user
             },
             {
                 element: <UsersTypePage />,
+                handle: {
+                    crumb: ()=><Link to={ routes.home.typeUser }>Tipos de usuario</Link>
+                },
                 path: routes.home.typeUser
             },
             {
                 element: <AnimalPage />,
+                handle: {
+                    crumb: ()=><Link to={ routes.home.animals }>Animales</Link>
+                },
                 path: routes.home.animals
             }
         ],
         element: <ContainerLayout />,
+        handle: {
+            crumb: ()=><Link to={ routes.home.root }>Home</Link>
+        },
         path: routes.home.root
     },
     {

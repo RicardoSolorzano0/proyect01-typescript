@@ -1,8 +1,10 @@
-import { App, Button, Input, Switch } from 'antd';
+import { App, Breadcrumb, Button, Input, Switch } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMatches } from 'react-router';
 import { deleteUserAction, updateAnimalsAction, updateUserAction } from './table/actions';
 import { columns } from './table/columns';
+import type { Match } from '../../../types/generalTypes';
 import { useDeleteUserMutation, useSelectPaginatedUsersQuery } from '@/api/services/user';
 import { useGetUserTypesQuery } from '@/api/services/userTypes';
 import { UserForm } from '@/forms/UserForm/UserForm';
@@ -15,7 +17,13 @@ import { EntityTable } from '@/ui/components/EntityTable';
 import { SelectUI } from '@/ui/components/SelectUI';
 
 const { useApp } = App;
+
 export const UsersPage = () => {
+    const matches = useMatches() as Match[];
+    const crumbs = matches
+        .filter(match => Boolean(match.handle?.crumb))
+        .map(match => match.handle.crumb(match.data));
+
     const { t } = useTranslation('users');
     const [text, setText] = useState('');
     const [userType, setUserType] = useState('');
@@ -81,8 +89,19 @@ export const UsersPage = () => {
         custom: [updateAnimalsAction(t)]
     };
 
+    const breadcrums = crumbs.map((crumb, index) => {
+        return {
+            title: <a href={ index === 0 ? '/' : '' }>{crumb}</a>
+        };
+    });
+
     return (
         <>
+            <Breadcrumb
+                className='mb-4'
+                items={ breadcrums }
+            />
+
             <div className='flex items-center justify-between'>
                 <Button
                     type='primary'
@@ -105,7 +124,7 @@ export const UsersPage = () => {
                         allowClear
                         placeholder={ t('page.searchBy') }
                         onChange={ e => {
-                            setText(e.target.value); 
+                            setText(e.target.value);
                         } }
                     />
 
