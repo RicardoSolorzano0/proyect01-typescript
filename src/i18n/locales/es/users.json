@@ -11,8 +11,7 @@
     "birthdate": "Fecha de nacimiento",
     "address": "Dirección",
     "gender": "Genero",
-    "userType": "Tipo de usuario",
-    "actions": "Acciones"
+    "userType": "Tipo de usuario"
   },
   "form": {
     "titles":{
