@@ -1,12 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import type { PaginationConfig }          from 'antd/es/pagination';
 import { useEffect }                      from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams }                from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './hooks';
-import { setPage } from '@/store/slices/paginationSlice';
-import type { Paginated } from '@/types/generalTypes';
-import type { ObjectWithId } from '@/types/ObjectWithId';
-import type { EntityTableProps } from '@/ui/components/EntityTable';
+import { setPage }                        from '@/store/slices/paginationSlice';
+import type { Paginated }                 from '@/types/generalTypes';
+import type { ObjectWithId }              from '@/types/ObjectWithId';
+import type { EntityTableProps }          from '@/ui/components/EntityTable';
 
 
 export const useHandlePaginatedData = <T extends ObjectWithId>(data: Paginated<T> | undefined) => {
@@ -31,20 +30,22 @@ export const usePagination = () => {
 
     useEffect(() => {
         const queryPage = Number.parseInt(searchParams.get('page') ?? '');
-        dispatch(setPage(!isNaN(queryPage) ? queryPage : null));
-         
+        const pageValue = !isNaN(queryPage) ? queryPage : null;
+        if (pageValue !== page) {
+            dispatch(setPage(pageValue));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [!!searchParams]);
 
     useEffect(() => {
         if (page !== null) {
             searchParams.set('page', page.toString());
-        } else if (page === null || page <= 0) {
+        } else {
             searchParams.delete('page');
         }
 
         setSearchParams(searchParams);
-
-    }, [page]);
+    }, [page, searchParams, setSearchParams]);
 
     return page ?? 1;
 };
@@ -70,5 +71,6 @@ export const usePageValidation = (pagination?: PaginationConfig) => {
             dispatch(setPage(1));
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, page, pagination?.total]);
 };
