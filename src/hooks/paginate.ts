@@ -59,17 +59,18 @@ export const usePageValidation = (pagination?: PaginationConfig) => {
     useEffect(() => {
         // Sets the page to the last valid page if accessing a non existing page
         // Ex.: If table has 3 pages and user tries to go to page 4, or even page 100, it will be redirected to page 3
+        console.log(page, 'inicio');
         if (pagination?.total && pagination.pageSize && page) {
             const currentPageMinIndex = pagination.pageSize * (page - 1);
-            if (page <= 0) {
-                dispatch(setPage(1));
-            } else if (pagination.total <= currentPageMinIndex) {
+            console.log(page, 'page antes');
+            if (pagination.total <= currentPageMinIndex) {
                 const finalPage = Math.ceil(pagination.total / pagination.pageSize);
                 dispatch(setPage(finalPage));
             } 
-        } else if (pagination?.total === 0) {
+        } else if ( page && page <= 0 || pagination?.total === 0) {
             dispatch(setPage(1));
         }
+      
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, page, pagination?.total]);
