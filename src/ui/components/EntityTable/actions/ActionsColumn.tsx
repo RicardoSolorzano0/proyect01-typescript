@@ -1,4 +1,4 @@
-import { Popconfirm, Space, Tooltip } from 'antd';
+import { Button, Popconfirm, Space, Tooltip } from 'antd';
 import type { TFunction } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ type ActionsColumnProps<RecordType extends ObjectWithId> = {
     readonly actions: TableActionType<RecordType>;
     readonly modal: ModalFunctionsType;
     readonly record: RecordType;
+    readonly actionsText?: boolean;
 };
 
 const getActionProps = <RecordType extends ObjectWithId>(data: TableCompositeAction<RecordType>, t: TFunction) => {
@@ -54,7 +55,7 @@ const getActionProps = <RecordType extends ObjectWithId>(data: TableCompositeAct
 
 export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsColumnProps<RecordType>) => {
     const { t } = useTranslation('common', { keyPrefix: 'table' });
-    const { actions, modal, record } = props;
+    const { actions, actionsText, modal, record } = props;
 
     const [locked, setLocked] = useState(false);
 
@@ -82,6 +83,17 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
                 const { actionData, buttonProps, color, title } = getActionProps(data, t);
 
                 if (typeof actionData === 'function') {
+                    if (actionsText) {
+                        return (
+                            <Button
+                                key={ i }
+                                type='link'
+                                onClick={ () => lockActionsUI(() => actionData(record, modal)) }
+                            >{title}
+                            </Button>
+                        );
+                    }
+
                     return (
                         <Tooltip
                             key={ i }
@@ -105,6 +117,17 @@ export const ActionsColumn = <RecordType extends ObjectWithId>(props: ActionsCol
 
                 if (type === 'click') {
                     const { onClick } = actionData;
+
+                    if (actionsText) {
+                        return (
+                            <Button
+                                key={ i }
+                                type='link'
+                                onClick={ () => lockActionsUI(() => onClick(record, modal)) }
+                            >{title}
+                            </Button>
+                        );
+                    }
 
                     return (
                         <Tooltip

@@ -25,6 +25,7 @@ export const EntityTable = <RecordType extends ObjectWithId>(props: EntityTableP
             key: 'actions',
             render: (_, r) => (
                 <ActionsColumn
+                    actionsText
                     actions={ actions }
                     modal={ modal }
                     record={ r }
